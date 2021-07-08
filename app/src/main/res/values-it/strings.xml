@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Messy Chef</string>
+    <string name="add_button_help">Aggiungi nuova Ricetta</string>
+    <string name="add_recipe_text">Ricetta</string>
+</resources>

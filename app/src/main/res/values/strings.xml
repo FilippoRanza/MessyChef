@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Messy Chef</string>
+    <string name="add_button_help">Add new Recipe</string>
+    <string name="add_recipe_text">Recipe</string>
+</resources>
