@@ -7,4 +7,7 @@
     <string name="add_recipe_step">Aggiungi Passaggio</string>
     <string name="add_recipe_done">Fatto</string>
     <string name="add_recipe_name_hint">Nome della Ricetta…</string>
+    <string name="ingredient_name_field">Nome Ingrediente</string>
+    <string name="ingredient_quantity_hint">Quantità</string>
+    <string name="empty_field_error_msg">ERRORE: è richiesto un valore</string>
 </resources>

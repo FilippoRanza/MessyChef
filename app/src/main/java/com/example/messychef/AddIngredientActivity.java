@@ -1,14 +1,14 @@
 package com.example.messychef;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.view.View;
 
-import android.os.Bundle;
+public class AddIngredientActivity extends AbstractManageIngredientActivity {
 
-public class AddIngredientActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_ingredient);
+    public void commit(View v) {
+        if(validateInput()) {
+            finish();
+        }
     }
 }

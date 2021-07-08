@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddIngredientActivity">
+    tools:context=".AbstractManageIngredientActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -24,12 +24,15 @@
             app:errorEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:endIconMode="clear_text"
+            android:id="@+id/ingredient_name_layout"
             >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
+                android:inputType="text"
+                android:id="@+id/ingredient_name_field"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -37,12 +40,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-
+            android:hint="@string/ingredient_quantity_hint"
+            app:errorEnabled="true"
+            android:id="@+id/ingredient_quantity_layout"
             >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:id="@+id/ingredient_quantity_field"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -59,6 +66,7 @@
             app:icon="@android:drawable/ic_input_add"
             android:contentDescription="@string/add_recipe_ingredient"
             android:tooltipText="@string/add_recipe_ingredient"
+            android:onClick="commit"
             />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
