@@ -12,43 +12,11 @@
     >
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <com.google.android.material.textfield.TextInputLayout
+        <androidx.fragment.app.FragmentContainerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/ingredient_name_field"
-            app:errorEnabled="true"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:endIconMode="clear_text"
-            >
+            android:layout_height="match_parent"
+            android:id="@+id/insert_new_ingredient" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-    </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/button_confirm_ingredient"
@@ -59,6 +27,8 @@
             app:icon="@android:drawable/ic_input_add"
             android:contentDescription="@string/add_recipe_ingredient"
             android:tooltipText="@string/add_recipe_ingredient"
+            android:text="@string/add_recipe_ingredient"
+            android:onClick="addIngredient"
             />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

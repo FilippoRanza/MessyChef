@@ -39,6 +39,7 @@
             app:icon="@android:drawable/ic_menu_save"
             android:onClick="saveRecipe"
             android:text="@string/add_recipe_done"
+
             />
 
     </LinearLayout>
