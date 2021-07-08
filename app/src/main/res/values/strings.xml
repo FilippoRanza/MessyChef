@@ -2,4 +2,9 @@
     <string name="app_name">Messy Chef</string>
     <string name="add_button_help">Add new Recipe</string>
     <string name="add_recipe_text">Recipe</string>
+    <string name="add_recipe_ingredient">Add Ingredient</string>
+    <string name="add_recipe_step">Add Step</string>
+    <string name="add_recipe_done">Done</string>
+    <string name="add_recipe_name_hint">Recipe Name…</string>
+    <string name="ingredient_name_field">Ingredient Name</string>
 </resources>

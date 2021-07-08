@@ -3,4 +3,8 @@
     <string name="app_name">Messy Chef</string>
     <string name="add_button_help">Aggiungi nuova Ricetta</string>
     <string name="add_recipe_text">Ricetta</string>
+    <string name="add_recipe_ingredient">Aggiungi Ingrediente</string>
+    <string name="add_recipe_step">Aggiungi Passaggio</string>
+    <string name="add_recipe_done">Fatto</string>
+    <string name="add_recipe_name_hint">Nome della Ricetta…</string>
 </resources>
