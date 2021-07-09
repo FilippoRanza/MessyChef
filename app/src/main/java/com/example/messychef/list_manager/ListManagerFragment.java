@@ -31,6 +31,7 @@ public class ListManagerFragment extends Fragment {
     private int emptyStringMessage;
 
     private final Activity owner;
+    private ItemClickRunner runner;
 
     public ListManagerFragment(Activity owner) {
         this.owner = owner;
@@ -46,7 +47,7 @@ public class ListManagerFragment extends Fragment {
     }
 
     public ListManagerFragment addItemClickListener(ItemClickRunner runner) {
-        list.setOnItemClickListener((parent, view, position, id) -> runner.run(position));
+        this.runner = runner;
         return this;
     }
 
@@ -80,7 +81,10 @@ public class ListManagerFragment extends Fragment {
     private void initialize(View v) {
         text = v.findViewById(TEXT_VIEW_ID);
         text.setText(emptyStringMessage);
+
         list = v.findViewById(LIST_VIEW_ID);
+        list.setOnItemClickListener((parent, view, position, id) -> runner.run(position));
+
     }
 
 

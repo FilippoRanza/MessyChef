@@ -41,6 +41,11 @@ public abstract class AbstractManageIngredientActivity extends AppCompatActivity
     }
 
 
+    protected void setValues() {
+        nameField.setText(name);
+        amountField.setText("" + amount);
+    }
+
     private void initializeNameField() {
         nameField = TextField.fromIds(this, R.id.ingredient_name_layout, R.id.ingredient_name_field)
                 .addUpdateListener((s) -> name = s);

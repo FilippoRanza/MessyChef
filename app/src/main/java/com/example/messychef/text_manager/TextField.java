@@ -66,6 +66,11 @@ public class TextField {
         return this;
     }
 
+
+    public void setText(CharSequence cs) {
+        input.setText(cs);
+    }
+
     private void emptyErrorMessage() {
         if (emptyErrorId != -1) {
             String msg = (emptyStatus) ? owner.getString(emptyErrorId) : null;

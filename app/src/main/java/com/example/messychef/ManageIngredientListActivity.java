@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 
 public class ManageIngredientListActivity extends AppCompatActivity {
 
-    private ActivityStarter starter;
+    final private ActivityStarter starter;
     private ListManagerFragment list;
-    private FragmentInstaller installer;
+    final private FragmentInstaller installer;
 
     public ManageIngredientListActivity() {
         starter = new ActivityStarter(this);
@@ -54,8 +54,15 @@ public class ManageIngredientListActivity extends AppCompatActivity {
 
     private void initializeListView() {
         list = new ListManagerFragment(this)
-                .setEmptyListMessage(R.string.empty_ingredient_list_message);
+                .setEmptyListMessage(R.string.empty_ingredient_list_message)
+                .addItemClickListener(this::modifyIngredient);
         installer.installFragment(R.id.ingredient_list_fragment, list);
     }
+
+    private void modifyIngredient(int id) {
+        RecipeFactory.getInstance().setModifyIngredientId(id);
+        starter.start(ModifyIngredientActivity.class);
+    }
+
 
 }
