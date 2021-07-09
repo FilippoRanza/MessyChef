@@ -1,4 +1,4 @@
-package com.example.messychef;
+package com.example.messychef.utils;
 
 import android.app.Activity;
 import android.content.Intent;

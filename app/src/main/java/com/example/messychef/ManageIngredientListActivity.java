@@ -1,15 +1,18 @@
 package com.example.messychef;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentContainerView;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import com.example.messychef.list_manager.ListManagerFragment;
 import com.example.messychef.recipe.Ingredient;
-import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeFactory;
+import com.example.messychef.utils.ActivityStarter;
+import com.example.messychef.utils.FragmentInstaller;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -17,14 +20,20 @@ import java.util.stream.Collectors;
 public class ManageIngredientListActivity extends AppCompatActivity {
 
     private ActivityStarter starter;
-    private AdapterView<ArrayAdapter<String>> list;
+    private ListManagerFragment list;
+    private FragmentInstaller installer;
+
+    public ManageIngredientListActivity() {
+        starter = new ActivityStarter(this);
+        installer = new FragmentInstaller(this);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_ingredient_list);
-        starter = new ActivityStarter(this);
-        list = findViewById(R.id.manage_ingredient_list);
+        initializeListView();
         updateIngredientList();
     }
 
@@ -39,16 +48,14 @@ public class ManageIngredientListActivity extends AppCompatActivity {
     }
 
     private void updateIngredientList() {
-        RecipeFactory factory = RecipeFactory.getInstance();
-        ArrayList<String> list = factory.getIngredients()
-                .stream()
-                .map(Ingredient::getName)
-                .collect(
-                        Collectors.toCollection(ArrayList::new)
-                );
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_element, list);
-        this.list.setAdapter(adapter);
+        list.updateList(RecipeFactory.getInstance().streamIngredients().map(Ingredient::getName));
     }
 
+
+    private void initializeListView() {
+        list = new ListManagerFragment(this)
+                .setEmptyListMessage(R.string.empty_ingredient_list_message);
+        installer.installFragment(R.id.ingredient_list_fragment, list);
+    }
 
 }

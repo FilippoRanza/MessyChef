@@ -1,15 +1,14 @@
 package com.example.messychef;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.messychef.recipe.Ingredient;
 import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeFactory;
+import com.example.messychef.text_manager.TextField;
+import com.example.messychef.utils.ActivityStarter;
 
 public class AddRecipeActivity extends AppCompatActivity {
 

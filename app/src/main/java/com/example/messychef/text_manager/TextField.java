@@ -1,13 +1,14 @@
-package com.example.messychef;
+package com.example.messychef.text_manager;
 
 import android.app.Activity;
 import android.text.Editable;
 import android.text.TextWatcher;
 
+import com.example.messychef.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-class TextField {
+public class TextField {
 
     Activity owner;
     TextInputLayout layout;
@@ -21,13 +22,13 @@ class TextField {
         this.layout = layout;
     }
 
-    static TextField fromIds(Activity a, int layoutId, int editId) {
+    public static TextField fromIds(Activity a, int layoutId, int editId) {
         TextInputEditText tiet = a.findViewById(editId);
         TextInputLayout til = a.findViewById(layoutId);
         return new TextField(a, til, tiet);
     }
 
-    boolean isEmpty() {
+    public boolean isEmpty() {
         Editable editable = input.getText();
         if (editable != null) {
             emptyStatus = editable.length() == 0;
@@ -38,13 +39,13 @@ class TextField {
         return emptyStatus;
     }
 
-    TextField setErrorMessageId(int id) {
+    public TextField setErrorMessageId(int id) {
         this.emptyErrorId = id;
         return this;
     }
 
 
-    TextField addUpdateListener(TextChangeRunner r) {
+    public TextField addUpdateListener(TextChangeRunner r) {
         input.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

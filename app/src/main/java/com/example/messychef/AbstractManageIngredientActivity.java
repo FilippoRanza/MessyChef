@@ -3,12 +3,10 @@ package com.example.messychef;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+import com.example.messychef.text_manager.TextField;
+import com.example.messychef.utils.GeneralUtils;
 
 public abstract class AbstractManageIngredientActivity extends AppCompatActivity {
 

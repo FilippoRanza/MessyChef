@@ -1,4 +1,4 @@
-package com.example.messychef;
+package com.example.messychef.utils;
 
 public class GeneralUtils {
 

@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
+        <androidx.fragment.app.FragmentContainerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/manage_ingredient_list"
+            android:layout_height="match_parent"
+            android:id="@+id/ingredient_list_fragment"
             />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

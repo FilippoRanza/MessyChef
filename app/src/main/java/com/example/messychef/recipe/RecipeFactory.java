@@ -1,6 +1,7 @@
 package com.example.messychef.recipe;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class RecipeFactory {
 
@@ -69,4 +70,13 @@ public class RecipeFactory {
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
+
+    public Stream<Ingredient> streamIngredients() {
+        return ingredients.stream();
+    }
+
+    public Stream<Step> streamSteps() {
+        return steps.stream();
+    }
+
 }

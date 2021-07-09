@@ -14,4 +14,5 @@
     <string name="add_take_ingredient_step">Add Take Ingredient</string>
     <string name="add_process_ingredient_step">Add Process</string>
     <string name="add_timer_step">Add Timer</string>
+    <string name="empty_ingredient_list_message">Add Ingredients for your Recipe</string>
 </resources>
