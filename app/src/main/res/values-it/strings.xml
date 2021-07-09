@@ -10,4 +10,9 @@
     <string name="ingredient_name_field">Nome Ingrediente</string>
     <string name="ingredient_quantity_hint">Quantità</string>
     <string name="empty_field_error_msg">ERRORE: è richiesto un valore</string>
+    <string name="manage_recipe_ingredient">Gestisci Ingredienti</string>
+    <string name="manage_recipe_step">Gestisci Passaggi</string>
+    <string name="add_take_ingredient_step">Prendi Ingrediente</string>
+    <string name="add_process_ingredient_step">Aggiungi Procedura</string>
+    <string name="add_timer_step">Aggiungi Timer</string>
 </resources>

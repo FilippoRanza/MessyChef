@@ -54,7 +54,6 @@ class TextField {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 emptyStatus = s.length() == 0;
-                System.out.println("AAAAA" + emptyStatus);
                 r.callback(s);
             }
 

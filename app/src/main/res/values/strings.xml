@@ -3,10 +3,15 @@
     <string name="add_button_help">Add new Recipe</string>
     <string name="add_recipe_text">Recipe</string>
     <string name="add_recipe_ingredient">Add Ingredient</string>
+    <string name="manage_recipe_ingredient">Manage Ingredients</string>
     <string name="add_recipe_step">Add Step</string>
+    <string name="manage_recipe_step">Manage Steps</string>
     <string name="add_recipe_done">Done</string>
     <string name="add_recipe_name_hint">Recipe Name…</string>
     <string name="ingredient_name_field">Ingredient Name</string>
     <string name="ingredient_quantity_hint">Amount</string>
     <string name="empty_field_error_msg">ERROR: A value is required</string>
+    <string name="add_take_ingredient_step">Add Take Ingredient</string>
+    <string name="add_process_ingredient_step">Add Process</string>
+    <string name="add_timer_step">Add Timer</string>
 </resources>

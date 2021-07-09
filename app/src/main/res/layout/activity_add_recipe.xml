@@ -11,26 +11,38 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/add_recipe_name_hint"
-            />
+            app:errorEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:endIconMode="clear_text"
+            android:id="@+id/input_recipe_name_layout"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:inputType="text"
+                android:id="@+id/input_recipe_name_field"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
-            android:text="@string/add_recipe_ingredient"
-            app:icon="@android:drawable/ic_input_add"
-            android:onClick="addIngredient"
+            android:text="@string/manage_recipe_ingredient"
+            android:onClick="manageIngredients"
             android:layout_height="wrap_content"
             />
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:icon="@android:drawable/ic_input_add"
-            android:onClick="addStep"
-            android:text="@string/add_recipe_step"
+            android:onClick="manageSteps"
+            android:text="@string/manage_recipe_step"
             />
 
         <com.google.android.material.button.MaterialButton
