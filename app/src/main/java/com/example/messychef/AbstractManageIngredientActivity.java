@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.messychef.text_manager.TextField;
+import com.example.messychef.utils.FragmentInstaller;
 import com.example.messychef.utils.GeneralUtils;
+import com.google.android.material.textfield.TextInputEditText;
 
 public abstract class AbstractManageIngredientActivity extends AppCompatActivity {
 
@@ -16,6 +18,13 @@ public abstract class AbstractManageIngredientActivity extends AppCompatActivity
 
     CharSequence name;
     Double quantity;
+
+    FragmentInstaller installer;
+
+    AbstractManageIngredientActivity() {
+        installer = new FragmentInstaller(this);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +56,15 @@ public abstract class AbstractManageIngredientActivity extends AppCompatActivity
     }
 
     private void initializeNameField() {
-        nameField = TextField.fromIds(this, R.id.ingredient_name_layout, R.id.ingredient_name_field)
-                .addUpdateListener((s) -> name = s);
+        nameField = new TextField(this, R.string.ingredient_name_field).addUpdateListener((s) -> name = s);
+        installer.installFragment(R.id.ingredient_name_field, nameField);
     }
 
     private void initializeQuantityField() {
-        amountField = TextField.fromIds(this, R.id.ingredient_quantity_layout, R.id.ingredient_quantity_field)
-                .addUpdateListener((s) -> quantity = GeneralUtils.parseDouble(s));
+        amountField = new TextField(this, R.string.ingredient_quantity_hint)
+                .addUpdateListener((s) -> quantity = GeneralUtils.parseDouble(s))
+                .setInputType(TextField.NUMBER_INPUT);
+        installer.installFragment(R.id.ingredient_quantity_field, amountField);
     }
 
 }

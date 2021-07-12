@@ -17,42 +17,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
+
+        <androidx.fragment.app.FragmentContainerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/ingredient_name_field"
-            app:errorEnabled="true"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:endIconMode="clear_text"
-            android:id="@+id/ingredient_name_layout"
-            >
+            android:id="@+id/ingredient_name_field"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:inputType="text"
-                android:id="@+id/ingredient_name_field"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
+        <androidx.fragment.app.FragmentContainerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="@string/ingredient_quantity_hint"
-            app:errorEnabled="true"
-            android:id="@+id/ingredient_quantity_layout"
-            >
+            android:id="@+id/ingredient_quantity_field"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:id="@+id/ingredient_quantity_field"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
 
         <androidx.fragment.app.FragmentContainerView
