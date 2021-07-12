@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.example.messychef.delete_dialog.DeleteDialog;
 import com.example.messychef.recipe.Ingredient;
-import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.utils.FragmentInstaller;
 
@@ -23,7 +22,7 @@ public class ModifyIngredientActivity extends AbstractManageIngredientActivity {
     @Override
     public void commit(View v) {
         if(validateInput()) {
-            Ingredient ingredient = new Ingredient(name.toString(), amount);
+            Ingredient ingredient = new Ingredient(name.toString(), quantity);
             factory.commitIngredient(ingredient);
             finish();
         }
@@ -33,7 +32,7 @@ public class ModifyIngredientActivity extends AbstractManageIngredientActivity {
         factory = RecipeFactory.getInstance();
         Ingredient ingredient = factory.getModifyIngredient();
         name = ingredient.getName();
-        amount = ingredient.getAmount();
+        quantity = ingredient.getQuantity();
         setValues();
     }
 

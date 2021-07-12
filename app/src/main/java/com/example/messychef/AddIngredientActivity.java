@@ -22,7 +22,7 @@ public class AddIngredientActivity extends AbstractManageIngredientActivity {
 
 
     private Ingredient makeIngredient() {
-        return new Ingredient(name.toString(), amount);
+        return new Ingredient(name.toString(), quantity);
     }
 
 

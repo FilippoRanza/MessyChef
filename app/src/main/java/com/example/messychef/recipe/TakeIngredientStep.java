@@ -6,5 +6,11 @@ public class TakeIngredientStep extends Step {
 
     private ArrayList<Ingredient> ingredients;
 
+    private String name;
 
+
+    @Override
+    public String getName() {
+        return name;
+    }
 }

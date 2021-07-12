@@ -15,7 +15,7 @@ public abstract class AbstractManageIngredientActivity extends AppCompatActivity
     TextField amountField;
 
     CharSequence name;
-    Integer amount;
+    Double quantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public abstract class AbstractManageIngredientActivity extends AppCompatActivity
 
     protected void setValues() {
         nameField.setText(name);
-        amountField.setText("" + amount);
+        amountField.setText("" + quantity);
     }
 
     private void initializeNameField() {
@@ -53,7 +53,7 @@ public abstract class AbstractManageIngredientActivity extends AppCompatActivity
 
     private void initializeQuantityField() {
         amountField = TextField.fromIds(this, R.id.ingredient_quantity_layout, R.id.ingredient_quantity_field)
-                .addUpdateListener((s) -> amount = GeneralUtils.parseInteger(s));
+                .addUpdateListener((s) -> quantity = GeneralUtils.parseDouble(s));
     }
 
 }

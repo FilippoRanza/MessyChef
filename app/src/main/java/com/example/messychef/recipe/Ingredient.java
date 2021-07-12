@@ -5,16 +5,16 @@ import java.io.Serializable;
 public class Ingredient implements Serializable {
 
     private String name;
-    private int amount;
+    private double quantity;
 
 
-    public Ingredient(String name, int amount) {
-        this.amount = amount;
+    public Ingredient(String name, double amount) {
+        this.quantity = amount;
         this.name = name;
     }
 
-    public int getAmount() {
-        return amount;
+    public double getQuantity() {
+        return quantity;
     }
 
     public String getName() {

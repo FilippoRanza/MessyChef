@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ManageIngredientListActivity">
+    tools:context=".AbstractManageItemListActivity">
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -14,7 +14,7 @@
         <androidx.fragment.app.FragmentContainerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/ingredient_list_fragment"
+            android:id="@+id/item_list_fragment"
             />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -23,7 +23,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             app:icon="@android:drawable/ic_input_add"
-            android:onClick="startAddRecipe"
+            android:onClick="startAddActivity"
             />
 
 

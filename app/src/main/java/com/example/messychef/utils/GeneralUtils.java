@@ -6,9 +6,10 @@ public class GeneralUtils {
     }
 
 
-    public static Integer parseInteger(CharSequence cs) {
-        return (cs.length() == 0) ? null : parseInt(cs);
+    public static Double parseDouble(CharSequence cs) {
+        return (cs.length() == 0) ? null : Double.parseDouble(cs.toString());
     }
+
 
     private static Integer parseInt(CharSequence cs) {
         return Integer.parseInt(cs.toString());
