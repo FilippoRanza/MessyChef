@@ -39,7 +39,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     }
 
     public void manageSteps(View v) {
-        starter.start(AddRecipeStepActivity.class);
+        starter.start(ManageStepListActivity.class);
     }
 
     public void saveRecipe(View v) {

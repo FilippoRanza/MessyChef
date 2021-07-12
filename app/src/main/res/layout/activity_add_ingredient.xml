@@ -55,6 +55,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+        <androidx.fragment.app.FragmentContainerView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/ingredient_plugin_fragment"/>
+
     </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

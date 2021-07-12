@@ -1,15 +1,19 @@
 package com.example.messychef;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentContainerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import com.example.messychef.delete_dialog.DeleteDialog;
 import com.example.messychef.list_manager.ListManagerFragment;
 import com.example.messychef.recipe.Ingredient;
+import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FragmentInstaller;
@@ -63,6 +67,5 @@ public class ManageIngredientListActivity extends AppCompatActivity {
         RecipeFactory.getInstance().setModifyIngredientId(id);
         starter.start(ModifyIngredientActivity.class);
     }
-
 
 }

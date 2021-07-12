@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MessyChef"
         tools:ignore="AllowBackup">
-        <activity android:name=".ManageIngredientListActivity"/>
+        <activity android:name=".ManageStepListActivity"></activity>
+        <activity android:name=".ManageIngredientListActivity" />
         <activity android:name=".AddRecipeStepActivity">
             <intent-filter>
                 <action android:name="com.example.messychef.activity.ADD_RECIPE_STEP_ACTIVITY" />

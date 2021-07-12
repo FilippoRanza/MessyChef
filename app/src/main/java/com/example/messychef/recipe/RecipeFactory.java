@@ -101,6 +101,12 @@ public class RecipeFactory {
         return ingredients.get(modifyIngredientId);
     }
 
+    public void deleteModifyIngredient() {
+        if(modifyIngredientId != -1) {
+            this.ingredients.remove(modifyIngredientId);
+        }
+    }
+
     public void setModifyStepId(int modifyStepId) {
         this.modifyStepId = modifyStepId;
     }
