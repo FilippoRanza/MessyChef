@@ -1,6 +1,7 @@
 package com.example.messychef.recipe;
 
 import java.util.ArrayList;
+import java.util.function.IntFunction;
 import java.util.stream.Stream;
 
 public class RecipeFactory {
@@ -9,10 +10,38 @@ public class RecipeFactory {
 
     private static RecipeFactory instance;
     private String name;
-    private ArrayList<Ingredient> ingredients;
+    private ArrayList<IngredientInfo> ingredients;
     private ArrayList<Step> steps;
     private int modifyIngredientId;
     private int modifyStepId;
+
+    private class IngredientInfo {
+        private Ingredient ingredient;
+        private boolean inUse;
+
+        IngredientInfo(Ingredient ingredient) {
+            this.ingredient = ingredient;
+        }
+
+        void setUsed() {
+            inUse = true;
+        }
+
+        void updateIngredient(Ingredient ingredient) {
+            this.ingredient = ingredient;
+        }
+
+        boolean isAvailable() {
+            return !inUse;
+        }
+
+        Ingredient getIngredient() {
+            return ingredient;
+        }
+
+
+    }
+
 
     private RecipeFactory() {
         name = null;
@@ -44,7 +73,8 @@ public class RecipeFactory {
     }
 
     public void addIngredient(Ingredient ingredient) {
-        ingredients.add(ingredient);
+        IngredientInfo info = new IngredientInfo(ingredient);
+        ingredients.add(info);
     }
 
     public void addStep(Step step) {
@@ -61,7 +91,10 @@ public class RecipeFactory {
 
     public Recipe getRecipe() {
 
-        Ingredient[] ingredients =  this.ingredients.toArray(new Ingredient[]{});
+        Ingredient[] ingredients = this.ingredients
+                .stream()
+                .map(IngredientInfo::getIngredient)
+                .toArray(Ingredient[]::new);
         Step[] steps = this.steps.toArray(new Step[]{});
 
         Recipe output = new Recipe(name, ingredients, steps);
@@ -72,17 +105,18 @@ public class RecipeFactory {
         return output;
     }
 
-    public ArrayList<Step> getSteps() {
-        return steps;
-    }
-
-    public ArrayList<Ingredient> getIngredients() {
-        return ingredients;
-    }
 
     public Stream<Ingredient> streamIngredients() {
-        return ingredients.stream();
+        return ingredients.stream().map(IngredientInfo::getIngredient);
     }
+
+    public Stream<Ingredient> streamAvailableIngredients() {
+        return ingredients
+                .stream()
+                .filter(IngredientInfo::isAvailable)
+                .map(IngredientInfo::getIngredient);
+    }
+
 
     public Stream<Step> streamSteps() {
         return steps.stream();
@@ -93,16 +127,18 @@ public class RecipeFactory {
     }
 
     public void commitIngredient(Ingredient i) {
-        ingredients.set(modifyIngredientId, i);
+        IngredientInfo ingredientInfo = ingredients.get(modifyIngredientId);
+        ingredientInfo.updateIngredient(i);
         modifyIngredientId = -1;
     }
 
     public Ingredient getModifyIngredient() {
-        return ingredients.get(modifyIngredientId);
+        IngredientInfo ingredientInfo = ingredients.get(modifyIngredientId);
+        return ingredientInfo.getIngredient();
     }
 
     public void deleteModifyIngredient() {
-        if(modifyIngredientId != -1) {
+        if (modifyIngredientId != -1) {
             this.ingredients.remove(modifyIngredientId);
         }
     }
