@@ -1,6 +1,9 @@
 package com.example.messychef.recipe;
 
+import android.widget.ListView;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.IntFunction;
 import java.util.stream.Stream;
 
@@ -15,7 +18,7 @@ public class RecipeFactory {
     private int modifyIngredientId;
     private int modifyStepId;
 
-    private class IngredientInfo {
+    private static class IngredientInfo {
         private Ingredient ingredient;
         private boolean inUse;
 
@@ -154,5 +157,21 @@ public class RecipeFactory {
     public Step getModifyStep() {
         return steps.get(modifyStepId);
     }
+
+    public void addTakeIngredientStep(String name, List<Boolean> selected) {
+        ArrayList<Ingredient> taken = new ArrayList<>();
+        for(int i = 0; i < selected.size(); i++) {
+            if(selected.get(i)) {
+                IngredientInfo info = ingredients.get(i);
+                info.setUsed();
+                taken.add(info.getIngredient());
+            }
+        }
+
+        TakeIngredientStep step = new TakeIngredientStep(name, taken);
+        this.steps.add(step);
+
+    }
+
 
 }

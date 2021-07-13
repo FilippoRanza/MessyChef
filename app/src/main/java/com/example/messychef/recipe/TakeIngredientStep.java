@@ -8,6 +8,10 @@ public class TakeIngredientStep extends Step {
 
     private String name;
 
+    public TakeIngredientStep(String name, ArrayList<Ingredient> ingredients) {
+        this.name = name;
+        this.ingredients = ingredients;
+    }
 
     @Override
     public String getName() {

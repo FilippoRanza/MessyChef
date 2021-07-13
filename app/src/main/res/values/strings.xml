@@ -24,4 +24,5 @@
     <string name="ingredient_delete_confirm_message">This operation cannot be undone</string>
     <string name="empty_step_list_message">Add Step to your Recipe</string>
     <string name="take_ingredient_hint">Step Name</string>
+    <string name="select_ingredients_text">Select Ingredients</string>
 </resources>
