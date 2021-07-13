@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MessyChef"
         tools:ignore="AllowBackup">
-        <activity android:name=".TakeIngredientActivity"></activity>
+        <activity android:name=".AddProcessStepActivity"></activity>
+        <activity android:name=".TakeIngredientActivity" />
         <activity android:name=".ManageStepListActivity" />
         <activity android:name=".ManageIngredientListActivity" />
         <activity android:name=".AddRecipeStepActivity">

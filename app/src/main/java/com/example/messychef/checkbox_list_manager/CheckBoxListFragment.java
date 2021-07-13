@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.messychef.R;
+import com.example.messychef.utils.IndexValue;
+import com.example.messychef.utils.SelectedIndex;
 
 import java.util.ArrayList;
 import java.util.stream.Collector;
@@ -26,13 +28,12 @@ public class CheckBoxListFragment extends Fragment {
     final private CheckboxArrayAdapter adapter;
 
 
-    public CheckBoxListFragment(Activity owner, Stream<String> names) {
+    public CheckBoxListFragment(Activity owner, ArrayList<IndexValue<String>> names) {
         this.owner = owner;
-        ArrayList<String> arrayList = names.collect(Collectors.toCollection(ArrayList::new));
-        adapter = new CheckboxArrayAdapter(owner, R.layout.checkbox_list_element, arrayList);
+        adapter = new CheckboxArrayAdapter(owner, R.layout.checkbox_list_element, names);
     }
 
-    public ArrayList<Boolean> getSelected() {
+    public ArrayList<SelectedIndex> getSelected() {
         return adapter.getSelected();
     }
 
@@ -47,7 +48,7 @@ public class CheckBoxListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_check_box_list, container, false);
-        AdapterView<ArrayAdapter<String>> list = view.findViewById(R.id.checkbox_list);
+        AdapterView<ArrayAdapter<IndexValue<String>>> list = view.findViewById(R.id.checkbox_list);
         list.setAdapter(adapter);
 
         return view;

@@ -41,7 +41,7 @@ public class TakeIngredientActivity extends AppCompatActivity {
     private void initCheckBoxList() {
         RecipeFactory factory = RecipeFactory.getInstance();
         fragment = new CheckBoxListFragment(this,
-                factory.streamAvailableIngredients().map(Ingredient::getName));
+                factory.streamAvailableIngredients());
         installer.installFragment(R.id.take_ingredients_select_ingredients, fragment);
     }
 

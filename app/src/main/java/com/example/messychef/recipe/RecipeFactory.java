@@ -2,6 +2,9 @@ package com.example.messychef.recipe;
 
 import android.widget.ListView;
 
+import com.example.messychef.utils.IndexValue;
+import com.example.messychef.utils.SelectedIndex;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntFunction;
@@ -43,6 +46,9 @@ public class RecipeFactory {
         }
 
 
+        public boolean isTaken() {
+            return inUse;
+        }
     }
 
 
@@ -113,11 +119,28 @@ public class RecipeFactory {
         return ingredients.stream().map(IngredientInfo::getIngredient);
     }
 
-    public Stream<Ingredient> streamAvailableIngredients() {
-        return ingredients
-                .stream()
-                .filter(IngredientInfo::isAvailable)
-                .map(IngredientInfo::getIngredient);
+    public ArrayList<IndexValue<String>> streamAvailableIngredients() {
+        ArrayList<IndexValue<String>> output = new ArrayList<>();
+        for(int i = 0; i < ingredients.size(); i++) {
+            IngredientInfo info = ingredients.get(i);
+            if(info.isAvailable()) {
+                IndexValue<String> tmp = new IndexValue<>(info.getIngredient().getName(), i);
+                output.add(tmp);
+            }
+        }
+        return output;
+    }
+
+    public ArrayList<IndexValue<String>> streamTakenIngredients() {
+        ArrayList<IndexValue<String>> output = new ArrayList<>();
+        for(int i = 0; i < ingredients.size(); i++) {
+            IngredientInfo info = ingredients.get(i);
+            if(info.isTaken()) {
+                IndexValue<String> tmp = new IndexValue<>(info.getIngredient().getName(), i);
+                output.add(tmp);
+            }
+        }
+        return output;
     }
 
 
@@ -158,20 +181,32 @@ public class RecipeFactory {
         return steps.get(modifyStepId);
     }
 
-    public void addTakeIngredientStep(String name, List<Boolean> selected) {
-        ArrayList<Ingredient> taken = new ArrayList<>();
-        for(int i = 0; i < selected.size(); i++) {
-            if(selected.get(i)) {
-                IngredientInfo info = ingredients.get(i);
-                info.setUsed();
-                taken.add(info.getIngredient());
-            }
-        }
-
+    public void addTakeIngredientStep(String name, List<SelectedIndex> selected) {
+        ArrayList<Ingredient> taken = getSelectedIngredients(selected);
         TakeIngredientStep step = new TakeIngredientStep(name, taken);
         this.steps.add(step);
 
     }
 
+
+    public void addProcessStep(String name, String description, List<SelectedIndex> selected) {
+        ArrayList<Ingredient> taken = getSelectedIngredients(selected);
+        RecipeProcess process = new RecipeProcess(name, description, taken);
+        this.steps.add(process);
+    }
+
+
+    private ArrayList<Ingredient> getSelectedIngredients(List<SelectedIndex> selected) {
+        ArrayList<Ingredient> taken = new ArrayList<>();
+        for(SelectedIndex index: selected) {
+            if(index.isSelected()) {
+                IngredientInfo info = ingredients.get(index.getValue());
+                info.setUsed();
+                taken.add(info.getIngredient());
+            }
+        }
+
+        return taken;
+    }
 
 }

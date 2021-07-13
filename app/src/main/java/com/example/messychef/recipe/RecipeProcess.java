@@ -9,6 +9,13 @@ public class RecipeProcess extends Step {
 
     private String name;
 
+    RecipeProcess(String name, String description, ArrayList<Ingredient> ingredients) {
+        this.name = name;
+        this.description = description;
+        this.ingredients = ingredients;
+    }
+
+
 
     @Override
     public String getName() {

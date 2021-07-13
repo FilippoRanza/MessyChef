@@ -9,22 +9,24 @@ import android.widget.CheckBox;
 
 
 import com.example.messychef.R;
+import com.example.messychef.utils.IndexValue;
+import com.example.messychef.utils.SelectedIndex;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class CheckboxArrayAdapter extends ArrayAdapter<String> {
+public class CheckboxArrayAdapter extends ArrayAdapter<IndexValue<String>> {
 
     final private Activity owner;
-    final private List<String> names;
-    final private ArrayList<Boolean> selected;
+    final private ArrayList<IndexValue<String>> names;
+    final private ArrayList<SelectedIndex> selected;
 
-    public CheckboxArrayAdapter(Activity context, int resource, List<String> objects) {
+    public CheckboxArrayAdapter(Activity context, int resource, ArrayList<IndexValue<String>> objects) {
         super(context, resource, objects);
         owner = context;
         names = objects;
-        selected = initializeSelected(names.size());
+        selected = initializeSelected();
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -37,25 +39,29 @@ public class CheckboxArrayAdapter extends ArrayAdapter<String> {
         return convertView;
     }
 
-    public ArrayList<Boolean> getSelected() {
+    public ArrayList<SelectedIndex> getSelected() {
         return selected;
     }
 
     private void initializeCheckbox(int position, View view) {
         CheckBox checkBox = view.findViewById(R.id.checkbox_list_element);
-        checkBox.setText(names.get(position));
+        checkBox.setText(names.get(position).getValue());
         checkBox.setOnClickListener((v) ->
-            selected.set(position, checkBox.isChecked()));
+            selected.get(position).setSelected(checkBox.isChecked())
+        );
     }
 
 
 
 
-    private ArrayList<Boolean> initializeSelected(int size) {
-        ArrayList<Boolean> output = new ArrayList<>(size);
-        for(int i = 0; i < size; i++) {
-            output.add(false);
+    private ArrayList<SelectedIndex> initializeSelected() {
+        ArrayList<SelectedIndex> output = new ArrayList<>(names.size());
+        for(int i = 0; i < names.size(); i++) {
+            SelectedIndex index = new SelectedIndex(names.get(i).getIndex());
+            output.add(index);
         }
+        System.out.println(output);
+        System.out.println(output.size());
         return output;
     }
 

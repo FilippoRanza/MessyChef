@@ -26,4 +26,9 @@ public class AddRecipeStepActivity extends AppCompatActivity {
     public void startTakeIngredientActivity(View view) {
         starter.start(TakeIngredientActivity.class);
     }
+
+
+    public void startProcessStepActivity(View view) {
+        starter.start(AddProcessStepActivity.class);
+    }
 }
