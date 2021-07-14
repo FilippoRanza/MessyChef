@@ -50,6 +50,7 @@ public class GroupController {
         for (int v : scaleValues) {
             int m = minutes / v;
             if (m > 0) {
+                m = roundToFive(m);
                 values.add(m);
             }
         }
@@ -89,6 +90,18 @@ public class GroupController {
             selected = id;
             System.out.println(selected);
         });
+    }
+
+    private int roundToFive(int a) {
+        if (a < 5) {
+            return a;
+        }
+        int m = a % 5;
+        a -= m;
+        if(m > 3) {
+            a += 5;
+        }
+        return a;
     }
 
 
