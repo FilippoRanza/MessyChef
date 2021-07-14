@@ -31,4 +31,8 @@ public class AddRecipeStepActivity extends AppCompatActivity {
     public void startProcessStepActivity(View view) {
         starter.start(AddProcessStepActivity.class);
     }
+
+    public void startAddTimerActivity(View view) {
+        starter.start(AddTimerActivity.class);
+    }
 }
