@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TimePicker;
 
+import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.text_manager.TextField;
 import com.example.messychef.time_stop_controller.GroupController;
 import com.example.messychef.utils.ActivityStarter;
@@ -62,9 +63,23 @@ public class AddTimerActivity extends AppCompatActivity {
         picker.setOnTimeChangedListener(this::timePickerCallback);
     }
 
-    private void initNameField() { }
+    private void initNameField() {
+        nameField = new TextField(this, R.string.timer_step_name)
+                .addUpdateListener((cs) -> name = cs);
+        installer.installFragment(R.id.time_step_name_field, nameField);
+    }
 
     public void addTimerStep(View view) {
+        if(validate()) {
+            createTimerStep();
+            finish();
+        }
+    }
+
+    private void createTimerStep() {
+        RecipeFactory factory = RecipeFactory.getInstance();
+        Integer stepTime = controller.getSelectedTime();
+        factory.addTimerStep(name.toString(), getMinutes(), stepTime);
     }
 
     private void timePickerCallback(View v, int hour, int minute) {
@@ -86,5 +101,14 @@ public class AddTimerActivity extends AppCompatActivity {
         return  (h * 60) + m;
     }
 
+
+    private boolean validate() {
+        return (!nameField.isEmpty()) && (!validateTime());
+    }
+
+
+    private boolean validateTime() {
+        return (getMinutes() == 0);
+    }
 
 }

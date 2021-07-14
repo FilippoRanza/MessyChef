@@ -195,6 +195,11 @@ public class RecipeFactory {
         this.steps.add(process);
     }
 
+    public void addTimerStep(String name, int duration, Integer step) {
+        RecipeTimer timer = new RecipeTimer(name, duration, step);
+        this.steps.add(timer);
+    }
+
 
     private ArrayList<Ingredient> getSelectedIngredients(List<SelectedIndex> selected) {
         ArrayList<Ingredient> taken = new ArrayList<>();

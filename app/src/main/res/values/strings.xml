@@ -27,4 +27,5 @@
     <string name="select_ingredients_text">Select Ingredients</string>
     <string name="process_name_placeholder">Name</string>
     <string name="process_description_placeholder">Description</string>
+    <string name="timer_step_name">Timer Name</string>
 </resources>
