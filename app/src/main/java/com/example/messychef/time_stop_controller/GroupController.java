@@ -5,47 +5,91 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import java.util.HashSet;
+import java.util.stream.Stream;
 
 public class GroupController {
 
     private static final int NONE_SELECTION = -1;
 
     final private RadioButtonController[] buttons;
+    final private int[] scaleValues;
     final private HashSet<Integer> values;
-    final private ViewGroup group;
     private int selected;
 
     public GroupController(int count, Activity owner, ViewGroup layout) {
         values = new HashSet<>();
-        this.group = layout;
         selected = NONE_SELECTION;
         buttons = new RadioButtonController[count];
-        for(int i = 0; i < count; i++) {
-            buttons[i] = initialize(i, i + 2, owner, layout);
+        scaleValues = new int[count];
+        for (int i = 0; i < count; i++) {
+            buttons[i] = initialize(i, owner, layout);
+            scaleValues[i] = i + 2;
         }
+
     }
 
     public void update(int minutes) {
-        values.clear();
-        //group.removeAllViews();
-        for(RadioButtonController rbc: buttons) {
-            rbc.update(minutes, values);
-        }
-
-
+        computeSteps(minutes);
+        Integer[] steps = getSortedStepValues();
+        fixSelection(steps.length);
+        updateButtons(steps);
     }
 
-    private RadioButtonController initialize(int id, int step, Activity owner, ViewGroup layout) {
+    public Integer getSelectedTime() {
+        return (selected == NONE_SELECTION) ? null : buttons[selected].getValue();
+    }
 
-        return new RadioButtonController(owner, step, layout).setListener((v) -> {
-            if(selected != NONE_SELECTION) {
+    public void clear() {
+        if (selected != NONE_SELECTION)
+            buttons[selected].unselect();
+        selected = NONE_SELECTION;
+    }
+
+    private void computeSteps(int minutes) {
+        values.clear();
+        for (int v : scaleValues) {
+            int m = minutes / v;
+            if (m > 0) {
+                values.add(m);
+            }
+        }
+    }
+
+    private void fixSelection(int enableLen) {
+        if (enableLen == 0) {
+            clear();
+        }
+
+        if (selected >= enableLen) {
+            buttons[selected].unselect();
+            selected = NONE_SELECTION;
+        }
+    }
+
+    private Integer[] getSortedStepValues() {
+        return values.stream().sorted().toArray(Integer[]::new);
+    }
+
+    private void updateButtons(Integer[] steps) {
+        for (int i = 0; i < buttons.length; i++) {
+            if (i < steps.length) {
+                buttons[i].enable(steps[i]);
+            } else {
+                buttons[i].disable();
+            }
+        }
+    }
+
+    private RadioButtonController initialize(int id, Activity owner, ViewGroup layout) {
+
+        return new RadioButtonController(owner, layout).setListener((v) -> {
+            if (selected != NONE_SELECTION) {
                 buttons[selected].unselect();
             }
             selected = id;
             System.out.println(selected);
         });
     }
-
 
 
 }

@@ -8,29 +8,26 @@ import android.widget.RadioButton;
 import java.util.HashSet;
 
 class RadioButtonController {
-    private RadioButton button;
-    private int step;
+    final private RadioButton button;
+    private int value;
 
 
-
-    RadioButtonController(Activity owner, int step, ViewGroup group) {
-        this.step = step;
+    RadioButtonController(Activity owner, ViewGroup group) {
         button = new RadioButton(owner);
         group.addView(button);
-
         button.setVisibility(RadioButton.INVISIBLE);
     }
 
-    void update(int minutes, HashSet<Integer> hashSet) {
-        int value = minutes / step;
-        boolean show = value > 0 && hashSet.add(value);
-        if (show) {
-            button.setVisibility(RadioButton.VISIBLE);
-            button.setText(convertTime(value));
-        } else {
-            button.setVisibility(RadioButton.INVISIBLE);
-        }
+    void enable(int minutes) {
+        button.setVisibility(RadioButton.VISIBLE);
+        value = minutes;
+        button.setText(convertTime(minutes));
     }
+
+    void disable() {
+        button.setVisibility(RadioButton.INVISIBLE);
+    }
+
 
 
     RadioButtonController setListener(View.OnClickListener listener) {
@@ -49,4 +46,7 @@ class RadioButtonController {
     }
 
 
+    public int getValue() {
+        return value;
+    }
 }
