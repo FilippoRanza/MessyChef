@@ -14,6 +14,7 @@ import android.widget.TimePicker;
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.text_manager.TextField;
 import com.example.messychef.time_stop_controller.GroupController;
+import com.example.messychef.time_stop_controller.TimeSelectionFragment;
 import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FragmentInstaller;
 import com.google.android.material.slider.Slider;
@@ -35,7 +36,7 @@ public class AddTimerActivity extends AppCompatActivity {
     private TextField nameField;
     private CharSequence name;
 
-    private TimePicker picker;
+    private TimeSelectionFragment picker;
 
     private GroupController controller;
 
@@ -53,15 +54,13 @@ public class AddTimerActivity extends AppCompatActivity {
         initTimePicker();
     }
 
-
-
     private void initTimePicker() {
-        picker = findViewById(R.id.time_picker);
-        picker.setIs24HourView(true);
-        picker.setHour(0);
-        picker.setMinute(0);
-        picker.setOnTimeChangedListener(this::timePickerCallback);
+        picker = new TimeSelectionFragment(this).setTimeUpdateListener(this::timePickerCallback);
+        installer.installFragment(R.id.time_selector_fragment, picker);
     }
+
+
+
 
     private void initNameField() {
         nameField = new TextField(this, R.string.timer_step_name)
@@ -82,8 +81,8 @@ public class AddTimerActivity extends AppCompatActivity {
         factory.addTimerStep(name.toString(), getMinutes(), stepTime);
     }
 
-    private void timePickerCallback(View v, int hour, int minute) {
-        picker.validateInput();
+    private void timePickerCallback(int hour, int minute, int second) {
+        //picker.validateInput();
         int minutes = getMinutes();
         controller.update(minutes);
     }
