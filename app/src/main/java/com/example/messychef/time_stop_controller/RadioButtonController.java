@@ -25,7 +25,6 @@ class RadioButtonController {
         int value = minutes / step;
         boolean show = value > 0 && hashSet.add(value);
         if (show) {
-            System.out.println(value);
             button.setVisibility(RadioButton.VISIBLE);
             button.setText(convertTime(value));
         } else {
@@ -37,6 +36,10 @@ class RadioButtonController {
     RadioButtonController setListener(View.OnClickListener listener) {
         button.setOnClickListener(listener);
         return this;
+    }
+
+    void unselect() {
+        button.setChecked(false);
     }
 
     private String convertTime(int value) {
