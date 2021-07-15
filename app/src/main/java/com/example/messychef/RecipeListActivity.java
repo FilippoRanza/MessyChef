@@ -8,20 +8,26 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import com.example.messychef.list_manager.ListManagerFragment;
 import com.example.messychef.recipe.Recipe;
 import com.example.messychef.storage_facility.FileInfo;
 import com.example.messychef.storage_facility.StoreData;
+import com.example.messychef.utils.FragmentInstaller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RecipeListActivity extends AppCompatActivity {
 
     private final StoreData storeData;
-
+    private final FragmentInstaller installer;
+    private FileInfo[] names;
+    private ListManagerFragment listManagerFragment;
 
     public RecipeListActivity() {
         storeData = new StoreData(this);
+        installer = new FragmentInstaller(this);
     }
 
 
@@ -29,6 +35,7 @@ public class RecipeListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_list);
+        initListFragment();
         initRecipeList();
     }
 
@@ -43,19 +50,22 @@ public class RecipeListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void initListFragment() {
+        listManagerFragment = new ListManagerFragment(this)
+                .setEmptyListMessage(R.string.empty_recipe_list_message);
+
+        installer.installFragment(R.id.list_view_recipe_list, listManagerFragment);
+    }
+
 
     private void initRecipeList() {
-        FileInfo[] names = null;
         try {
             names = storeData.buildFileInfoList();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        listManagerFragment.updateList(Arrays.stream(names).map(FileInfo::toString));
 
-        ArrayAdapter<FileInfo> content = new ArrayAdapter<>(this, R.layout.list_element, names);
-
-        AdapterView<ArrayAdapter<FileInfo>> adapter = findViewById(R.id.recipe_list);
-        adapter.setAdapter(content);
     }
 
 }

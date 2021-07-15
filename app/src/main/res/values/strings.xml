@@ -29,4 +29,5 @@
     <string name="process_description_placeholder">Description</string>
     <string name="timer_step_name">Timer Name</string>
     <string name="default_time_string">00:00:00</string>
+    <string name="empty_recipe_list_message">Create new Recipes...</string>
 </resources>
