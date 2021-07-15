@@ -31,7 +31,7 @@ public class AddTimerActivity extends AppCompatActivity {
 
     private static final int RADIO_BUTTON_COUNT = 12;
 
-    private FragmentInstaller installer;
+    private final FragmentInstaller installer;
 
     private TextField nameField;
     private CharSequence name;

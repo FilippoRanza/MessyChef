@@ -1,5 +1,7 @@
 package com.example.messychef.recipe;
 
-abstract public class Step {
+import java.io.Serializable;
+
+abstract public class Step implements Serializable {
     public abstract String getName();
 }

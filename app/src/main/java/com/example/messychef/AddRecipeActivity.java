@@ -7,9 +7,12 @@ import android.view.View;
 
 import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeFactory;
+import com.example.messychef.storage_facility.StoreData;
 import com.example.messychef.text_manager.TextField;
 import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FragmentInstaller;
+
+import java.io.IOException;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
@@ -19,10 +22,17 @@ public class AddRecipeActivity extends AppCompatActivity {
     TextField textField;
     CharSequence name;
 
+    private final StoreData storeData;
+
+    public AddRecipeActivity() {
+        storeData = new StoreData(this);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             setContentView(R.layout.activity_add_recipe);
             if (savedInstanceState == null) {
                 factory = RecipeFactory.getInstance();
@@ -37,6 +47,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
 
+
     public void manageIngredients(View v) {
         starter.start(ManageIngredientListActivity.class);
     }
@@ -47,9 +58,19 @@ public class AddRecipeActivity extends AppCompatActivity {
 
     public void saveRecipe(View v) {
         if (!textField.isEmpty()) {
-            factory.setName(name.toString());
-            Recipe recipe = factory.getRecipe();
+            save();
             finish();
+        }
+    }
+
+
+    private void save() {
+        factory.setName(name.toString());
+        Recipe recipe = factory.getRecipe();
+        try {
+            storeData.saveRecipe(recipe);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

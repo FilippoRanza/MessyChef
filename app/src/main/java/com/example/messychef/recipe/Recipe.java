@@ -1,8 +1,9 @@
 package com.example.messychef.recipe;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Recipe {
+public class Recipe implements Serializable {
 
     private String name;
     private Ingredient[] ingredients;

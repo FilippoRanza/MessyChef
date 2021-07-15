@@ -1,6 +1,8 @@
 package com.example.messychef.recipe;
 
-public class RecipeTimer extends Step {
+import java.io.Serializable;
+
+public class RecipeTimer extends Step implements Serializable {
 
     private static final int NO_STEPS = -1;
 

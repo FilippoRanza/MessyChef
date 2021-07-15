@@ -1,8 +1,9 @@
 package com.example.messychef.recipe;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TakeIngredientStep extends Step {
+public class TakeIngredientStep extends Step implements Serializable {
 
     private ArrayList<Ingredient> ingredients;
 
