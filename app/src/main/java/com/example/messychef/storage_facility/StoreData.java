@@ -23,7 +23,14 @@ public class StoreData {
         indexManager = new FileIndexManager(owner);
     }
 
+    public Recipe loadRecipe(FileInfo info) throws IOException, ClassNotFoundException {
+        String fileName = info.getFileName();
+        ObjectInputStream ois = facility.openObjectRead(fileName);
+        Recipe recipe = (Recipe) ois.readObject();
+        ois.close();
 
+        return recipe;
+    }
 
 
     public void saveRecipe(Recipe r) throws IOException {

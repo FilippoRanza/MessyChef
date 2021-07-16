@@ -16,4 +16,23 @@
     <string name="add_process_ingredient_step">Aggiungi Procedura</string>
     <string name="add_timer_step">Aggiungi Timer</string>
     <string name="empty_ingredient_list_message">Aggiungi Ingredienti alla tua Ricetta</string>
+    <string name="cancel_delete">No</string>
+    <string name="confirm_delete">Conferma</string>
+    <string name="delete_ingredient">Elimina Ingrediente</string>
+    <string name="ingredient_delete_confirm_title">Confermi l\'eliminazione?</string>
+    <string name="ingredient_delete_confirm_message">Quasta operazione non può essere annullata</string>
+    <string name="empty_step_list_message">Aggiungi un passaggio alla tua ricetta</string>
+    <string name="take_ingredient_hint">Nome del Passaggio</string>
+    <string name="select_ingredients_text">Seleziona Ingredienti</string>
+    <string name="process_name_placeholder">Nome</string>
+    <string name="process_description_placeholder">Descrizione</string>
+    <string name="timer_step_name">Nome del Timer</string>
+    <string name="empty_recipe_list_message">Crea nuove Ricette...</string>
+    <string name="modify_recipe_button">Modifica la Ricetta</string>
+    <string name="start_recipe_button">Avvia la Ricetta</string>
+    <string name="delete_recipe_button">Elimina la Ricetta</string>
+    <string name="ingredient_count">Ingredienti:</string>
+    <string name="step_count">Passaggi:</string>
+    <string name="prev_step_button">◄ Indietro</string>
+    <string name="next_step_button">Avanti ►</string>
 </resources>

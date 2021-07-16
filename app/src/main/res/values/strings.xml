@@ -17,8 +17,6 @@
     <string name="empty_ingredient_list_message">Add Ingredients for your Recipe</string>
     <string name="cancel_delete">No</string>
     <string name="confirm_delete">Confirm</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="delete_ingredient">Delete Ingredient</string>
     <string name="ingredient_delete_confirm_title">Confirm Delete ?</string>
     <string name="ingredient_delete_confirm_message">This operation cannot be undone</string>
@@ -28,6 +26,13 @@
     <string name="process_name_placeholder">Name</string>
     <string name="process_description_placeholder">Description</string>
     <string name="timer_step_name">Timer Name</string>
-    <string name="default_time_string">00:00:00</string>
+    <string name="default_time_string" translatable="false">00:00:00</string>
     <string name="empty_recipe_list_message">Create new Recipes...</string>
+    <string name="modify_recipe_button">Modify Recipe</string>
+    <string name="start_recipe_button">Start Recipe</string>
+    <string name="delete_recipe_button">Delete Recipe</string>
+    <string name="ingredient_count">Ingredients:</string>
+    <string name="step_count">Steps:</string>
+    <string name="prev_step_button">◄ Back</string>
+    <string name="next_step_button">Next ►</string>
 </resources>
