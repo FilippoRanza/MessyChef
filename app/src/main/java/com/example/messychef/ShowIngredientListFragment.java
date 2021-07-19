@@ -1,5 +1,6 @@
 package com.example.messychef;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,17 +8,26 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ShowIngredientListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.example.messychef.recipe.Ingredient;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+
 public class ShowIngredientListFragment extends AbstractShowStepFragment {
 
 
-    public ShowIngredientListFragment() {
-        // Required empty public constructor
+    private final Ingredient[] ingredients;
+    private final Activity owner;
+
+    public ShowIngredientListFragment(Activity owner, Ingredient[] ingredients) {
+        this.ingredients = ingredients;
+        this.owner = owner;
     }
 
 
@@ -30,7 +40,20 @@ public class ShowIngredientListFragment extends AbstractShowStepFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_show_ingredient_list, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_show_ingredient_list, container, false);
+        initIngredientList(view);
+        return view;
     }
+
+    private void initIngredientList(View v) {
+        ArrayList<String> ingredientName = Arrays.stream(ingredients)
+                .map(Ingredient::getName)
+                .collect(Collectors.toCollection(ArrayList::new));
+        ArrayAdapter<String> ingredientArrayAdapter = new ArrayAdapter<>(owner, R.layout.list_element, ingredientName);
+        ListView lv = v.findViewById(R.id.show_ingredient_list);
+        lv.setAdapter(ingredientArrayAdapter);
+    }
+
+
 }
