@@ -47,7 +47,7 @@ public class RecipeRunner {
 
 
     public Step getStep() {
-        return (step > 0) ?
+        return (step >= 0) ?
                 recipe.getSteps()[step] : null;
     }
 

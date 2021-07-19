@@ -49,10 +49,9 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
 
 
     private void update() {
+        step = runner.getStep();
         updateButtons();
         updateStepNameView();
-
-        step = runner.getStep();
     }
 
     private void updateButtons() {
