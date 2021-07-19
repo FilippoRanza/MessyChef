@@ -7,24 +7,33 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeProcess;
 import com.example.messychef.recipe.RecipeRunner;
 import com.example.messychef.recipe.Step;
 import com.example.messychef.recipe.TakeIngredientStep;
 import com.example.messychef.utils.FieldInitializer;
+import com.example.messychef.utils.FragmentInstaller;
 
 public class ExecuteRecipeActivity extends AppCompatActivity {
 
-    private RecipeRunner runner;
+    private final RecipeRunner runner;
     private Step step;
+    private final FragmentInstaller installer;
+
+
+    public ExecuteRecipeActivity() {
+        installer = new FragmentInstaller(this);
+        runner = RecipeRunner.getInstance();
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_execute_recipe);
-        runner = RecipeRunner.getInstance();
         initTextField();
-
         update();
     }
 
@@ -52,6 +61,7 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
         step = runner.getStep();
         updateButtons();
         updateStepNameView();
+        installFragment();
     }
 
     private void updateButtons() {
@@ -76,7 +86,6 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
         if (step == null) {
             return R.string.showIngredients_step;
         }
-
         if (step instanceof TakeIngredientStep) {
             return R.string.take_ingredient_step_name;
         }
@@ -84,8 +93,32 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
             return R.string.process_ingredient_step_name;
         }
         return R.string.timer_step;
-
     }
+
+
+    private void installFragment() {
+        AbstractShowStepFragment fragment = getStepFragment();
+
+        installer.installFragment(R.id.recipe_step_fragment, fragment);
+    }
+
+    private AbstractShowStepFragment getStepFragment() {
+        if (step == null) {
+            return new ShowIngredientListFragment();
+        }
+        if (step instanceof TakeIngredientStep) {
+            return new ShowTakeIngredientStepFragment();
+        }
+        if (step instanceof RecipeProcess) {
+            return new ShowProcessIngredientsStepFragment();
+        }
+        return new ShowTimerStepFragment();
+    }
+
+
+
+
+
 
 
 }
