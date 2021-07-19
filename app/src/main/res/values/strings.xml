@@ -35,4 +35,9 @@
     <string name="step_count">Steps:</string>
     <string name="prev_step_button">◄ Back</string>
     <string name="next_step_button">Next ►</string>
+    <string name="show_ingredients_button">Show Ingredient List</string>
+    <string name="timer_step" translatable="false">Timer</string>
+    <string name="process_ingredient_step_name">Process</string>
+    <string name="take_ingredient_step_name">Take Ingredients</string>
+    <string name="showIngredients_step">Ingredient List</string>
 </resources>

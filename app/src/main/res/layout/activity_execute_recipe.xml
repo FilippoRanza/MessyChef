@@ -14,8 +14,34 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/recipe_name_text_view"/>
+            android:id="@+id/recipe_name_text_view"
+            android:textAlignment="center"
+            android:textSize="28sp"/>
+        <View style="@style/Divider.Horizontal"/>
 
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/step_type_text_view"
+            android:textAlignment="center"
+            android:textSize="18sp"/>
+        <View style="@style/Divider.Horizontal"/>
+
+
+
+        <androidx.fragment.app.FragmentContainerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recipe_step_fragment"
+            />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/show_ingredients_button"
+            android:onClick="showIngredientList"/>
 
         <TableLayout
             android:layout_width="match_parent"
@@ -28,6 +54,8 @@
                     android:layout_weight="2"
                     android:layout_width="match_parent"
                     android:text="@string/prev_step_button"
+                    android:id="@+id/prev_step_button"
+                    android:onClick="showPervStep"
                     android:layout_height="wrap_content"/>
 
                 <Space
@@ -39,6 +67,8 @@
                     android:layout_weight="2"
                     android:layout_width="match_parent"
                     android:text="@string/next_step_button"
+                    android:onClick="showNextStep"
+                    android:id="@+id/next_step_button"
                     android:layout_height="wrap_content"/>
             </TableRow>
 

@@ -35,4 +35,7 @@
     <string name="step_count">Passaggi:</string>
     <string name="prev_step_button">◄ Indietro</string>
     <string name="next_step_button">Avanti ►</string>
+    <string name="show_ingredients_button">Mostra Lista Ingredienti</string>
+    <string name="process_ingredient_step_name">Procedura</string>
+    <string name="take_ingredient_step_name">Prendi Ingredienti</string>
 </resources>

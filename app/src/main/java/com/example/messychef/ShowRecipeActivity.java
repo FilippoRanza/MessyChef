@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.messychef.recipe.Recipe;
+import com.example.messychef.recipe.RecipeRunner;
 import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FieldInitializer;
 import com.example.messychef.utils.FragmentInstaller;
@@ -46,6 +47,7 @@ public class ShowRecipeActivity extends AppCompatActivity {
     }
 
     public void startRecipe(View view) {
+        RecipeRunner.getInstance().setRecipe(recipe);
         starter.start(ExecuteRecipeActivity.class);
     }
 
