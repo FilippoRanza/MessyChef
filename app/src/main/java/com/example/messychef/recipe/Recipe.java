@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public class Recipe implements Serializable {
 
-    private String name;
-    private Ingredient[] ingredients;
-    private Step[] steps;
+    private final String name;
+    private final Ingredient[] ingredients;
+    private final Step[] steps;
 
     public Recipe(String name, Ingredient[] ingredients, Step[] steps) {
         this.name = name;

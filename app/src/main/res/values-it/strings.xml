@@ -38,4 +38,7 @@
     <string name="show_ingredients_button">Mostra Lista Ingredienti</string>
     <string name="process_ingredient_step_name">Procedura</string>
     <string name="take_ingredient_step_name">Prendi Ingredienti</string>
+    <string name="showIngredients_step">Lista degli Ingredienti</string>
+    <string name="name">Nome</string>
+    <string name="description">Descrizione</string>
 </resources>

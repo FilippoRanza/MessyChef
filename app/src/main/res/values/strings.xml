@@ -40,6 +40,6 @@
     <string name="process_ingredient_step_name">Process</string>
     <string name="take_ingredient_step_name">Take Ingredients</string>
     <string name="showIngredients_step">Ingredient List</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
 </resources>
