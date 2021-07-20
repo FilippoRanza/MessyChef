@@ -11,35 +11,14 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.util.List;
 
 class IOFacility {
 
-    class FileIterator {
-        private String[] files;
-        private int index;
-
-        FileIterator(String[] files) {
-            this.files = files;
-            index = 0;
-        }
-
-        boolean hasNext() {
-            return index < files.length;
-        }
-
-        ObjectInputStream next() throws IOException {
-            String name = files[index];
-            index++;
-            return openObjectRead(name);
-        }
-
-        int getCount() {
-            return files.length;
-        }
-
-
+    public void deleteFile(String fileName) {
+        owner.deleteFile(fileName);
     }
+
+
 
     private final Activity owner;
 
@@ -88,10 +67,6 @@ class IOFacility {
         return owner.openFileOutput(name, Activity.MODE_PRIVATE);
     }
 
-
-    FileIterator getFiles() {
-        return new FileIterator(owner.fileList());
-    }
 
 
 }

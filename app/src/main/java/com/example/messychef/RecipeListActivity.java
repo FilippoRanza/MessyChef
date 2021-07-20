@@ -74,14 +74,8 @@ public class RecipeListActivity extends AppCompatActivity {
 
     private void startShowRecipe(int id) {
         FileInfo info = names[id];
-        Recipe recipe = null;
-        try {
-            recipe = storeData.loadRecipe(info);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         starter.setActivity(ShowRecipeActivity.class)
-                .setExtra(ShowRecipeActivity.RECIPE_EXTRA_ID, recipe)
+                .setExtra(ShowRecipeActivity.RECIPE_EXTRA_ID, info)
                 .start();
 
     }

@@ -43,4 +43,6 @@
     <string name="name">Name</string>
     <string name="description">Description</string>
     <string name="ingredient_list_button_back">Back to Recipe Step</string>
+    <string name="delete_recipe_message">Delete</string>
+    <string name="delete_recipe_title">Delete Recipe</string>
 </resources>

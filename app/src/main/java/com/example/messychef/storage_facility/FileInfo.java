@@ -1,6 +1,8 @@
 package com.example.messychef.storage_facility;
 
-public class FileInfo {
+import java.io.Serializable;
+
+public class FileInfo implements Serializable {
 
     String fileName;
     String recipeName;
@@ -21,5 +23,6 @@ public class FileInfo {
     public String getRecipeName() {
         return recipeName;
     }
+
 }
 
