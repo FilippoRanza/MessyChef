@@ -182,7 +182,7 @@ public class RecipeFactory {
     }
 
     public void addTakeIngredientStep(String name, List<SelectedIndex> selected) {
-        ArrayList<Ingredient> taken = getSelectedIngredients(selected);
+        int[] taken = getSelectedIngredients(selected);
         TakeIngredientStep step = new TakeIngredientStep(name, taken);
         this.steps.add(step);
 
@@ -190,7 +190,7 @@ public class RecipeFactory {
 
 
     public void addProcessStep(String name, String description, List<SelectedIndex> selected) {
-        ArrayList<Ingredient> taken = getSelectedIngredients(selected);
+        int[] taken = getSelectedIngredients(selected);
         RecipeProcess process = new RecipeProcess(name, description, taken);
         this.steps.add(process);
     }
@@ -201,17 +201,24 @@ public class RecipeFactory {
     }
 
 
-    private ArrayList<Ingredient> getSelectedIngredients(List<SelectedIndex> selected) {
-        ArrayList<Ingredient> taken = new ArrayList<>();
+    private int[] getSelectedIngredients(List<SelectedIndex> selected) {
+        int count = 0;
         for(SelectedIndex index: selected) {
             if(index.isSelected()) {
                 IngredientInfo info = ingredients.get(index.getValue());
                 info.setUsed();
-                taken.add(info.getIngredient());
+                count++;
+            }
+        }
+        int[] output = new int[count];
+        int index = 0;
+        for(SelectedIndex sel: selected) {
+            if(sel.isSelected()) {
+                output[index++] = sel.getValue();
             }
         }
 
-        return taken;
+        return output;
     }
 
 }
