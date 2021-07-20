@@ -3,7 +3,11 @@ package com.example.messychef.storage_facility;
 import android.app.Activity;
 
 import com.example.messychef.recipe.Recipe;
+import com.example.messychef.recipe.serde.RecipeDeserializer;
+import com.example.messychef.recipe.serde.RecipeSerializer;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,19 +29,18 @@ public class StoreData {
 
     public Recipe loadRecipe(FileInfo info) throws IOException, ClassNotFoundException {
         String fileName = info.getFileName();
-        ObjectInputStream ois = facility.openObjectRead(fileName);
-        Recipe recipe = (Recipe) ois.readObject();
-        ois.close();
-
+        DataInputStream dis = new DataInputStream(facility.openReadFile(fileName));
+        Recipe recipe = new RecipeDeserializer(dis).deserialize();
+        dis.close();
         return recipe;
     }
 
 
     public void saveRecipe(Recipe r) throws IOException {
         String fileName = makeFileName(r);
-        ObjectOutputStream oos = new ObjectOutputStream(facility.openWriteFile(fileName));
-        oos.writeObject(r);
-        oos.close();
+        DataOutputStream dos = new DataOutputStream(facility.openWriteFile(fileName));
+        new RecipeSerializer(dos).serialize(r);
+        dos.close();
     }
 
     public ArrayList<Recipe> loadRecipes() throws IOException, ClassNotFoundException {

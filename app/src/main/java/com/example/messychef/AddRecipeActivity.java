@@ -34,18 +34,15 @@ public class AddRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
             setContentView(R.layout.activity_add_recipe);
-            if (savedInstanceState == null) {
-                factory = RecipeFactory.getInstance();
-                factory.initFactory();
-                textField = new TextField(this, R.string.add_recipe_text)
-                        .addUpdateListener((cs) -> name = cs);
+            factory = RecipeFactory.getInstance();
+            factory.initFactory();
+            textField = new TextField(this, R.string.add_recipe_text)
+                    .addUpdateListener((cs) -> name = cs);
 
-                installer.installFragment(R.id.input_recipe_name, textField);
-            }
+            installer.installFragment(R.id.input_recipe_name, textField);
+
         }
     }
-
-
 
 
     public void manageIngredients(View v) {

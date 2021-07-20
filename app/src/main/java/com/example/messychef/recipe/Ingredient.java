@@ -5,13 +5,15 @@ import java.util.Objects;
 
 public class Ingredient implements Serializable  {
 
-    private String name;
-    private double quantity;
-    private String unit;
+    private final String name;
+    private final double quantity;
+    private final String unit;
 
 
     public Ingredient(String name, double amount) {
-        new Ingredient(name, amount, "");
+        this.name = name;
+        this.quantity = amount;
+        this.unit = "";
     }
 
     public Ingredient(String name, double amount, String unit) {
@@ -47,5 +49,14 @@ public class Ingredient implements Serializable  {
     @Override
     public int hashCode() {
         return Objects.hash(name, quantity, unit);
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "name='" + name + '\'' +
+                ", quantity=" + quantity +
+                ", unit='" + unit + '\'' +
+                '}';
     }
 }
