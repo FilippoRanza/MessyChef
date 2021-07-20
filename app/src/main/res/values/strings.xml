@@ -42,4 +42,5 @@
     <string name="showIngredients_step">Ingredient List</string>
     <string name="name">Name</string>
     <string name="description">Description</string>
+    <string name="ingredient_list_button_back">Back to Recipe Step</string>
 </resources>

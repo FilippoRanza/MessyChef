@@ -41,4 +41,5 @@
     <string name="showIngredients_step">Lista degli Ingredienti</string>
     <string name="name">Nome</string>
     <string name="description">Descrizione</string>
+    <string name="ingredient_list_button_back">Torna alla Ricetta</string>
 </resources>

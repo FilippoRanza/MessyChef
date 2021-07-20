@@ -30,7 +30,7 @@ public class RecipeStepFragmentFactory {
 
 
     public ShowProcessIngredientsStepFragment showProcessIngredientsStepFragmentFactory() {
-        return new ShowProcessIngredientsStepFragment();
+        return new ShowProcessIngredientsStepFragment(owner);
     }
 
     public ShowTakeIngredientStepFragment showTakeIngredientStepFragmentFactory() {

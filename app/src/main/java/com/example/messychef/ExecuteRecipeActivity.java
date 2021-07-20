@@ -59,10 +59,12 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
         switch (status) {
             case Step:
                 installShowIngredientList();
+                setIngredientListButtonText(R.string.ingredient_list_button_back);
                 status = ShowStatus.Ingredients;
                 break;
             case Ingredients:
                 installFragment();
+                setIngredientListButtonText(R.string.show_ingredients_button);
                 status = ShowStatus.Step;
                 break;
         }
@@ -80,10 +82,16 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
 
 
     private void update() {
+        resetShowIngredientListButton();
         step = runner.getStep();
         updateButtons();
         updateStepNameView();
         installFragment();
+    }
+
+    private void setIngredientListButtonText(int id) {
+        Button button = findViewById(R.id.show_ingredient_list_button);
+        button.setText(id);
     }
 
     private void installShowIngredientList() {
@@ -154,6 +162,10 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
     }
 
 
+    private void resetShowIngredientListButton() {
+        status = ShowStatus.Step;
+        setIngredientListButtonText(R.string.show_ingredients_button);
+    }
 
 
 }

@@ -15,18 +15,16 @@ import android.widget.TextView;
 import com.example.messychef.recipe.RecipeRunner;
 import com.example.messychef.recipe.TakeIngredientStep;
 import com.example.messychef.utils.FieldInitializer;
+import com.example.messychef.utils.IngredientsFieldRunnerValues;
 
 
 public class ShowTakeIngredientStepFragment extends AbstractShowStepFragment {
 
 
-    private final TakeIngredientStep step;
-    private final ArrayAdapter<String> adapter;
+    private final IngredientsFieldRunnerValues<?> fieldRunnerValues;
 
     public ShowTakeIngredientStepFragment(Activity owner) {
-        RecipeRunner runner = RecipeRunner.getInstance();
-        this.step = runner.getStep();
-        adapter = new ArrayAdapter<>(owner, R.layout.list_element, runner.getIngredientsName());
+        fieldRunnerValues = new IngredientsFieldRunnerValues<>(owner);
     }
 
 
@@ -47,9 +45,9 @@ public class ShowTakeIngredientStepFragment extends AbstractShowStepFragment {
 
     private void initView(View v) {
         FieldInitializer.getInstance(v)
-                .initTextField(R.id.take_ingredient_name_value, step.getName());
+                .initTextField(R.id.take_ingredient_name_value, fieldRunnerValues.getStep().getName());
         ListView listView = v.findViewById(R.id.take_ingredient_list_view);
-        listView.setAdapter(adapter);
+        listView.setAdapter(fieldRunnerValues.getAdapter());
     }
 
 }
