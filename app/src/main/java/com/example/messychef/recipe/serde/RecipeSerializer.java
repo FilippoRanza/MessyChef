@@ -63,7 +63,7 @@ public class RecipeSerializer {
 
     private void serializeTakeIngredient(TakeIngredientStep step) throws IOException {
         writer.writeUTF(step.getName());
-        int[] ingredients = step.getIngredients();
+        int[] ingredients = step.getIngredientIndexList();
         serializeIntArray(ingredients);
     }
 
@@ -76,7 +76,7 @@ public class RecipeSerializer {
     private void serializeRecipeProcess(RecipeProcess process) throws IOException {
         writer.writeUTF(process.getName());
         writer.writeUTF(process.getDescription());
-        serializeIntArray(process.getIngredients());
+        serializeIntArray(process.getIngredientIndexList());
     }
 
 

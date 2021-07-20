@@ -11,18 +11,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/name"
-            />
-
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/take_ingredient_name_value"
+            android:textSize="20sp"
+            android:textAlignment="center"
             />
 
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class RecipeProcess extends Step implements Serializable {
+public class RecipeProcess extends Step implements IngredientList {
 
     private final String description;
     private final int[] ingredients;
@@ -25,9 +25,6 @@ public class RecipeProcess extends Step implements Serializable {
         return name;
     }
 
-    public int[] getIngredients() {
-        return ingredients;
-    }
 
     public String getDescription() {
         return description;
@@ -58,5 +55,10 @@ public class RecipeProcess extends Step implements Serializable {
                 ", ingredients=" + Arrays.toString(ingredients) +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public int[] getIngredientIndexList() {
+        return ingredients;
     }
 }

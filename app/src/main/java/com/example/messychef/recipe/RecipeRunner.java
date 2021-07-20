@@ -46,9 +46,9 @@ public class RecipeRunner {
     }
 
 
-    public Step getStep() {
+    public <T extends Step> T getStep() {
         return (step >= 0) ?
-                recipe.getSteps()[step] : null;
+                ((T) recipe.getSteps()[step]) : null;
     }
 
     public Ingredient[] getIngredients() {
@@ -61,6 +61,22 @@ public class RecipeRunner {
 
     public String getRecipeName() {
         return recipe.getName();
+    }
+
+    public String[] getIngredientsName() {
+        Step step = getStep();
+        if(step instanceof IngredientList)
+            return makeIngredientList((IngredientList) step);
+        throw new IllegalStateException("cannot call getIngredientsName on an item without Ingredients");
+    }
+
+    private String[] makeIngredientList(IngredientList list) {
+        int[] ingredients = list.getIngredientIndexList();
+        String[] output = new String[ingredients.length];
+        for (int i = 0; i < ingredients.length; i++) {
+            output[i] = recipe.getIngredients()[ingredients[i]].getName();
+        }
+        return output;
     }
 
 }

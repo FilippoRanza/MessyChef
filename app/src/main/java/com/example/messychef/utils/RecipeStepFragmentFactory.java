@@ -34,8 +34,7 @@ public class RecipeStepFragmentFactory {
     }
 
     public ShowTakeIngredientStepFragment showTakeIngredientStepFragmentFactory() {
-        TakeIngredientStep step = (TakeIngredientStep) runner.getStep();
-        return new ShowTakeIngredientStepFragment(step);
+        return new ShowTakeIngredientStepFragment(owner);
     }
 
 
