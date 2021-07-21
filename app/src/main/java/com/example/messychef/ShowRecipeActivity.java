@@ -11,6 +11,7 @@ import com.example.messychef.delete_dialog.DeleteDialog;
 import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.recipe.RecipeRunner;
+import com.example.messychef.storage_facility.CurrentRecipe;
 import com.example.messychef.storage_facility.FileInfo;
 import com.example.messychef.storage_facility.StoreData;
 import com.example.messychef.utils.ActivityStarter;
@@ -21,16 +22,18 @@ import java.io.IOException;
 
 public class ShowRecipeActivity extends AppCompatActivity {
 
-    public static final String RECIPE_EXTRA_ID = "Recipe";
-    private Recipe recipe;
-    private FileInfo info;
-    private final StoreData storeData;
 
+    private Recipe recipe;
+    private String recipeFile;
+
+    private final CurrentRecipe currentRecipe;
+    private final StoreData storeData;
     private final ActivityStarter starter;
 
     public ShowRecipeActivity() {
         starter = new ActivityStarter(this);
         storeData = new StoreData(this);
+        currentRecipe = new CurrentRecipe(this);
     }
 
 
@@ -42,13 +45,18 @@ public class ShowRecipeActivity extends AppCompatActivity {
         initTextField();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initRecipe();
+        initTextField();
+    }
 
     private void initRecipe() {
-        Intent intent = getIntent();
-        info = (FileInfo) intent.getSerializableExtra(RECIPE_EXTRA_ID);
         try {
-            recipe = storeData.loadRecipe(info);
-        } catch (IOException | ClassNotFoundException e) {
+            recipeFile = currentRecipe.getCurrentRecipeName();
+            recipe = storeData.loadRecipe(recipeFile);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -67,7 +75,7 @@ public class ShowRecipeActivity extends AppCompatActivity {
 
     public void modifyRecipe(View view) {
         RecipeFactory factory = RecipeFactory.getInstance();
-        factory.initFactoryFromRecipe(recipe, info.getFileName());
+        factory.initFactoryFromRecipe(recipe);
         starter.start(AddRecipeActivity.class);
     }
 
@@ -76,7 +84,7 @@ public class ShowRecipeActivity extends AppCompatActivity {
                 .setMessage(R.string.ingredient_delete_confirm_message)
                 .setTitle(R.string.ingredient_delete_confirm_title)
                 .setDeleteMessageAction((n) -> {
-                    storeData.deleteFile(info);
+                    storeData.deleteFile(recipeFile);
                     finish();
                 })
                 .start();

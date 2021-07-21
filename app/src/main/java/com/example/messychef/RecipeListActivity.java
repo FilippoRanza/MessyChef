@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 
 import com.example.messychef.list_manager.ListManagerFragment;
 import com.example.messychef.recipe.Recipe;
+import com.example.messychef.storage_facility.CurrentRecipe;
 import com.example.messychef.storage_facility.FileInfo;
 import com.example.messychef.storage_facility.StoreData;
 import com.example.messychef.utils.ActivityStarter;
@@ -24,6 +25,8 @@ public class RecipeListActivity extends AppCompatActivity {
     private final StoreData storeData;
     private final FragmentInstaller installer;
     private final ActivityStarter starter;
+    private final CurrentRecipe currentRecipe;
+
     private FileInfo[] names;
     private ListManagerFragment listManagerFragment;
 
@@ -31,6 +34,7 @@ public class RecipeListActivity extends AppCompatActivity {
         storeData = new StoreData(this);
         installer = new FragmentInstaller(this);
         starter = new ActivityStarter(this);
+        currentRecipe = new CurrentRecipe(this);
     }
 
 
@@ -49,6 +53,7 @@ public class RecipeListActivity extends AppCompatActivity {
     }
 
     public void addNewRecipe(View view) {
+        currentRecipe.clear();
         Intent intent = new Intent(this, AddRecipeActivity.class);
         startActivity(intent);
     }
@@ -74,8 +79,12 @@ public class RecipeListActivity extends AppCompatActivity {
 
     private void startShowRecipe(int id) {
         FileInfo info = names[id];
+        try {
+            currentRecipe.setCurrentRecipeName(info.getFileName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         starter.setActivity(ShowRecipeActivity.class)
-                .setExtra(ShowRecipeActivity.RECIPE_EXTRA_ID, info)
                 .start();
 
     }

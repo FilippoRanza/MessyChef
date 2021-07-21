@@ -21,7 +21,6 @@ public class RecipeFactory {
     private ArrayList<Step> steps;
     private int modifyIngredientId;
     private int modifyStepId;
-    private String fileName;
 
 
     private static class IngredientInfo {
@@ -73,20 +72,13 @@ public class RecipeFactory {
         return instance;
     }
 
-    public void initFactoryFromRecipe(Recipe r, String fileName) {
+    public void initFactoryFromRecipe(Recipe r) {
         name = r.getName();
         steps = GeneralUtils.fromArray(r.getSteps());
         ingredients = GeneralUtils.fromArray(r.getIngredients(), IngredientInfo::new);
-        this.fileName = fileName;
     }
 
-    public boolean hasFileName() {
-        return fileName != null;
-    }
 
-    public String getFileName() {
-        return fileName;
-    }
 
     public String getName() {
         return name;
@@ -136,8 +128,6 @@ public class RecipeFactory {
         this.ingredients = null;
         this.steps = null;
         this.name = null;
-        this.fileName = null;
-
         return output;
     }
 

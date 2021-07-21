@@ -28,13 +28,20 @@ public class StoreData {
         indexManager = new FileIndexManager(owner);
     }
 
-    public Recipe loadRecipe(FileInfo info) throws IOException, ClassNotFoundException {
-        String fileName = info.getFileName();
+
+
+    public Recipe loadRecipe(FileInfo info) throws IOException {
+        return loadRecipe(info.getFileName());
+    }
+
+
+    public Recipe loadRecipe(String fileName) throws IOException {
         DataInputStream dis = new DataInputStream(facility.openReadFile(fileName));
         Recipe recipe = new RecipeDeserializer(dis).deserialize();
         dis.close();
         return recipe;
     }
+
 
     public FileInfo updateRecipe(Recipe r, String currName) throws IOException {
         facility.deleteFile(currName);
@@ -49,8 +56,8 @@ public class StoreData {
         return new FileInfo(fileName, r.getName());
     }
 
-    public void deleteFile(FileInfo info) {
-        facility.deleteFile(info.getFileName());
+    public void deleteFile(String fileName) {
+        facility.deleteFile(fileName);
     }
 
     public FileInfo[] buildFileInfoList() throws IOException {
