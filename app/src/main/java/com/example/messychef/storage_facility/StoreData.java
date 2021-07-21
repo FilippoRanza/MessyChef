@@ -36,12 +36,17 @@ public class StoreData {
         return recipe;
     }
 
+    public FileInfo updateRecipe(Recipe r, String currName) throws IOException {
+        facility.deleteFile(currName);
+        return saveRecipe(r);
+    }
 
-    public void saveRecipe(Recipe r) throws IOException {
+    public FileInfo saveRecipe(Recipe r) throws IOException {
         String fileName = makeFileName(r);
         DataOutputStream dos = new DataOutputStream(facility.openWriteFile(fileName));
         new RecipeSerializer(dos).serialize(r);
         dos.close();
+        return new FileInfo(fileName, r.getName());
     }
 
     public void deleteFile(FileInfo info) {

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.messychef.delete_dialog.DeleteDialog;
 import com.example.messychef.recipe.Recipe;
+import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.recipe.RecipeRunner;
 import com.example.messychef.storage_facility.FileInfo;
 import com.example.messychef.storage_facility.StoreData;
@@ -65,6 +66,9 @@ public class ShowRecipeActivity extends AppCompatActivity {
     }
 
     public void modifyRecipe(View view) {
+        RecipeFactory factory = RecipeFactory.getInstance();
+        factory.initFactoryFromRecipe(recipe, info.getFileName());
+        starter.start(AddRecipeActivity.class);
     }
 
     public void deleteRecipe(View view) {
@@ -77,6 +81,8 @@ public class ShowRecipeActivity extends AppCompatActivity {
                 })
                 .start();
     }
+
+
 
 
 }

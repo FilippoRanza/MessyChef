@@ -35,13 +35,20 @@ public class AddRecipeActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             setContentView(R.layout.activity_add_recipe);
             factory = RecipeFactory.getInstance();
-            factory.initFactory();
             textField = new TextField(this, R.string.add_recipe_text)
                     .addUpdateListener((cs) -> name = cs);
+            if (factory.shouldInitialize())
+                factory.initFactory();
+            else
+                initNameField();
 
             installer.installFragment(R.id.input_recipe_name, textField);
-
         }
+    }
+
+    private void initNameField() {
+        textField.setText(factory.getName());
+        name = factory.getName();
     }
 
 
@@ -62,14 +69,21 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
     private void save() {
-        factory.setName(name.toString());
-        Recipe recipe = factory.getRecipe();
         try {
-            storeData.saveRecipe(recipe);
+            runSave();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
+    private void runSave() throws IOException {
+        factory.setName(name.toString());
+        Recipe recipe = factory.getRecipe();
+        if (factory.hasFileName())
+            storeData.updateRecipe(recipe, factory.getFileName());
+        else
+            storeData.saveRecipe(recipe);
+
+    }
 }

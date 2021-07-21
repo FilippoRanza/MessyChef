@@ -2,6 +2,7 @@ package com.example.messychef.recipe;
 
 import android.widget.ListView;
 
+import com.example.messychef.utils.GeneralUtils;
 import com.example.messychef.utils.IndexValue;
 import com.example.messychef.utils.SelectedIndex;
 
@@ -20,6 +21,8 @@ public class RecipeFactory {
     private ArrayList<Step> steps;
     private int modifyIngredientId;
     private int modifyStepId;
+    private String fileName;
+
 
     private static class IngredientInfo {
         private Ingredient ingredient;
@@ -70,12 +73,35 @@ public class RecipeFactory {
         return instance;
     }
 
+    public void initFactoryFromRecipe(Recipe r, String fileName) {
+        name = r.getName();
+        steps = GeneralUtils.fromArray(r.getSteps());
+        ingredients = GeneralUtils.fromArray(r.getIngredients(), IngredientInfo::new);
+        this.fileName = fileName;
+    }
+
+    public boolean hasFileName() {
+        return fileName != null;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public void initFactory() {
         ingredients = new ArrayList<>();
         steps = new ArrayList<>();
         name = null;
+
     }
 
+    public boolean shouldInitialize() {
+        return ingredients == null && steps == null;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -110,6 +136,7 @@ public class RecipeFactory {
         this.ingredients = null;
         this.steps = null;
         this.name = null;
+        this.fileName = null;
 
         return output;
     }
@@ -121,9 +148,9 @@ public class RecipeFactory {
 
     public ArrayList<IndexValue<String>> streamAvailableIngredients() {
         ArrayList<IndexValue<String>> output = new ArrayList<>();
-        for(int i = 0; i < ingredients.size(); i++) {
+        for (int i = 0; i < ingredients.size(); i++) {
             IngredientInfo info = ingredients.get(i);
-            if(info.isAvailable()) {
+            if (info.isAvailable()) {
                 IndexValue<String> tmp = new IndexValue<>(info.getIngredient().getName(), i);
                 output.add(tmp);
             }
@@ -133,9 +160,9 @@ public class RecipeFactory {
 
     public ArrayList<IndexValue<String>> streamTakenIngredients() {
         ArrayList<IndexValue<String>> output = new ArrayList<>();
-        for(int i = 0; i < ingredients.size(); i++) {
+        for (int i = 0; i < ingredients.size(); i++) {
             IngredientInfo info = ingredients.get(i);
-            if(info.isTaken()) {
+            if (info.isTaken()) {
                 IndexValue<String> tmp = new IndexValue<>(info.getIngredient().getName(), i);
                 output.add(tmp);
             }
@@ -203,8 +230,8 @@ public class RecipeFactory {
 
     private int[] getSelectedIngredients(List<SelectedIndex> selected) {
         int count = 0;
-        for(SelectedIndex index: selected) {
-            if(index.isSelected()) {
+        for (SelectedIndex index : selected) {
+            if (index.isSelected()) {
                 IngredientInfo info = ingredients.get(index.getValue());
                 info.setUsed();
                 count++;
@@ -212,8 +239,8 @@ public class RecipeFactory {
         }
         int[] output = new int[count];
         int index = 0;
-        for(SelectedIndex sel: selected) {
-            if(sel.isSelected()) {
+        for (SelectedIndex sel : selected) {
+            if (sel.isSelected()) {
                 output[index++] = sel.getValue();
             }
         }
