@@ -5,8 +5,12 @@ import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.example.messychef.storage_facility.CurrentRecipe;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -23,4 +27,42 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.messychef", appContext.getPackageName());
     }
+
+    @Test
+    public void testEmptyCacheRecipeName() {
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        CurrentRecipe currentRecipe = new CurrentRecipe(appContext);
+        try {
+            assertNull(currentRecipe.getCurrentRecipeIndex());
+            assertNull(currentRecipe.getCurrentRecipeName());
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+    }
+
+
+    @Test
+    public void testCacheRecipeName() {
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        CurrentRecipe currentRecipe = new CurrentRecipe(appContext);
+        String name = "TEST-NAME";
+        try {
+            currentRecipe.setCurrentRecipeName(name);
+            String cache = currentRecipe.getCurrentRecipeName();
+            assertEquals(cache, name);
+            int value = currentRecipe.getCurrentRecipeIndex();
+            assertEquals(value, 0);
+
+            currentRecipe.setCurrentRecipeIndex(45);
+            value = currentRecipe.getCurrentRecipeIndex();
+            assertEquals(value, 45);
+
+            currentRecipe.clear();
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+    }
+
+
+
 }

@@ -1,16 +1,20 @@
 package com.example.messychef.storage_facility;
 
 import android.app.Activity;
+import android.content.Context;
 
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 class IOFacility {
 
@@ -20,15 +24,21 @@ class IOFacility {
 
 
 
-    private final Activity owner;
+    private final Context owner;
 
-    IOFacility(Activity owner) {
+    IOFacility(Context owner) {
         this.owner = owner;
     }
 
 
     String[] getFileList() {
         return owner.fileList();
+    }
+
+    boolean exists(String name) {
+        File directory = owner.getFilesDir();
+        Path path = Paths.get(directory.getAbsolutePath(), name);
+        return path.toFile().exists();
     }
 
 
