@@ -30,6 +30,11 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
             stepTimer.setTime(step);
         }
 
+        @Override
+        public void done() {
+
+        }
+
     }
 
     private boolean bound;

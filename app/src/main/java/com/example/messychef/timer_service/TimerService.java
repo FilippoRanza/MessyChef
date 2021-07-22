@@ -6,18 +6,11 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Binder;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
-import android.os.Messenger;
-import android.os.RemoteException;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 
 import com.example.messychef.R;
 
-import java.sql.Time;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,6 +24,7 @@ public class TimerService extends Service {
 
         public void setStepTime(int time) {
             remainingStep = time;
+            startStepTime = time;
         }
 
         public void installMessenger(UpdateTimer update) {
@@ -38,7 +32,7 @@ public class TimerService extends Service {
         }
 
         public void snooze() {
-            stopRingtone();
+            runSnooze();
         }
 
         public void start() {
@@ -51,6 +45,8 @@ public class TimerService extends Service {
 
     }
 
+
+
     private static final long DEFAULT_SLEEP = 100;
 
 
@@ -61,19 +57,21 @@ public class TimerService extends Service {
 
     private int remainingGlobal;
     private int remainingStep;
-
+    private int startStepTime;
 
     private long currentTime;
 
     private Ringtone ringtone;
 
     private boolean running;
+    private boolean done;
 
     public TimerService() {
         super();
         this.timer = new Timer();
         binder = new TimerController();
         running = false;
+        done = false;
     }
 
     @Override
@@ -131,25 +129,37 @@ public class TimerService extends Service {
     }
 
     private void updateTime(int delta) {
-        remainingGlobal -= delta;
-        remainingStep -= delta;
+        if(remainingGlobal > 0)
+            remainingGlobal -= delta;
+        if(remainingStep > 0)
+            remainingStep -= delta;
     }
 
     private void playRingtone() {
-        if (remainingStep == 0 || remainingGlobal == 0) {
+        if(remainingGlobal <= 0) {
+            startRingtone();
+            done = true;
+            running = false;
+        }
+        else if (remainingStep <= 0) {
             startRingtone();
         }
     }
 
     private void startRingtone() {
-        stopRingtone();
-        ringtone.play();
+        if (ringtone == null)
+            initRingtone();
+        if(!ringtone.isPlaying()) {
+            ringtone.play();
+            System.out.println("ALARM");
+        }
     }
 
     private void stopRingtone() {
         if (ringtone == null)
             initRingtone();
         ringtone.stop();
+
     }
 
     private void initRingtone() {
@@ -164,5 +174,17 @@ public class TimerService extends Service {
 
     private void sendMessage() {
         updateTime.updateTimer(remainingGlobal, remainingStep);
+    }
+
+
+    private void runSnooze() {
+        stopRingtone();
+        if(remainingGlobal > 0) {
+            remainingStep = Math.min(remainingGlobal, startStepTime);
+            updateClient();
+        }
+        if(done) {
+            stopSelf();
+        }
     }
 }
