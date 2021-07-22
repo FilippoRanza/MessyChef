@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -16,39 +17,32 @@ import androidx.annotation.NonNull;
 
 import com.example.messychef.R;
 
+import java.sql.Time;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class TimerService extends Service {
 
-    public static final int SET_GLOBAL_TIME = 0;
-    public static final int SET_LOCAL_TIME = 1;
-    public static final int INSTALL_LISTENER = 2;
-    public static final int TIME_UPDATE = 0;
-    public static final int SNOOZE = 3;
+    public class TimerController extends Binder {
 
-
-    private class TimerHandler extends Handler {
-
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            switch (msg.what) {
-                case SET_GLOBAL_TIME:
-                    remainingGlobal = msg.arg1;
-                    break;
-                case SET_LOCAL_TIME:
-                    remainingStep = msg.arg1;
-                    break;
-                case INSTALL_LISTENER:
-                    clientMessenger = msg.replyTo;
-                    break;
-                case SNOOZE:
-                    stopRingtone();
-                    break;
-                default:
-                    super.handleMessage(msg);
-            }
+        public void setGlobalTime(int time) {
+           remainingGlobal = time;
         }
+
+        public void setStepTime(int time) {
+           remainingStep = time;
+        }
+
+        public void installMessenger(UpdateTimer update) {
+            updateTime = update;
+        }
+
+        public void snooze() {
+            stopRingtone();
+        }
+
+        public void pause() {}
+
     }
 
     private static final long DEFAULT_SLEEP = 100;
@@ -56,8 +50,8 @@ public class TimerService extends Service {
 
     private final Timer timer;
 
-    private final Messenger messenger;
-    private Messenger clientMessenger;
+    private final IBinder binder;
+    private UpdateTimer updateTime;
 
     private int remainingGlobal;
     private int remainingStep;
@@ -70,7 +64,7 @@ public class TimerService extends Service {
     public TimerService() {
         super();
         this.timer = new Timer();
-        messenger = new Messenger(new TimerHandler());
+        binder = new TimerController();
 
     }
 
@@ -90,7 +84,7 @@ public class TimerService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return messenger.getBinder();
+        return binder;
     }
 
     @Override
@@ -155,16 +149,11 @@ public class TimerService extends Service {
     }
 
     private void updateClient() {
-        if(clientMessenger != null)
+        if(updateTime != null)
             sendMessage();
     }
 
     private void sendMessage() {
-        Message msg = Message.obtain(null, TIME_UPDATE, remainingGlobal, remainingStep);
-        try {
-            clientMessenger.send(msg);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        updateTime.updateTimer(remainingGlobal, remainingStep);
     }
 }
