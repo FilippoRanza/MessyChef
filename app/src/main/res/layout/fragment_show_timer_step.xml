@@ -5,9 +5,77 @@
     android:layout_height="match_parent"
     tools:context=".ShowTimerStepFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="28sp"
+            android:text="@string/global_timer_clock_message"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="60sp"
+            android:id="@+id/global_timer_clock"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="28sp"
+            android:text="@string/step_timer_clock"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="56sp"
+            android:id="@+id/step_timer_clock"/>
+
+
+        <TableLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_weight="5">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:text="@string/start_timer_button"
+                android:id="@+id/start_pause_button"
+                android:layout_height="wrap_content"/>
+
+            <Space
+                android:layout_weight="1"
+
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:text="@string/stop_timer_button"
+                android:id="@+id/button_stop"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+
+    </TableLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/snooze_button"
+            android:text="@string/snooze_button_text"/>
+
+
+    </LinearLayout>
+
 
 </FrameLayout>

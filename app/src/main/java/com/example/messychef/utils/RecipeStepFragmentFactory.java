@@ -25,7 +25,7 @@ public class RecipeStepFragmentFactory {
     }
 
     public ShowTimerStepFragment showTimerStepFragmentFactory() {
-        return new ShowTimerStepFragment();
+        return new ShowTimerStepFragment(owner);
     }
 
 

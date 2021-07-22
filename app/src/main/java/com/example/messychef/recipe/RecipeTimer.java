@@ -35,6 +35,10 @@ public class RecipeTimer extends Step implements Serializable {
         return stepTime;
     }
 
+    public boolean hasStepTime() {
+        return stepTime != NO_STEPS;
+    }
+
 
     @Override
     public boolean equals(Object o) {

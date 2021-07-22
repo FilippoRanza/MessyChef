@@ -45,4 +45,11 @@
     <string name="ingredient_list_button_back">Back to Recipe Step</string>
     <string name="delete_recipe_message">Delete</string>
     <string name="delete_recipe_title">Delete Recipe</string>
+    <string name="global_timer_clock_message">Global Timer</string>
+    <string name="step_timer_clock">Step Timer</string>
+    <string name="start_timer_button">Start</string>
+    <string name="stop_timer_button">Stop</string>
+    <string name="snooze_button_text">Snooze</string>
+    <string name="start_timer_service">Start Recipe Timer</string>
+    <string name="stop_timer_service">Timer over</string>
 </resources>
