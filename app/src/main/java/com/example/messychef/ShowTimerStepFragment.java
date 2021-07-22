@@ -22,10 +22,16 @@ import androidx.annotation.NonNull;
 import com.example.messychef.recipe.RecipeRunner;
 import com.example.messychef.recipe.RecipeTimer;
 import com.example.messychef.timer_service.TimerService;
+import com.example.messychef.timer_view.TimerView;
 import com.example.messychef.utils.FieldInitializer;
+
+import java.sql.Time;
 
 
 public  class ShowTimerStepFragment extends AbstractShowStepFragment {
+
+
+
 
 
     private boolean bound;
@@ -38,6 +44,9 @@ public  class ShowTimerStepFragment extends AbstractShowStepFragment {
     private final Intent timerIntent;
 
     private FieldInitializer initializer;
+
+    private TimerView globalTimer;
+    private TimerView stepTimer;
 
     public ShowTimerStepFragment(Activity owner) {
         this.owner = owner;
@@ -64,34 +73,16 @@ public  class ShowTimerStepFragment extends AbstractShowStepFragment {
     }
 
     private void initView(View v) {
-        initializer
-                .initTextField(R.id.global_timer_clock, formatTime(timer.getGlobalTime()));
-        initStepTimeField(v);
+        findTimerTextViews(v);
         initializeButtons(v);
     }
 
-    private void initStepTimeField(View v) {
-        if (timer.hasStepTime())
-            setStepTimerValue();
+    private void findTimerTextViews(View v) {
+        globalTimer = TimerView.getInstance(v, R.id.global_timer_clock, timer.getGlobalTime());
+        if(timer.hasStepTime())
+            stepTimer = TimerView.getInstance(v, R.id.step_timer_clock, timer.getStepTime());
         else
-            hideStepTimer(v);
-    }
-
-    private void setStepTimerValue() {
-        initializer.initTextField(R.id.step_timer_clock, formatTime(timer.getStepTime()));
-    }
-
-    private void hideStepTimer(View v) {
-        TextView textView = v.findViewById(R.id.step_timer_clock);
-        textView.setVisibility(View.INVISIBLE);
-    }
-    
-    private String formatTime(int seconds) {
-        int h = seconds / 3600;
-        seconds %= 3600;
-        int m = seconds / 60;
-        int s = seconds % 60;
-        return String.format("%02d:%02d:%02d", h, m, s);
+            stepTimer = TimerView.getDisableInstance(v, R.id.step_timer_clock);
     }
 
     private void initializeButtons(View v) {
@@ -119,6 +110,8 @@ public  class ShowTimerStepFragment extends AbstractShowStepFragment {
             owner.unbindService(connection);
             owner.stopService(timerIntent);
             bound = false;
+            globalTimer.reset();
+            stepTimer.reset();
         }
     }
 
@@ -156,8 +149,8 @@ public  class ShowTimerStepFragment extends AbstractShowStepFragment {
         @Override
         public void handleMessage(@NonNull Message msg) {
             if (msg.what == TimerService.TIME_UPDATE) {
-                initializer.initTextField(R.id.global_timer_clock, formatTime(msg.arg1));
-                initializer.initTextField(R.id.step_timer_clock, formatTime(msg.arg2));
+                globalTimer.setTime(msg.arg1);
+                stepTimer.setTime(msg.arg2);
             } else {
                 super.handleMessage(msg);
             }
