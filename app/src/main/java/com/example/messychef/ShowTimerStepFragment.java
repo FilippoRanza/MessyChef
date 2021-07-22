@@ -45,11 +45,21 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
     private TimerView globalTimer;
     private TimerView stepTimer;
 
+    private ButtonTextController button;
+
+    private enum Status {
+        Init,
+        Running,
+        Pause
+    }
+    private Status status;
+
     public ShowTimerStepFragment(Activity owner) {
         this.owner = owner;
         timer = RecipeRunner.getInstance().getStep();
         timerIntent = new Intent(owner, TimerService.class);
         connection = initServiceConnection();
+        status = Status.Init;
     }
 
 
@@ -85,6 +95,10 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
         setOnClick(v, R.id.start_pause_button, this::startButtonClick);
         setOnClick(v, R.id.button_stop, this::stopButtonClick);
         setOnClick(v, R.id.snooze_button, this::snoozeTimer);
+        button = new ButtonTextController(v, R.id.start_pause_button)
+                .addStringId(R.string.start_timer_button)
+                .addStringId(R.string.pause_timer_button);
+        button.reset();
     }
 
     private void setOnClick(View view, int id, View.OnClickListener run) {
@@ -99,10 +113,38 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
     }
 
     private void startButtonClick(View v) {
+        switch (status) {
+            case Init:
+                initService();
+                status = Status.Running;
+                break;
+            case Pause:
+                restartTimer();
+                status = Status.Running;
+                break;
+            case Running:
+                pauseTimer();
+                status = Status.Pause;
+                break;
+        }
+        button.nextText();
+    }
+
+
+    private void initService() {
         owner.startService(timerIntent);
         owner.bindService(timerIntent, connection, Context.BIND_AUTO_CREATE);
-
     }
+
+    private void pauseTimer() {
+        if(bound)
+            controller.pause();
+    }
+    private void restartTimer() {
+        if(bound)
+            controller.start();
+    }
+
 
     private void stopButtonClick(View v) {
         if (bound) {
@@ -111,6 +153,8 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
             bound = false;
             globalTimer.reset();
             stepTimer.reset();
+            status = Status.Init;
+            button.reset();
         }
     }
 
@@ -124,6 +168,7 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
                 controller.setGlobalTime(timer.getGlobalTime());
                 controller.setStepTime(timer.getStepTime());
                 controller.installMessenger(new ShowTimerController());
+                controller.start();
                 bound = true;
             }
 

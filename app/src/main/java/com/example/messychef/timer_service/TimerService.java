@@ -26,11 +26,11 @@ public class TimerService extends Service {
     public class TimerController extends Binder {
 
         public void setGlobalTime(int time) {
-           remainingGlobal = time;
+            remainingGlobal = time;
         }
 
         public void setStepTime(int time) {
-           remainingStep = time;
+            remainingStep = time;
         }
 
         public void installMessenger(UpdateTimer update) {
@@ -41,7 +41,13 @@ public class TimerService extends Service {
             stopRingtone();
         }
 
-        public void pause() {}
+        public void start() {
+            running = true;
+        }
+
+        public void pause() {
+            running = false;
+        }
 
     }
 
@@ -61,17 +67,18 @@ public class TimerService extends Service {
 
     private Ringtone ringtone;
 
+    private boolean running;
+
     public TimerService() {
         super();
         this.timer = new Timer();
         binder = new TimerController();
-
+        running = false;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, R.string.start_timer_service, Toast.LENGTH_SHORT).show();
-
         startTimer();
         return START_STICKY;
     }
@@ -91,8 +98,8 @@ public class TimerService extends Service {
     public void onDestroy() {
         Toast.makeText(this, R.string.stop_timer_service, Toast.LENGTH_SHORT).show();
         timer.cancel();
+        stopRingtone();
     }
-
 
 
     private void startTimer() {
@@ -113,21 +120,23 @@ public class TimerService extends Service {
     private void timerEngine() {
         long now = getSeconds();
         int delta = (int) (now - currentTime);
-        if (delta > 0) {
-            updateTime(delta, now);
-            playRingtone();
-            updateClient();
+        if (running) {
+            if (delta > 0) {
+                updateTime(delta);
+                playRingtone();
+                updateClient();
+            }
         }
+        currentTime = now;
     }
 
-    private void updateTime(int delta, long now) {
-        currentTime = now;
+    private void updateTime(int delta) {
         remainingGlobal -= delta;
         remainingStep -= delta;
     }
 
     private void playRingtone() {
-        if(remainingStep == 0 || remainingGlobal == 0) {
+        if (remainingStep == 0 || remainingGlobal == 0) {
             startRingtone();
         }
     }
@@ -138,7 +147,7 @@ public class TimerService extends Service {
     }
 
     private void stopRingtone() {
-        if(ringtone == null)
+        if (ringtone == null)
             initRingtone();
         ringtone.stop();
     }
@@ -149,7 +158,7 @@ public class TimerService extends Service {
     }
 
     private void updateClient() {
-        if(updateTime != null)
+        if (updateTime != null)
             sendMessage();
     }
 
