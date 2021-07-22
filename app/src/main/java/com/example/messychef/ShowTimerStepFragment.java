@@ -28,22 +28,19 @@ import com.example.messychef.utils.FieldInitializer;
 import java.sql.Time;
 
 
-public  class ShowTimerStepFragment extends AbstractShowStepFragment {
-
-
-
+public class ShowTimerStepFragment extends AbstractShowStepFragment {
 
 
     private boolean bound;
     private final ServiceConnection connection;
     private final Messenger messenger;
+    private Messenger serviceListener;
 
     private final Activity owner;
     private final RecipeTimer timer;
 
     private final Intent timerIntent;
 
-    private FieldInitializer initializer;
 
     private TimerView globalTimer;
     private TimerView stepTimer;
@@ -65,9 +62,9 @@ public  class ShowTimerStepFragment extends AbstractShowStepFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View inflate = inflater.inflate(R.layout.fragment_show_timer_step, container, false);
-        initializer = FieldInitializer.getInstance(inflate);
+
         initView(inflate);
         return inflate;
     }
@@ -79,7 +76,7 @@ public  class ShowTimerStepFragment extends AbstractShowStepFragment {
 
     private void findTimerTextViews(View v) {
         globalTimer = TimerView.getInstance(v, R.id.global_timer_clock, timer.getGlobalTime());
-        if(timer.hasStepTime())
+        if (timer.hasStepTime())
             stepTimer = TimerView.getInstance(v, R.id.step_timer_clock, timer.getStepTime());
         else
             stepTimer = TimerView.getDisableInstance(v, R.id.step_timer_clock);
@@ -97,6 +94,14 @@ public  class ShowTimerStepFragment extends AbstractShowStepFragment {
     }
 
     private void snoozeTimer(View v) {
+        if(!bound)
+            return;
+        Message msg = Message.obtain(null, TimerService.SNOOZE, 0, 0);
+        try {
+            serviceListener.send(msg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     private void startButtonClick(View v) {
@@ -106,7 +111,7 @@ public  class ShowTimerStepFragment extends AbstractShowStepFragment {
     }
 
     private void stopButtonClick(View v) {
-        if(bound) {
+        if (bound) {
             owner.unbindService(connection);
             owner.stopService(timerIntent);
             bound = false;
@@ -121,8 +126,8 @@ public  class ShowTimerStepFragment extends AbstractShowStepFragment {
             @Override
             public void onServiceConnected(ComponentName className,
                                            IBinder service) {
-                Messenger serviceListener = new Messenger(service);
-                Message msg1 = Message.obtain(null, TimerService.SET_GLOBAL_TIME,  ShowTimerStepFragment.this.timer.getGlobalTime(), 0);
+                serviceListener = new Messenger(service);
+                Message msg1 = Message.obtain(null, TimerService.SET_GLOBAL_TIME, ShowTimerStepFragment.this.timer.getGlobalTime(), 0);
                 Message msg2 = Message.obtain(null, TimerService.SET_LOCAL_TIME, ShowTimerStepFragment.this.timer.getStepTime(), 0);
                 Message msg3 = Message.obtain(null, TimerService.INSTALL_LISTENER);
                 msg3.replyTo = ShowTimerStepFragment.this.messenger;

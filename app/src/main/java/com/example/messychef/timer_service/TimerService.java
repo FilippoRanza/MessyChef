@@ -2,7 +2,9 @@ package com.example.messychef.timer_service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Binder;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -23,6 +25,7 @@ public class TimerService extends Service {
     public static final int SET_LOCAL_TIME = 1;
     public static final int INSTALL_LISTENER = 2;
     public static final int TIME_UPDATE = 0;
+    public static final int SNOOZE = 3;
 
 
     private class TimerHandler extends Handler {
@@ -39,11 +42,12 @@ public class TimerService extends Service {
                 case INSTALL_LISTENER:
                     clientMessenger = msg.replyTo;
                     break;
+                case SNOOZE:
+                    stopRingtone();
+                    break;
                 default:
                     super.handleMessage(msg);
             }
-            System.out.println(remainingGlobal);
-            System.out.println(remainingStep);
         }
     }
 
@@ -61,11 +65,13 @@ public class TimerService extends Service {
 
     private long currentTime;
 
-
+    private Ringtone ringtone;
 
     public TimerService() {
+        super();
         this.timer = new Timer();
         messenger = new Messenger(new TimerHandler());
+
     }
 
     @Override
@@ -94,25 +100,13 @@ public class TimerService extends Service {
     }
 
 
+
     private void startTimer() {
         currentTime = getSeconds();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                long now = getSeconds();
-                int delta = (int) (now - currentTime);
-                if (delta > 0) {
-                    currentTime = now;
-                    if(clientMessenger == null)
-                        return;
-                    remainingGlobal -= delta;
-                    remainingStep -= delta;
-                    try {
-                        clientMessenger.send(Message.obtain(null, TIME_UPDATE, remainingGlobal, remainingStep));
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                }
+                timerEngine();
             }
         }, 0, DEFAULT_SLEEP);
     }
@@ -122,4 +116,55 @@ public class TimerService extends Service {
         return millis / 1000;
     }
 
+    private void timerEngine() {
+        long now = getSeconds();
+        int delta = (int) (now - currentTime);
+        if (delta > 0) {
+            updateTime(delta, now);
+            playRingtone();
+            updateClient();
+        }
+    }
+
+    private void updateTime(int delta, long now) {
+        currentTime = now;
+        remainingGlobal -= delta;
+        remainingStep -= delta;
+    }
+
+    private void playRingtone() {
+        if(remainingStep == 0 || remainingGlobal == 0) {
+            startRingtone();
+        }
+    }
+
+    private void startRingtone() {
+        stopRingtone();
+        ringtone.play();
+    }
+
+    private void stopRingtone() {
+        if(ringtone == null)
+            initRingtone();
+        ringtone.stop();
+    }
+
+    private void initRingtone() {
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        ringtone = RingtoneManager.getRingtone(this, uri);
+    }
+
+    private void updateClient() {
+        if(clientMessenger != null)
+            sendMessage();
+    }
+
+    private void sendMessage() {
+        Message msg = Message.obtain(null, TIME_UPDATE, remainingGlobal, remainingStep);
+        try {
+            clientMessenger.send(msg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 }
