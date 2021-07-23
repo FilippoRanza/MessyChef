@@ -55,4 +55,6 @@
     <string name="pause_timer_button">Pause</string>
     <string name="channel_name">TIMER_NOTIFICATION_CHANNEL</string>
     <string name="channel_description">"Timer notification Channel "</string>
+    <string name="step_timer_over">Intermediate Timer</string>
+    <string name="global_timer_over">Timer done</string>
 </resources>

@@ -11,10 +11,13 @@ import android.widget.Toast;
 
 import com.example.messychef.R;
 
+import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class TimerService extends Service {
+
+
 
     public class TimerController extends Binder {
 
@@ -65,12 +68,15 @@ public class TimerService extends Service {
     private boolean running;
     private boolean done;
 
+    private TimerNotificationManager notificationManager;
+
     public TimerService() {
         super();
         this.timer = new Timer();
         binder = new TimerController();
         running = false;
         done = false;
+
     }
 
     @Override
@@ -83,7 +89,9 @@ public class TimerService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        notificationManager = new TimerNotificationManager(this);
+        TimerServiceCache cache = TimerServiceCache.getInstance();
+        cache.setTimerService(this);
     }
 
     @Override
@@ -136,13 +144,16 @@ public class TimerService extends Service {
 
     private void playRingtone() {
         if (remainingGlobal <= 0) {
-            startRingtone();
+            notificationManager.showGlobalNotification();
             done = true;
             running = false;
             updateTime.done();
-        } else if (remainingStep <= 0) {
             startRingtone();
+        } else if (remainingStep <= 0) {
+
+            notificationManager.showStepNotification();
             updateTime.timeout();
+            startRingtone();
         }
     }
 
@@ -177,7 +188,7 @@ public class TimerService extends Service {
     }
 
 
-    private void runSnooze() {
+    void runSnooze() {
         stopRingtone();
         if (remainingGlobal > 0) {
             remainingStep = Math.min(remainingGlobal, startStepTime);

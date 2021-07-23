@@ -53,7 +53,6 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
     private TimerView stepTimer;
 
     private ButtonTextController startButton;
-    private Button snoozeButton;
 
     private enum Status {
         Init,
@@ -103,8 +102,7 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
     private void initializeButtons(View v) {
         setOnClick(v, R.id.start_pause_button, this::startButtonClick);
         setOnClick(v, R.id.button_stop, this::stopButtonClick);
-        setOnClick(v, R.id.snooze_button, this::snoozeTimer);
-        snoozeButton = v.findViewById(R.id.snooze_button);
+        //setOnClick(v, R.id.snooze_button, this::snoozeTimer);
         startButton = new ButtonTextController(v, R.id.start_pause_button)
                 .addStringId(R.string.start_timer_button)
                 .addStringId(R.string.pause_timer_button);
