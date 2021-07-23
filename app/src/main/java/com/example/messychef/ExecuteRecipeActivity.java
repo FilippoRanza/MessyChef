@@ -1,5 +1,6 @@
 package com.example.messychef;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,11 +12,14 @@ import com.example.messychef.recipe.RecipeProcess;
 import com.example.messychef.recipe.RecipeRunner;
 import com.example.messychef.recipe.Step;
 import com.example.messychef.recipe.TakeIngredientStep;
+import com.example.messychef.utils.AppFocus;
 import com.example.messychef.utils.FieldInitializer;
 import com.example.messychef.utils.FragmentInstaller;
 import com.example.messychef.utils.RecipeStepFragmentFactory;
 
 public class ExecuteRecipeActivity extends AppCompatActivity {
+
+    public static final String AUTO_NEXT = "AUTO_NEXT";
 
     private final RecipeRunner runner;
     private Step step;
@@ -50,6 +54,18 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
         FieldInitializer.getInstance(this)
                 .initTextField(R.id.recipe_name_text_view, runner.getRecipeName());
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppFocus.getInstance().setFocus(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AppFocus.getInstance().setFocus(false);
     }
 
     public void showIngredientList(View view) {

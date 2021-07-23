@@ -1,5 +1,6 @@
 package com.example.messychef.timer_service;
 
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -17,6 +18,7 @@ class TimerNotificationManager {
     private static final String CHANNEL_ID = "timer-notification-id";
     private static final int STEP_NOTIFY_ID = 0;
     private static final int GLOBAL_NOTIFY_ID = 1;
+    private static final int NEXT_STEP_ID = 2;
 
 
     private final TimerService owner;
@@ -60,35 +62,49 @@ class TimerNotificationManager {
     }
 
     private NotificationCompat.Builder setupGlobalNotificationBuilder() {
-        Intent intent = new Intent(owner, TimerNotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(owner, 0, intent, 0);
+        Intent snoozeIntent = new Intent(owner, TimerNotificationReceiver.class);
+        snoozeIntent.setAction("");
+        PendingIntent snoozePendingIntent = PendingIntent.getBroadcast(owner, 0, snoozeIntent, 0);
 
         return new NotificationCompat.Builder(owner, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(owner.getString(R.string.global_timer_over))
                 .setContentText("Arrivederci")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setDeleteIntent(pendingIntent)
+                .setDeleteIntent(snoozePendingIntent)
                 .setAutoCancel(true);
     }
 
     void showStepNotification() {
-        if(canShowNotification()) {
-            Notification notification = stepNotificationBuilder.build();
-            manager.notify(STEP_NOTIFY_ID, notification);
-        }
+        Notification notification = stepNotificationBuilder.build();
+        manager.notify(STEP_NOTIFY_ID, notification);
+
     }
 
     void showGlobalNotification() {
-        if(canShowNotification()) {
-            Notification notification = globalNotificationBuilder.build();
-            notification.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
-            manager.notify(GLOBAL_NOTIFY_ID, notification);
-        }
+
+        Notification notification = globalNotificationBuilder.build();
+        manager.notify(GLOBAL_NOTIFY_ID, notification);
+
     }
 
-    private boolean canShowNotification() {
-        return manager.getActiveNotifications().length == 0;
+    void showNextStepNotification() {
+        Intent intent = new Intent(owner, ExecuteRecipeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setAction(ExecuteRecipeActivity.AUTO_NEXT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(owner, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        Notification notification = new NotificationCompat.Builder(owner, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle(owner.getString(R.string.global_timer_over))
+                .setContentText("Arrivederci")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setOngoing(true)
+                .build();
+        manager.notify(NEXT_STEP_ID, notification);
     }
 
 
