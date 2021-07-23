@@ -15,7 +15,7 @@ public class RecipeTimer extends Step implements Serializable {
     public RecipeTimer(String name, int globalTime, Integer stepTime) {
         this.name = name;
         this.globalTime = globalTime;
-        if(stepTime == null)
+        if (stepTime == null)
             this.stepTime = NO_STEPS;
         else
             this.stepTime = stepTime;

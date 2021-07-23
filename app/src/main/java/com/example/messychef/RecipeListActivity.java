@@ -1,15 +1,12 @@
 package com.example.messychef;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.messychef.list_manager.ListManagerFragment;
-import com.example.messychef.recipe.Recipe;
 import com.example.messychef.storage_facility.CurrentRecipe;
 import com.example.messychef.storage_facility.FileInfo;
 import com.example.messychef.storage_facility.StoreData;
@@ -17,7 +14,6 @@ import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FragmentInstaller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class RecipeListActivity extends AppCompatActivity {

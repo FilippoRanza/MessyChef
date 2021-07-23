@@ -5,7 +5,8 @@ import android.view.View;
 
 public class FindViewAdapterFactory {
 
-    private FindViewAdapterFactory() {}
+    private FindViewAdapterFactory() {
+    }
 
     public static AbstractFindViewAdapter<?> fromView(View v) {
         return new ViewFindViewAdapter<>(v);

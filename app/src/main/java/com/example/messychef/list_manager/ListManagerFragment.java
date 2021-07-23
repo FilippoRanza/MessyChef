@@ -2,17 +2,14 @@ package com.example.messychef.list_manager;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.core.view.MotionEventCompat;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.messychef.R;
 
@@ -91,9 +88,9 @@ public class ListManagerFragment extends Fragment {
         text.setText(emptyStringMessage);
 
         list = v.findViewById(LIST_VIEW_ID);
-        if(clickRunner != null)
+        if (clickRunner != null)
             list.setOnItemClickListener((parent, view, position, id) -> clickRunner.run(position));
-        if(longClickRunner != null)
+        if (longClickRunner != null)
             list.setOnItemLongClickListener((parent, view, position, id) -> {
                 longClickRunner.run(position);
                 return false;
@@ -107,10 +104,9 @@ public class ListManagerFragment extends Fragment {
     }
 
     private void updateFragment() {
-        if(adapter != null) {
+        if (adapter != null) {
             updateView();
-        }
-        else {
+        } else {
             showMessage();
         }
     }

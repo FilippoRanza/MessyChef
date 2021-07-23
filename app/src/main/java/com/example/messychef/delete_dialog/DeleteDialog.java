@@ -2,8 +2,6 @@ package com.example.messychef.delete_dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.view.View;
 
 import com.example.messychef.R;
 
@@ -43,7 +41,6 @@ public class DeleteDialog<T> {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
 
 
 }

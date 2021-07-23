@@ -6,4 +6,7 @@ public abstract class UpdateTimer extends Binder {
     abstract public void updateTimer(int global, int step);
 
     abstract public void done();
+
+    abstract public void timeout();
+
 }

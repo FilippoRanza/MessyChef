@@ -7,7 +7,6 @@ import com.example.messychef.ShowProcessIngredientsStepFragment;
 import com.example.messychef.ShowTakeIngredientStepFragment;
 import com.example.messychef.ShowTimerStepFragment;
 import com.example.messychef.recipe.RecipeRunner;
-import com.example.messychef.recipe.TakeIngredientStep;
 
 public class RecipeStepFragmentFactory {
 
@@ -36,7 +35,6 @@ public class RecipeStepFragmentFactory {
     public ShowTakeIngredientStepFragment showTakeIngredientStepFragmentFactory() {
         return new ShowTakeIngredientStepFragment(owner);
     }
-
 
 
 }

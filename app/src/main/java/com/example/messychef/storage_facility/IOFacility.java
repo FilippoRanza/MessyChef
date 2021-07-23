@@ -3,7 +3,6 @@ package com.example.messychef.storage_facility;
 import android.app.Activity;
 import android.content.Context;
 
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -21,7 +20,6 @@ class IOFacility {
     public void deleteFile(String fileName) {
         owner.deleteFile(fileName);
     }
-
 
 
     private final Context owner;
@@ -43,7 +41,7 @@ class IOFacility {
 
 
     DataOutputStream openDataOutput(String name) throws IOException {
-        return  new DataOutputStream(openWriteFile(name));
+        return new DataOutputStream(openWriteFile(name));
     }
 
 
@@ -53,7 +51,7 @@ class IOFacility {
 
 
     ObjectOutputStream openObjectOutput(String name) throws IOException {
-        return  new ObjectOutputStream(openWriteFile(name));
+        return new ObjectOutputStream(openWriteFile(name));
     }
 
 
@@ -76,7 +74,6 @@ class IOFacility {
     OutputStream openWriteFile(String name) throws IOException {
         return owner.openFileOutput(name, Activity.MODE_PRIVATE);
     }
-
 
 
 }

@@ -1,7 +1,5 @@
 package com.example.messychef.recipe;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 

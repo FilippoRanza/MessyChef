@@ -1,32 +1,22 @@
 package com.example.messychef;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.GridLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TimePicker;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.text_manager.TextField;
 import com.example.messychef.time_stop_controller.GroupController;
 import com.example.messychef.time_stop_controller.TimeSelectionFragment;
-import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FragmentInstaller;
-import com.google.android.material.slider.Slider;
-
-import java.util.ArrayList;
 
 public class AddTimerActivity extends AppCompatActivity {
 
     private static class RadioButtonGroupController {
         //private
     }
-
 
 
     private static final int RADIO_BUTTON_COUNT = 12;
@@ -60,8 +50,6 @@ public class AddTimerActivity extends AppCompatActivity {
     }
 
 
-
-
     private void initNameField() {
         nameField = new TextField(this, R.string.timer_step_name)
                 .addUpdateListener((cs) -> name = cs);
@@ -69,7 +57,7 @@ public class AddTimerActivity extends AppCompatActivity {
     }
 
     public void addTimerStep(View view) {
-        if(validate()) {
+        if (validate()) {
             createTimerStep();
             finish();
         }
@@ -97,7 +85,7 @@ public class AddTimerActivity extends AppCompatActivity {
     private int getMinutes() {
         int h = picker.getHour();
         int m = picker.getMinute();
-        return  (h * 60) + m;
+        return (h * 60) + m;
     }
 
 

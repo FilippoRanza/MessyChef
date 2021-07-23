@@ -1,13 +1,11 @@
 package com.example.messychef;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.messychef.checkbox_list_manager.CheckBoxListFragment;
-import com.example.messychef.recipe.Ingredient;
-import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.text_manager.TextField;
 import com.example.messychef.utils.ActivityStarter;
@@ -47,7 +45,7 @@ public class AddProcessStepActivity extends AppCompatActivity {
 
 
     public void addProcessStep(View view) {
-        if(validate()) {
+        if (validate()) {
             createProcessStep();
             finish();
         }

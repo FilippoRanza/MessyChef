@@ -1,11 +1,7 @@
 package com.example.messychef;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.view.View;
 
-import com.example.messychef.recipe.Ingredient;
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.recipe.Step;
 

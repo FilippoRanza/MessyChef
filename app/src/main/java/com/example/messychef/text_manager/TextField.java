@@ -8,7 +8,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 
 import androidx.fragment.app.Fragment;
 
@@ -16,15 +15,13 @@ import com.example.messychef.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.w3c.dom.Text;
-
 public class TextField extends Fragment {
 
     public static final int FIELD_ID = R.id.text_input_fragment_field;
     public static final int LAYOUT_ID = R.id.text_input_fragment_layout;
 
     public static final int NONE_TYPE = -1;
-    public static final int NUMBER_INPUT = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL ;
+    public static final int NUMBER_INPUT = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL;
 
 
     Activity owner;
@@ -33,7 +30,7 @@ public class TextField extends Fragment {
     int emptyErrorId = R.string.empty_field_error_msg;
     boolean emptyStatus = false;
     CharSequence tmpBuff;
-    int placeholderID ;
+    int placeholderID;
 
     TextChangeRunner textChangeRunner;
     int inputType;
@@ -93,7 +90,7 @@ public class TextField extends Fragment {
 
 
     private void applyListener() {
-        if(textChangeRunner != null) {
+        if (textChangeRunner != null) {
             input.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -117,17 +114,17 @@ public class TextField extends Fragment {
 
     private void initializeInput() {
 
-        if(inputType != NONE_TYPE) {
+        if (inputType != NONE_TYPE) {
             input.setInputType(inputType);
         }
-        if(tmpBuff != null) {
+        if (tmpBuff != null) {
             input.setText(tmpBuff);
         }
         applyListener();
     }
 
     public void setText(CharSequence cs) {
-        if(input == null)
+        if (input == null)
             tmpBuff = cs;
         else
             input.setText(cs);

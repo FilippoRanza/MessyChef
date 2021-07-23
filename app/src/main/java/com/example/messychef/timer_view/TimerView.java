@@ -18,8 +18,8 @@ abstract public class TimerView {
 
 
     abstract public void reset();
-    abstract public void setTime(int time);
 
+    abstract public void setTime(int time);
 
 
     protected String formatTime(int seconds) {
@@ -29,7 +29,6 @@ abstract public class TimerView {
         int s = seconds % 60;
         return String.format("%02d:%02d:%02d", h, m, s);
     }
-
 
 
 }

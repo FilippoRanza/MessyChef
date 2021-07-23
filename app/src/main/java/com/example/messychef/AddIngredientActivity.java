@@ -10,7 +10,7 @@ public class AddIngredientActivity extends AbstractManageIngredientActivity {
 
     @Override
     public void commit(View v) {
-        if(validateInput()) {
+        if (validateInput()) {
             sendResult();
             finish();
         }

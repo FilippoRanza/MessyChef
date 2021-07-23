@@ -2,9 +2,6 @@ package com.example.messychef;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +45,6 @@ public class ShowProcessIngredientsStepFragment extends AbstractShowStepFragment
                 .initTextField(R.id.process_name_text_view, rp.getName())
                 .initTextField(R.id.process_description_view, rp.getDescription());
     }
-
 
 
 }

@@ -5,10 +5,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Messenger;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +30,11 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
 
         @Override
         public void done() {
+            startButton.reset();
+        }
 
+        @Override
+        public void timeout() {
         }
 
     }
@@ -50,13 +52,15 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
     private TimerView globalTimer;
     private TimerView stepTimer;
 
-    private ButtonTextController button;
+    private ButtonTextController startButton;
+    private Button snoozeButton;
 
     private enum Status {
         Init,
         Running,
         Pause
     }
+
     private Status status;
 
     public ShowTimerStepFragment(Activity owner) {
@@ -100,10 +104,11 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
         setOnClick(v, R.id.start_pause_button, this::startButtonClick);
         setOnClick(v, R.id.button_stop, this::stopButtonClick);
         setOnClick(v, R.id.snooze_button, this::snoozeTimer);
-        button = new ButtonTextController(v, R.id.start_pause_button)
+        snoozeButton = v.findViewById(R.id.snooze_button);
+        startButton = new ButtonTextController(v, R.id.start_pause_button)
                 .addStringId(R.string.start_timer_button)
                 .addStringId(R.string.pause_timer_button);
-        button.reset();
+        startButton.reset();
     }
 
     private void setOnClick(View view, int id, View.OnClickListener run) {
@@ -112,7 +117,7 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
     }
 
     private void snoozeTimer(View v) {
-        if(bound) {
+        if (bound) {
             controller.snooze();
         }
     }
@@ -132,7 +137,7 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
                 status = Status.Pause;
                 break;
         }
-        button.nextText();
+        startButton.nextText();
     }
 
 
@@ -142,11 +147,12 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
     }
 
     private void pauseTimer() {
-        if(bound)
+        if (bound)
             controller.pause();
     }
+
     private void restartTimer() {
-        if(bound)
+        if (bound)
             controller.start();
     }
 
@@ -159,7 +165,7 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
             globalTimer.reset();
             stepTimer.reset();
             status = Status.Init;
-            button.reset();
+            startButton.reset();
         }
     }
 

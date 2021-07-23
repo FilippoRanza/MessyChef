@@ -17,7 +17,7 @@ class FileIndexManager {
         facility = new IOFacility(owner);
     }
 
-    int getNextIndex() throws IOException{
+    int getNextIndex() throws IOException {
         int output = loadIndex();
         saveIndex(output + 1);
         return output;
@@ -29,7 +29,8 @@ class FileIndexManager {
         int output = 0;
         try {
             output = dis.readInt();
-        } catch (EOFException ignored) {}
+        } catch (EOFException ignored) {
+        }
         dis.close();
         return output;
     }
@@ -39,8 +40,6 @@ class FileIndexManager {
         dos.writeInt(index);
         dos.close();
     }
-
-
 
 
 }

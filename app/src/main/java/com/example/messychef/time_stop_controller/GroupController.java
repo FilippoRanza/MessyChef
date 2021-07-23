@@ -2,10 +2,8 @@ package com.example.messychef.time_stop_controller;
 
 import android.app.Activity;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
 
 import java.util.HashSet;
-import java.util.stream.Stream;
 
 public class GroupController {
 
@@ -98,7 +96,7 @@ public class GroupController {
         }
         int m = a % 5;
         a -= m;
-        if(m > 3) {
+        if (m > 3) {
             a += 5;
         }
         return a;

@@ -3,7 +3,7 @@ package com.example.messychef.recipe;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Ingredient implements Serializable  {
+public class Ingredient implements Serializable {
 
     private final String name;
     private final double quantity;

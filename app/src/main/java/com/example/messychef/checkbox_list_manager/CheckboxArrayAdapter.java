@@ -7,13 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 
-
 import com.example.messychef.R;
 import com.example.messychef.utils.IndexValue;
 import com.example.messychef.utils.SelectedIndex;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class CheckboxArrayAdapter extends ArrayAdapter<IndexValue<String>> {
@@ -30,9 +28,9 @@ public class CheckboxArrayAdapter extends ArrayAdapter<IndexValue<String>> {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
+        if (convertView == null) {
             LayoutInflater inflater = owner.getLayoutInflater();
-            View view  = inflater.inflate(R.layout.checkbox_list_element, parent, false);
+            View view = inflater.inflate(R.layout.checkbox_list_element, parent, false);
             initializeCheckbox(position, view);
             convertView = view;
         }
@@ -47,16 +45,14 @@ public class CheckboxArrayAdapter extends ArrayAdapter<IndexValue<String>> {
         CheckBox checkBox = view.findViewById(R.id.checkbox_list_element);
         checkBox.setText(names.get(position).getValue());
         checkBox.setOnClickListener((v) ->
-            selected.get(position).setSelected(checkBox.isChecked())
+                selected.get(position).setSelected(checkBox.isChecked())
         );
     }
 
 
-
-
     private ArrayList<SelectedIndex> initializeSelected() {
         ArrayList<SelectedIndex> output = new ArrayList<>(names.size());
-        for(int i = 0; i < names.size(); i++) {
+        for (int i = 0; i < names.size(); i++) {
             SelectedIndex index = new SelectedIndex(names.get(i).getIndex());
             output.add(index);
         }

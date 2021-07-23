@@ -20,7 +20,7 @@ class RunningTimerView extends TimerView {
 
     @Override
     public void setTime(int time) {
-        if(time >= 0) {
+        if (time >= 0) {
             String str = formatTime(time);
             timer.setText(str);
         }

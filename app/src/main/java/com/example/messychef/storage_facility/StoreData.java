@@ -8,11 +8,7 @@ import com.example.messychef.recipe.serde.RecipeSerializer;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class StoreData {
@@ -27,7 +23,6 @@ public class StoreData {
         facility = new IOFacility(owner);
         indexManager = new FileIndexManager(owner);
     }
-
 
 
     public Recipe loadRecipe(FileInfo info) throws IOException {
@@ -61,7 +56,7 @@ public class StoreData {
     }
 
     public FileInfo[] buildFileInfoList() throws IOException {
-        return  Arrays.stream(facility.getFileList())
+        return Arrays.stream(facility.getFileList())
                 .filter(this::isRecipe)
                 .map(this::fromFileName)
                 .toArray(FileInfo[]::new);
@@ -79,7 +74,7 @@ public class StoreData {
     }
 
 
-    private String makeFileName(Recipe r) throws  IOException {
+    private String makeFileName(Recipe r) throws IOException {
         int index = indexManager.getNextIndex();
         return String.format("%s-%s-%d", RECIPE_IDENTIFIER, r.getName(), index);
     }

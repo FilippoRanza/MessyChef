@@ -1,7 +1,6 @@
 package com.example.messychef;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 
@@ -40,7 +39,7 @@ public class ButtonTextController {
         return this;
     }
 
-    public void nextText(){
+    public void nextText() {
         int id = textIds.get(current);
         current = (current + 1) % textIds.size();
         button.setText(id);

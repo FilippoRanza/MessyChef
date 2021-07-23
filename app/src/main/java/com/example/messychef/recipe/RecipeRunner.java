@@ -1,9 +1,5 @@
 package com.example.messychef.recipe;
 
-import android.content.Intent;
-
-import com.example.messychef.storage_facility.StoreData;
-
 public class RecipeRunner {
 
     private static final int INGREDIENT_STEP = -1;
@@ -65,7 +61,7 @@ public class RecipeRunner {
 
     public String[] getIngredientsName() {
         Step step = getStep();
-        if(step instanceof IngredientList)
+        if (step instanceof IngredientList)
             return makeIngredientList((IngredientList) step);
         throw new IllegalStateException("cannot call getIngredientsName on an item without Ingredients");
     }

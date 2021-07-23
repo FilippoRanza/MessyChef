@@ -24,10 +24,10 @@ public class RecipeSerializer {
         serializeSteps(r.getSteps());
     }
 
-    private void serializeIngredients(Ingredient[] ingredients) throws IOException{
+    private void serializeIngredients(Ingredient[] ingredients) throws IOException {
         int count = ingredients.length;
         writer.writeInt(count);
-        for(Ingredient i: ingredients) {
+        for (Ingredient i : ingredients) {
             serializeIngredient(i);
         }
     }
@@ -41,21 +41,19 @@ public class RecipeSerializer {
     private void serializeSteps(Step[] steps) throws IOException {
         int count = steps.length;
         writer.writeInt(count);
-        for(Step s: steps) {
+        for (Step s : steps) {
             serializeStep(s);
         }
     }
 
     private void serializeStep(Step step) throws IOException {
-        if(step instanceof TakeIngredientStep) {
+        if (step instanceof TakeIngredientStep) {
             writer.writeInt(Constants.STEP_TAKE);
             serializeTakeIngredient((TakeIngredientStep) step);
-        }
-        else if (step instanceof RecipeTimer) {
+        } else if (step instanceof RecipeTimer) {
             writer.writeInt(Constants.STEP_TIMER);
             serializeRecipeTimer((RecipeTimer) step);
-        }
-        else if (step instanceof RecipeProcess) {
+        } else if (step instanceof RecipeProcess) {
             writer.writeInt(Constants.STEP_PROCESS);
             serializeRecipeProcess((RecipeProcess) step);
         }
@@ -80,10 +78,9 @@ public class RecipeSerializer {
     }
 
 
-
     private void serializeIntArray(int[] ints) throws IOException {
         writer.writeInt(ints.length);
-        for(int i : ints) {
+        for (int i : ints) {
             writer.writeInt(i);
         }
     }

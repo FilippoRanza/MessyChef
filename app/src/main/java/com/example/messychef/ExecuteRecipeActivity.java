@@ -1,14 +1,12 @@
 package com.example.messychef;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.messychef.recipe.Ingredient;
-import com.example.messychef.recipe.Recipe;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.messychef.recipe.RecipeProcess;
 import com.example.messychef.recipe.RecipeRunner;
 import com.example.messychef.recipe.Step;
@@ -38,7 +36,6 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
         fragmentFactory = new RecipeStepFragmentFactory(this);
         status = ShowStatus.Step;
     }
-
 
 
     @Override
@@ -112,7 +109,7 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
 
     private void showIngredientListButton(boolean cond) {
         Button button = findViewById(R.id.show_ingredient_list_button);
-        int visibility = cond ? View.VISIBLE: View.INVISIBLE;
+        int visibility = cond ? View.VISIBLE : View.INVISIBLE;
         button.setVisibility(visibility);
     }
 
@@ -153,7 +150,6 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
         }
         return fragmentFactory.showTimerStepFragmentFactory();
     }
-
 
 
     private void updateFragment(AbstractShowStepFragment fragment) {

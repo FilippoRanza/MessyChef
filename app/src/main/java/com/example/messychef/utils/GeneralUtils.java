@@ -19,18 +19,17 @@ public class GeneralUtils {
         return Integer.parseInt(cs.toString());
     }
 
-    public static  <T> ArrayList<T> fromArray(T[] array){
+    public static <T> ArrayList<T> fromArray(T[] array) {
         ArrayList<T> output = new ArrayList<>(array.length);
         output.addAll(Arrays.asList(array));
         return output;
     }
 
-    public static  <T, K> ArrayList<K> fromArray(T[] array, Function<T, K> map){
+    public static <T, K> ArrayList<K> fromArray(T[] array, Function<T, K> map) {
         ArrayList<K> output = new ArrayList<>(array.length);
         Arrays.stream(array).map(map).forEach(output::add);
         return output;
     }
-
 
 
 }

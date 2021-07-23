@@ -3,7 +3,6 @@ package com.example.messychef.utils;
 import android.app.Activity;
 import android.content.Intent;
 
-import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 public class ActivityStarter {

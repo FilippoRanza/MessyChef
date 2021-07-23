@@ -5,8 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 
-import java.util.HashSet;
-
 class RadioButtonController {
     final private RadioButton button;
     private int value;
@@ -27,7 +25,6 @@ class RadioButtonController {
     void disable() {
         button.setVisibility(RadioButton.INVISIBLE);
     }
-
 
 
     RadioButtonController setListener(View.OnClickListener listener) {

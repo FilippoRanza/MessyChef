@@ -46,7 +46,6 @@ public class TimerService extends Service {
     }
 
 
-
     private static final long DEFAULT_SLEEP = 100;
 
 
@@ -129,27 +128,28 @@ public class TimerService extends Service {
     }
 
     private void updateTime(int delta) {
-        if(remainingGlobal > 0)
+        if (remainingGlobal > 0)
             remainingGlobal -= delta;
-        if(remainingStep > 0)
+        if (remainingStep > 0)
             remainingStep -= delta;
     }
 
     private void playRingtone() {
-        if(remainingGlobal <= 0) {
+        if (remainingGlobal <= 0) {
             startRingtone();
             done = true;
             running = false;
-        }
-        else if (remainingStep <= 0) {
+            updateTime.done();
+        } else if (remainingStep <= 0) {
             startRingtone();
+            updateTime.timeout();
         }
     }
 
     private void startRingtone() {
         if (ringtone == null)
             initRingtone();
-        if(!ringtone.isPlaying()) {
+        if (!ringtone.isPlaying()) {
             ringtone.play();
             System.out.println("ALARM");
         }
@@ -179,11 +179,11 @@ public class TimerService extends Service {
 
     private void runSnooze() {
         stopRingtone();
-        if(remainingGlobal > 0) {
+        if (remainingGlobal > 0) {
             remainingStep = Math.min(remainingGlobal, startStepTime);
             updateClient();
         }
-        if(done) {
+        if (done) {
             stopSelf();
         }
     }

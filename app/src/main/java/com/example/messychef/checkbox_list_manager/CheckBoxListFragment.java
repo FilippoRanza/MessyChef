@@ -2,23 +2,19 @@ package com.example.messychef.checkbox_list_manager;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.messychef.R;
 import com.example.messychef.utils.IndexValue;
 import com.example.messychef.utils.SelectedIndex;
 
 import java.util.ArrayList;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class CheckBoxListFragment extends Fragment {
 

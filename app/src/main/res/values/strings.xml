@@ -53,4 +53,6 @@
     <string name="start_timer_service">Start Recipe Timer</string>
     <string name="stop_timer_service">Timer over</string>
     <string name="pause_timer_button">Pause</string>
+    <string name="channel_name">TIMER_NOTIFICATION_CHANNEL</string>
+    <string name="channel_description">"Timer notification Channel "</string>
 </resources>

@@ -1,14 +1,13 @@
 package com.example.messychef;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.messychef.text_manager.TextField;
 import com.example.messychef.utils.FragmentInstaller;
 import com.example.messychef.utils.GeneralUtils;
-import com.google.android.material.textfield.TextInputEditText;
 
 public abstract class AbstractManageIngredientActivity extends AppCompatActivity {
 

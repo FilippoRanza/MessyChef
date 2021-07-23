@@ -1,22 +1,18 @@
 package com.example.messychef;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.messychef.delete_dialog.DeleteDialog;
 import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.recipe.RecipeRunner;
 import com.example.messychef.storage_facility.CurrentRecipe;
-import com.example.messychef.storage_facility.FileInfo;
 import com.example.messychef.storage_facility.StoreData;
 import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FieldInitializer;
-import com.example.messychef.utils.FragmentInstaller;
 
 import java.io.IOException;
 
@@ -80,7 +76,7 @@ public class ShowRecipeActivity extends AppCompatActivity {
     }
 
     public void deleteRecipe(View view) {
-        new DeleteDialog<>(this,  null)
+        new DeleteDialog<>(this, null)
                 .setMessage(R.string.ingredient_delete_confirm_message)
                 .setTitle(R.string.ingredient_delete_confirm_title)
                 .setDeleteMessageAction((n) -> {
@@ -89,8 +85,6 @@ public class ShowRecipeActivity extends AppCompatActivity {
                 })
                 .start();
     }
-
-
 
 
 }

@@ -1,12 +1,7 @@
 package com.example.messychef.time_stop_controller;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +9,8 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.messychef.R;
 
@@ -46,12 +43,11 @@ public class TimeSelectionFragment extends Fragment {
         }
 
 
-
         public View getView(int position, View convertView, ViewGroup parent) {
-            position = position  % items.size();
-            if(convertView == null) {
+            position = position % items.size();
+            if (convertView == null) {
                 LayoutInflater inflater = owner.getLayoutInflater();
-                View view  = inflater.inflate(R.layout.list_element, parent, false);
+                View view = inflater.inflate(R.layout.list_element, parent, false);
                 initializeTextView(position, view);
                 convertView = view;
             } else {
@@ -77,11 +73,10 @@ public class TimeSelectionFragment extends Fragment {
         }
 
         public int getCount() {
-            return  Integer.MAX_VALUE;
+            return Integer.MAX_VALUE;
         }
 
     }
-
 
 
     public TimeSelectionFragment(Activity owner) {
@@ -113,10 +108,9 @@ public class TimeSelectionFragment extends Fragment {
     }
 
 
-
     private ArrayList<String> makeDialList(int count) {
         ArrayList<String> output = new ArrayList<>(count);
-        for(int i = 0; i < count; i++){
+        for (int i = 0; i < count; i++) {
             String value = String.valueOf(i);
             output.add(value);
         }
@@ -132,10 +126,10 @@ public class TimeSelectionFragment extends Fragment {
         lv.setDivider(null);
         lv.setItemsCanFocus(false);
 
-        AbsListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener(){
+        AbsListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
-                if(i == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+                if (i == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                     lv.setSelection(lv.getFirstVisiblePosition());
                     updateTextView();
                     listener.callback(getHour(), getMinute(), getSecond());

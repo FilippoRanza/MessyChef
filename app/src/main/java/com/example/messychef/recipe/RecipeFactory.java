@@ -1,14 +1,11 @@
 package com.example.messychef.recipe;
 
-import android.widget.ListView;
-
 import com.example.messychef.utils.GeneralUtils;
 import com.example.messychef.utils.IndexValue;
 import com.example.messychef.utils.SelectedIndex;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.IntFunction;
 import java.util.stream.Stream;
 
 public class RecipeFactory {
@@ -77,7 +74,6 @@ public class RecipeFactory {
         steps = GeneralUtils.fromArray(r.getSteps());
         ingredients = GeneralUtils.fromArray(r.getIngredients(), IngredientInfo::new);
     }
-
 
 
     public String getName() {

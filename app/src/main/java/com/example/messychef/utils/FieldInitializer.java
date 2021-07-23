@@ -12,7 +12,6 @@ public class FieldInitializer {
     private final AbstractFindViewAdapter<?> owner;
 
 
-
     public FieldInitializer(Activity owner) {
         this.owner = FindViewAdapterFactory.fromActivity(owner);
     }
@@ -39,9 +38,6 @@ public class FieldInitializer {
     public FieldInitializer initTextField(int id, int value) {
         return initTextField(id, String.valueOf(value));
     }
-
-
-
 
 
 }

@@ -2,18 +2,11 @@ package com.example.messychef;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.example.messychef.recipe.RecipeRunner;
-import com.example.messychef.recipe.TakeIngredientStep;
 import com.example.messychef.utils.FieldInitializer;
 import com.example.messychef.utils.IngredientsFieldRunnerValues;
 
@@ -26,7 +19,6 @@ public class ShowTakeIngredientStepFragment extends AbstractShowStepFragment {
     public ShowTakeIngredientStepFragment(Activity owner) {
         fieldRunnerValues = new IngredientsFieldRunnerValues<>(owner);
     }
-
 
 
     @Override
