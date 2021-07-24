@@ -12,6 +12,8 @@ import com.example.messychef.recipe.RecipeProcess;
 import com.example.messychef.recipe.RecipeRunner;
 import com.example.messychef.recipe.Step;
 import com.example.messychef.recipe.TakeIngredientStep;
+import com.example.messychef.timer_service.TimerService;
+import com.example.messychef.timer_service.TimerServiceCache;
 import com.example.messychef.utils.AppFocus;
 import com.example.messychef.utils.FieldInitializer;
 import com.example.messychef.utils.FragmentInstaller;
@@ -46,8 +48,18 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_execute_recipe);
+        runAction();
         initTextField();
         update();
+    }
+
+    private void runAction() {
+        Intent intent = getIntent();
+        if(intent.getAction() != null) {
+            TimerServiceCache cache = TimerServiceCache.getInstance();
+            cache.getTimerService().runSnooze();
+            cache.getTimerService().stopSelf();
+        }
     }
 
     private void initTextField() {

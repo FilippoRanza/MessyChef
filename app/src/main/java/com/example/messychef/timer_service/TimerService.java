@@ -188,7 +188,7 @@ public class TimerService extends Service {
     }
 
 
-    void runSnooze() {
+    public void runSnooze() {
         stopRingtone();
         if (remainingGlobal > 0) {
             remainingStep = Math.min(remainingGlobal, startStepTime);

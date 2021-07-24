@@ -26,17 +26,6 @@ public class TimerNotificationReceiver extends BroadcastReceiver {
         TimerServiceCache cache = TimerServiceCache.getInstance();
         TimerService timerService = cache.getTimerService();
         timerService.runSnooze();
-        if(intent.getAction() != null) {
-            if(!AppFocus.getInstance().hasFocus()) {
-                runNextStepNotification(timerService);
-            }
-        }
-
     }
 
-
-    private void runNextStepNotification(TimerService timerService) {
-        TimerNotificationManager timerNotificationManager = new TimerNotificationManager(timerService);
-        timerNotificationManager.showNextStepNotification();
-    }
 }

@@ -1,7 +1,7 @@
 package com.example.messychef.timer_service;
 
 
-class TimerServiceCache {
+public class TimerServiceCache {
 
     private static TimerServiceCache instance;
     private TimerService timerService;

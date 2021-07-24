@@ -12,6 +12,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.messychef.ExecuteRecipeActivity;
 import com.example.messychef.R;
+import com.example.messychef.utils.AppFocus;
 
 class TimerNotificationManager {
 
@@ -24,7 +25,6 @@ class TimerNotificationManager {
     private final TimerService owner;
     private NotificationManager manager;
     private NotificationCompat.Builder stepNotificationBuilder;
-    private NotificationCompat.Builder globalNotificationBuilder;
 
     TimerNotificationManager(TimerService context) {
         this.owner = context;
@@ -45,7 +45,6 @@ class TimerNotificationManager {
 
     private void createNotificationBuilders() {
         stepNotificationBuilder = setupStepNotificationBuilder();
-        globalNotificationBuilder = setupGlobalNotificationBuilder();
     }
 
     private NotificationCompat.Builder setupStepNotificationBuilder() {
@@ -64,15 +63,30 @@ class TimerNotificationManager {
     private NotificationCompat.Builder setupGlobalNotificationBuilder() {
         Intent snoozeIntent = new Intent(owner, TimerNotificationReceiver.class);
         snoozeIntent.setAction("");
-        PendingIntent snoozePendingIntent = PendingIntent.getBroadcast(owner, 0, snoozeIntent, 0);
+        PendingIntent snoozePendingIntent = PendingIntent
+                .getBroadcast(owner, 0, snoozeIntent, 0);
 
-        return new NotificationCompat.Builder(owner, CHANNEL_ID)
+        Intent restartIntent = new Intent(owner, ExecuteRecipeActivity.class);
+        restartIntent.setAction(ExecuteRecipeActivity.AUTO_NEXT);
+        PendingIntent restartPendingIntent = PendingIntent
+                .getActivity(owner, 0, restartIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(owner, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(owner.getString(R.string.global_timer_over))
                 .setContentText("Arrivederci")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setDeleteIntent(snoozePendingIntent)
                 .setAutoCancel(true);
+
+        if(!AppFocus.getInstance().hasFocus()) {
+            builder.setContentIntent(restartPendingIntent);
+        }
+        else {
+            builder.setContentIntent(snoozePendingIntent);
+        }
+
+        return builder;
     }
 
     void showStepNotification() {
@@ -82,30 +96,10 @@ class TimerNotificationManager {
     }
 
     void showGlobalNotification() {
-
-        Notification notification = globalNotificationBuilder.build();
+        NotificationCompat.Builder builder = setupGlobalNotificationBuilder();
+        Notification notification = builder.build();
         manager.notify(GLOBAL_NOTIFY_ID, notification);
 
     }
-
-    void showNextStepNotification() {
-        Intent intent = new Intent(owner, ExecuteRecipeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.setAction(ExecuteRecipeActivity.AUTO_NEXT);
-        PendingIntent pendingIntent = PendingIntent.getActivity(owner, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-        Notification notification = new NotificationCompat.Builder(owner, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(owner.getString(R.string.global_timer_over))
-                .setContentText("Arrivederci")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .setOngoing(true)
-                .build();
-        manager.notify(NEXT_STEP_ID, notification);
-    }
-
 
 }
