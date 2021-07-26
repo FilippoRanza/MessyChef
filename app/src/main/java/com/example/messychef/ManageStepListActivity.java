@@ -14,7 +14,8 @@ public class ManageStepListActivity extends AbstractManageItemListActivity {
 
     @Override
     protected void initializeView() {
-        list.setEmptyListMessage(R.string.empty_step_list_message);
+        list.setEmptyListMessage(R.string.empty_step_list_message)
+        .addItemClickListener(this::modifyStepActivity);
         installer.installFragment(R.id.item_list_fragment, list);
     }
 
@@ -23,4 +24,10 @@ public class ManageStepListActivity extends AbstractManageItemListActivity {
         list.updateList(RecipeFactory.getInstance().streamSteps().map(Step::getName));
 
     }
+
+    private void modifyStepActivity(int id) {
+        RecipeFactory.getInstance().setModifyStepId(id);
+        starter.start(ModifyStepActivity.class);
+    }
+
 }

@@ -23,12 +23,12 @@ public class AddTimerActivity extends AppCompatActivity {
 
     private final FragmentInstaller installer;
 
-    private TextField nameField;
-    private CharSequence name;
+    protected TextField nameField;
+    protected CharSequence name;
 
-    private TimeSelectionFragment picker;
+    protected TimeSelectionFragment picker;
 
-    private GroupController controller;
+    protected GroupController controller;
 
     public AddTimerActivity() {
         this.installer = new FragmentInstaller(this);
@@ -44,13 +44,13 @@ public class AddTimerActivity extends AppCompatActivity {
         initTimePicker();
     }
 
-    private void initTimePicker() {
+    protected void initTimePicker() {
         picker = new TimeSelectionFragment(this).setTimeUpdateListener(this::timePickerCallback);
         installer.installFragment(R.id.time_selector_fragment, picker);
     }
 
 
-    private void initNameField() {
+    protected void initNameField() {
         nameField = new TextField(this, R.string.timer_step_name)
                 .addUpdateListener((cs) -> name = cs);
         installer.installFragment(R.id.time_step_name_field, nameField);
@@ -63,10 +63,12 @@ public class AddTimerActivity extends AppCompatActivity {
         }
     }
 
-    private void createTimerStep() {
+    protected void createTimerStep() {
         RecipeFactory factory = RecipeFactory.getInstance();
         Integer stepTime = controller.getSelectedTime();
-        factory.addTimerStep(name.toString(), getMinutes(), stepTime);
+        if(stepTime != null)
+            stepTime *= 60;
+        factory.addTimerStep(name.toString(), getSeconds(), stepTime);
     }
 
     private void timePickerCallback(int hour, int minute, int second) {
@@ -81,11 +83,14 @@ public class AddTimerActivity extends AppCompatActivity {
         controller = new GroupController(RADIO_BUTTON_COUNT, this, radioGroup);
     }
 
+    protected int getSeconds() {
+        return picker.getSecond() + (60 * getMinutes());
+    }
 
     private int getMinutes() {
         int h = picker.getHour();
         int m = picker.getMinute();
-        return (h * 60) + m;
+        return ((h * 60) + m);
     }
 
 

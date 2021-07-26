@@ -19,20 +19,29 @@ import java.util.ArrayList;
 
 public class TimeSelectionFragment extends Fragment {
 
+    private static final int NO_CACHE = -1;
 
     private ListView hourList;
     private ListView minuteList;
     private ListView secondList;
     private TextView textView;
 
+    private int cacheMinute;
+    private int cacheSecond;
+    private int cacheHour;
+
+
     private TimeUpdateListener listener;
+
+
+    private boolean used;
 
     final private Activity owner;
 
     private static class LoopAdapter extends ArrayAdapter<String> {
 
-        private ArrayList<String> items;
-        private Activity owner;
+        private final ArrayList<String> items;
+        private final Activity owner;
         private int current;
 
         public LoopAdapter(Activity context, int resource, ArrayList<String> objects) {
@@ -42,6 +51,10 @@ public class TimeSelectionFragment extends Fragment {
             current = initCurrent() - 2;
         }
 
+        public void setCurrent(int current) {
+            System.out.println(current);
+            this.current += current;
+        }
 
         public View getView(int position, View convertView, ViewGroup parent) {
             position = position % items.size();
@@ -81,6 +94,10 @@ public class TimeSelectionFragment extends Fragment {
 
     public TimeSelectionFragment(Activity owner) {
         this.owner = owner;
+        cacheSecond = NO_CACHE;
+        cacheMinute = NO_CACHE;
+        cacheHour = NO_CACHE;
+        used = false;
     }
 
     public TimeSelectionFragment setTimeUpdateListener(TimeUpdateListener listener) {
@@ -99,11 +116,12 @@ public class TimeSelectionFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_time_selection, container, false);
-        hourList = initializeListView(view, R.id.hour_dial, 24);
-        minuteList = initializeListView(view, R.id.minute_dial, 60);
-        secondList = initializeListView(view, R.id.seconds_dial, 60);
+        hourList = initializeListView(view, R.id.hour_dial, 24, cacheHour);
+        minuteList = initializeListView(view, R.id.minute_dial, 60, cacheMinute);
+        secondList = initializeListView(view, R.id.seconds_dial, 60, cacheSecond);
         textView = view.findViewById(R.id.selected_time_value);
-
+        updateTextView();
+        listener.callback(cacheHour, cacheMinute, cacheSecond);
         return view;
     }
 
@@ -117,10 +135,13 @@ public class TimeSelectionFragment extends Fragment {
         return output;
     }
 
-    private ListView initializeListView(View v, int id, int count) {
+    private ListView initializeListView(View v, int id, int count, int cache) {
         ListView lv = v.findViewById(id);
         ArrayList<String> valueList = makeDialList(count);
         LoopAdapter stringArrayAdapter = new LoopAdapter(owner, R.layout.list_element, valueList);
+        if (cache != NO_CACHE)
+            stringArrayAdapter.setCurrent(cache);
+
         lv.setAdapter(stringArrayAdapter);
         lv.setSelection(stringArrayAdapter.getCurrent());
         lv.setDivider(null);
@@ -133,6 +154,7 @@ public class TimeSelectionFragment extends Fragment {
                     lv.setSelection(lv.getFirstVisiblePosition());
                     updateTextView();
                     listener.callback(getHour(), getMinute(), getSecond());
+                    used = true;
                 }
             }
 
@@ -148,25 +170,46 @@ public class TimeSelectionFragment extends Fragment {
     }
 
     private void updateTextView() {
-        String text = String.format("%02d:%02d:%02d", getHour(), getMinute(), getSecond());
+        updateTextView(getHour(), getMinute(), getSecond());
+    }
+
+    private void updateTextView(int h, int m, int s) {
+        String text = String.format("%02d:%02d:%02d", h, m, s);
         textView.setText(text);
     }
 
 
     public int getHour() {
-        return getSelection(hourList) % 24;
+        return (used) ?
+        getSelection(hourList) % 24 : (cacheHour == NO_CACHE) ? 0 : cacheHour;
     }
 
     public int getMinute() {
-        return getSelection(minuteList) % 60;
+        return (used) ?
+                getSelection(minuteList) % 60 : (cacheMinute == NO_CACHE) ? 0 : cacheMinute;
     }
 
     public int getSecond() {
-        return getSelection(secondList) % 60;
+        return (used) ?
+                getSelection(secondList) % 60 : (cacheSecond == NO_CACHE) ? 0 : cacheSecond;
     }
+
+    public void setHour(int h) {
+        cacheHour = h;
+    }
+
+    public void setMinute(int m) {
+        cacheMinute = m;
+    }
+
+    public void setSecond(int s) {
+        cacheSecond = s;
+    }
+
 
     private int getSelection(ListView lv) {
         return lv.getFirstVisiblePosition() + 2;
     }
+
 
 }

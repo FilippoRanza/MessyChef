@@ -41,10 +41,14 @@
         <activity android:name=".ManageStepListActivity" />
         <activity android:name=".ManageIngredientListActivity" />
         <activity android:name=".AddRecipeStepActivity">
+
             <intent-filter>
                 <action android:name="com.example.messychef.activity.ADD_RECIPE_STEP_ACTIVITY" />
             </intent-filter>
         </activity>
+        <activity android:name=".ModifyStepActivity"/>
+        <activity android:name=".ModifyTimerStepActivity"/>
+
         <activity android:name=".AddIngredientActivity" />
         <activity android:name=".ModifyIngredientActivity" />
         <activity android:name=".AddRecipeActivity" />

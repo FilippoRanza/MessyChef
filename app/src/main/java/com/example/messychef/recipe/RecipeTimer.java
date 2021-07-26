@@ -7,9 +7,9 @@ public class RecipeTimer extends Step implements Serializable {
 
     private static final int NO_STEPS = -1;
 
-    private final int globalTime;
-    private final int stepTime;
-    private final String name;
+    private int globalTime;
+    private int stepTime;
+    private String name;
 
 
     public RecipeTimer(String name, int globalTime, Integer stepTime) {
@@ -39,6 +39,22 @@ public class RecipeTimer extends Step implements Serializable {
         return stepTime != NO_STEPS;
     }
 
+
+    public void setGlobalTime(int globalTime) {
+        this.globalTime = globalTime;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public void setStepTime(Integer stepTime) {
+        if (stepTime == null)
+            this.stepTime = NO_STEPS;
+        else
+            this.stepTime = stepTime;
+    }
 
     @Override
     public boolean equals(Object o) {
