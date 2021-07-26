@@ -42,4 +42,20 @@
     <string name="name">Nome</string>
     <string name="description">Descrizione</string>
     <string name="ingredient_list_button_back">Torna alla Ricetta</string>
+    <string name="delete_recipe_message">Elimina</string>
+    <string name="delete_recipe_title">Elimina Ricetta</string>
+    <string name="global_timer_clock_message">Timer Globale</string>
+    <string name="step_timer_clock">Timer Intermedio</string>
+    <string name="start_timer_button">Avvio</string>
+    <string name="stop_timer_button">Stop</string>
+    <string name="snooze_button_text">Ferma</string>
+    <string name="start_timer_service">Avvia Timer</string>
+    <string name="stop_timer_service">Tempo Finito</string>
+    <string name="pause_timer_button">Pausa</string>
+    <string name="step_timer_over">Tempo Intermedio</string>
+    <string name="global_timer_over">Tempo Finito</string>
+    <string name="last_step">Ricetta Completata</string>
+    <string name="recipe_done">Il tuo piatto è pronto. Complimenti!</string>
+    <string name="back_to_recipe_list_text">Torna alla lista delle ricette</string>
+    <string name="back_to_recipe_menu">Torna al menu della ricetta</string>
 </resources>
