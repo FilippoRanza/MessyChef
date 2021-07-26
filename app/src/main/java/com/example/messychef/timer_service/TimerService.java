@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 import com.example.messychef.R;
+import com.example.messychef.recipe.RecipeTimer;
 
 import java.io.Serializable;
 import java.util.Timer;
@@ -28,14 +29,14 @@ public class TimerService extends Service {
         public void setStepTime(int time) {
             remainingStep = time;
             startStepTime = time;
+            if(time <= 0) {
+                runningStep = false;
+                enableStep = false;
+            }
         }
 
         public void installMessenger(UpdateTimer update) {
             updateTime = update;
-        }
-
-        public void snooze() {
-            runSnooze();
         }
 
         public void start() {
@@ -60,6 +61,8 @@ public class TimerService extends Service {
     private int remainingGlobal;
     private int remainingStep;
     private int startStepTime;
+    private boolean enableStep;
+    private boolean runningStep;
 
     private long currentTime;
 
@@ -76,6 +79,8 @@ public class TimerService extends Service {
         binder = new TimerController();
         running = false;
         done = false;
+        enableStep = true;
+        runningStep = true;
 
     }
 
@@ -149,8 +154,8 @@ public class TimerService extends Service {
             running = false;
             updateTime.done();
             startRingtone();
-        } else if (remainingStep <= 0) {
-
+        } else if (remainingStep <= 0 && runningStep) {
+            runningStep = false;
             notificationManager.showStepNotification();
             updateTime.timeout();
             startRingtone();
@@ -193,6 +198,8 @@ public class TimerService extends Service {
         if (remainingGlobal > 0) {
             remainingStep = Math.min(remainingGlobal, startStepTime);
             updateClient();
+            if(enableStep)
+                runningStep = true;
         }
         if (done) {
             stopSelf();

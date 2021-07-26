@@ -114,11 +114,6 @@ public class ShowTimerStepFragment extends AbstractShowStepFragment {
         button.setOnClickListener(run);
     }
 
-    private void snoozeTimer(View v) {
-        if (bound) {
-            controller.snooze();
-        }
-    }
 
     private void startButtonClick(View v) {
         switch (status) {
