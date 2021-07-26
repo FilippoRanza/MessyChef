@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.messychef.recipe.RecipeProcess;
 import com.example.messychef.recipe.RecipeRunner;
+import com.example.messychef.recipe.RecipeTimer;
 import com.example.messychef.recipe.Step;
 import com.example.messychef.recipe.TakeIngredientStep;
 import com.example.messychef.timer_service.TimerService;
@@ -51,11 +52,12 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
         runAction();
         initTextField();
         update();
+        AppFocus.getInstance().setActivity(this);
     }
 
     private void runAction() {
         Intent intent = getIntent();
-        if(intent.getAction() != null) {
+        if (intent.getAction() != null) {
             TimerServiceCache cache = TimerServiceCache.getInstance();
             cache.getTimerService().runSnooze();
             cache.getTimerService().stopSelf();
@@ -78,6 +80,7 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         AppFocus.getInstance().setFocus(false);
+        AppFocus.getInstance().setActivity(this);
     }
 
     public void showIngredientList(View view) {
@@ -158,7 +161,10 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
         if (step instanceof RecipeProcess) {
             return R.string.process_ingredient_step_name;
         }
-        return R.string.timer_step;
+        if (step instanceof RecipeTimer) {
+            return R.string.timer_step;
+        }
+        return R.string.last_step;
     }
 
 
@@ -176,7 +182,10 @@ public class ExecuteRecipeActivity extends AppCompatActivity {
         if (step instanceof RecipeProcess) {
             return fragmentFactory.showProcessIngredientsStepFragmentFactory();
         }
-        return fragmentFactory.showTimerStepFragmentFactory();
+        if (step instanceof RecipeTimer) {
+            return fragmentFactory.showTimerStepFragmentFactory();
+        }
+        return fragmentFactory.showLastStepFragmentFactory();
     }
 
 

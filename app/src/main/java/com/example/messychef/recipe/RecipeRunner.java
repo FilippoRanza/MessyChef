@@ -24,7 +24,7 @@ public class RecipeRunner {
     }
 
     public boolean hasNext() {
-        return step < (recipe.getSteps().length - 1);
+        return step < (recipe.getSteps().length);
     }
 
     public boolean hasPrev() {
@@ -43,8 +43,14 @@ public class RecipeRunner {
 
 
     public <T extends Step> T getStep() {
-        return (step >= 0) ?
-                ((T) recipe.getSteps()[step]) : null;
+        T output = null;
+        if(step >= 0) {
+            if(step < recipe.getSteps().length)
+                output = (T) recipe.getSteps()[step];
+            else
+                output = (T)  new RecipeLastStep();
+        }
+        return output;
     }
 
     public Ingredient[] getIngredients() {

@@ -1,8 +1,11 @@
 package com.example.messychef.utils;
 
+import android.app.Activity;
+
 public class AppFocus {
     private static AppFocus instance;
     private boolean hasFocus;
+    private Activity activity;
 
     private AppFocus() {}
 
@@ -18,5 +21,13 @@ public class AppFocus {
 
     public boolean hasFocus() {
         return hasFocus;
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 }

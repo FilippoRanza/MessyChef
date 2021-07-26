@@ -2,6 +2,8 @@ package com.example.messychef.utils;
 
 import android.app.Activity;
 
+import com.example.messychef.AbstractShowStepFragment;
+import com.example.messychef.LastStepFragment;
 import com.example.messychef.ShowIngredientListFragment;
 import com.example.messychef.ShowProcessIngredientsStepFragment;
 import com.example.messychef.ShowTakeIngredientStepFragment;
@@ -37,4 +39,7 @@ public class RecipeStepFragmentFactory {
     }
 
 
+    public LastStepFragment showLastStepFragmentFactory() {
+        return new LastStepFragment();
+    }
 }

@@ -4,31 +4,37 @@
     package="com.example.messychef">
 
     <uses-permission android:name="android.permission.REORDER_TASKS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:launchMode="singleTask"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:launchMode="singleTask"
         android:theme="@style/Theme.MessyChef"
         tools:ignore="AllowBackup">
+
         <receiver
             android:name=".timer_service.TimerNotificationReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <service
             android:name=".timer_service.TimerService"
             android:enabled="true"
             android:exported="false" />
 
-        <activity android:name=".ExecuteRecipeActivity" >
+        <activity
+            android:name=".ExecuteRecipeActivity"
+            android:parentActivityName=".ShowRecipeActivity">
             <intent-filter>
                 <action android:name="com.example.messychef.activity.OPEN_TIMER_VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".ShowRecipeActivity" />
+        <activity
+            android:name=".ShowRecipeActivity"
+            android:parentActivityName=".RecipeListActivity" />
         <activity android:name=".AddTimerActivity" />
         <activity android:name=".AddProcessStepActivity" />
         <activity android:name=".TakeIngredientActivity" />
@@ -49,7 +55,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecipeListActivity" />
+        <activity
+            android:name=".RecipeListActivity"
+            android:parentActivityName=".SplashActivity" />
     </application>
 
 </manifest>

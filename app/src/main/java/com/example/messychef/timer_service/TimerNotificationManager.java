@@ -1,10 +1,12 @@
 package com.example.messychef.timer_service;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 
@@ -56,22 +58,26 @@ class TimerNotificationManager {
                 .setContentTitle(owner.getString(R.string.step_timer_over))
                 .setContentText("Arrivederci")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingIntent)
                 .setDeleteIntent(pendingIntent)
                 .setAutoCancel(true);
     }
 
     private NotificationCompat.Builder setupGlobalNotificationBuilder() {
-        Intent snoozeIntent = new Intent(owner, TimerNotificationReceiver.class);
+        Activity activity = AppFocus.getInstance().getActivity();
+        Intent snoozeIntent = new Intent(activity, TimerNotificationReceiver.class);
         snoozeIntent.setAction("");
         PendingIntent snoozePendingIntent = PendingIntent
-                .getBroadcast(owner, 0, snoozeIntent, 0);
+                .getBroadcast(activity, 0, snoozeIntent, 0);
 
-        Intent restartIntent = new Intent(owner, ExecuteRecipeActivity.class);
+        Intent restartIntent = new Intent(activity, ExecuteRecipeActivity.class);
         restartIntent.setAction(ExecuteRecipeActivity.AUTO_NEXT);
-        PendingIntent restartPendingIntent = PendingIntent
-                .getActivity(owner, 0, restartIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(activity);
+        taskStackBuilder.addNextIntentWithParentStack(restartIntent);
+        PendingIntent restartPendingIntent = taskStackBuilder
+                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(owner, CHANNEL_ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(owner.getString(R.string.global_timer_over))
                 .setContentText("Arrivederci")
