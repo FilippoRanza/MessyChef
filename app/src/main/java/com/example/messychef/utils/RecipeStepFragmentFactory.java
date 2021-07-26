@@ -40,6 +40,6 @@ public class RecipeStepFragmentFactory {
 
 
     public LastStepFragment showLastStepFragmentFactory() {
-        return new LastStepFragment();
+        return new LastStepFragment(owner);
     }
 }

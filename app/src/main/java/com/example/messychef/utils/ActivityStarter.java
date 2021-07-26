@@ -23,6 +23,10 @@ public class ActivityStarter {
         return this;
     }
 
+    public ActivityStarter setFlag(int flag) {
+        cacheIntent.setFlags(flag);
+        return this;
+    }
 
     public void start() {
         Intent tmp = cacheIntent;
