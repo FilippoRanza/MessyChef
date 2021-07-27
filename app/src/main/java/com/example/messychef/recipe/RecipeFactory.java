@@ -182,6 +182,15 @@ public class RecipeFactory {
         }
     }
 
+
+    public void deleteModifyStep() {
+        if(modifyStepId != NO_MODIFY) {
+            this.steps.remove(modifyStepId);
+            modifyStepId = NO_MODIFY;
+        }
+    }
+
+
     public void setModifyStepId(int modifyStepId) {
         this.modifyStepId = modifyStepId;
     }

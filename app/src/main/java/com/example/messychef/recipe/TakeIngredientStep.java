@@ -14,6 +14,15 @@ public class TakeIngredientStep extends Step implements IngredientList {
         this.ingredients = ingredients;
     }
 
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIngredients(int[] ingredients) {
+        this.ingredients = ingredients;
+    }
+
     @Override
     public String getName() {
         return name;

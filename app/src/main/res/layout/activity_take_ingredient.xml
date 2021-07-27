@@ -10,31 +10,37 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/take_ingredients_action_name"/>
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/take_ingredients_action_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/take_ingredients_select_ingredients"/>
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/take_ingredients_select_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/delete_step_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_step"
+                android:visibility="invisible" />
+        </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            app:icon="@android:drawable/ic_input_add"
             android:onClick="addTakeIngredientStep"
-            />
+            app:icon="@android:drawable/ic_input_add" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

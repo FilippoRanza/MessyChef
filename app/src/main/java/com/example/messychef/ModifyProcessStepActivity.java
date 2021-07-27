@@ -1,5 +1,8 @@
 package com.example.messychef;
 
+import android.view.View;
+import android.widget.Button;
+
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.recipe.RecipeProcess;
 
@@ -17,6 +20,8 @@ public class ModifyProcessStepActivity extends AddProcessStepActivity {
     protected void createProcessStep() {
         process.setName(name.toString());
         process.setDescription(description.toString());
+
+        RecipeFactory.getInstance().commitStep();
     }
 
     @Override
@@ -25,6 +30,7 @@ public class ModifyProcessStepActivity extends AddProcessStepActivity {
 
         nameField.setText(process.getName());
         name = process.getName();
+        enableDeleteButton();
     }
 
 
@@ -35,4 +41,11 @@ public class ModifyProcessStepActivity extends AddProcessStepActivity {
         descriptionField.setText(process.getDescription());
         description = process.getDescription();
     }
+
+    private void enableDeleteButton() {
+        Button button = findViewById(R.id.delete_step_button);
+        button.setVisibility(View.VISIBLE);
+        button.setOnClickListener(new DeleteStepListener(this));
+    }
+
 }

@@ -1,5 +1,8 @@
 package com.example.messychef;
 
+import android.view.View;
+import android.widget.Button;
+
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.recipe.RecipeTimer;
 
@@ -16,6 +19,7 @@ public class ModifyTimerStepActivity extends AddTimerActivity {
         super.initNameField();
         nameField.setText(timer.getName());
         name = timer.getName();
+        enableDeleteButton();
     }
 
     @Override
@@ -40,5 +44,14 @@ public class ModifyTimerStepActivity extends AddTimerActivity {
         if(stepTimer != null)
             stepTimer *= 60;
         timer.setStepTime(stepTimer);
+
+        RecipeFactory.getInstance().commitStep();
     }
+
+    private void enableDeleteButton() {
+        Button button = findViewById(R.id.delete_step_button);
+        button.setVisibility(View.VISIBLE);
+        button.setOnClickListener(new DeleteStepListener(this));
+    }
+
 }

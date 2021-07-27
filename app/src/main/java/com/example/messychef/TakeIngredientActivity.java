@@ -51,7 +51,7 @@ public class TakeIngredientActivity extends AppCompatActivity {
         }
     }
 
-    private void makeTakeIngredientStep() {
+    protected void makeTakeIngredientStep() {
         RecipeFactory factory = RecipeFactory.getInstance();
         factory.addTakeIngredientStep(name.toString(), fragment.getSelected());
     }

@@ -32,6 +32,14 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/process_ingredient_list"/>
 
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/delete_step_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:text="@string/delete_step"/>
+
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
