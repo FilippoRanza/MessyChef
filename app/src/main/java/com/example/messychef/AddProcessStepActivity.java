@@ -19,13 +19,13 @@ public class AddProcessStepActivity extends AppCompatActivity {
     private final ActivityStarter starter;
     private final FragmentInstaller installer;
 
-    private TextField nameField;
-    private CharSequence name;
+    protected TextField nameField;
+    protected CharSequence name;
 
     private CheckBoxListFragment checkBoxList;
 
-    private TextField descriptionField;
-    private CharSequence description;
+    protected TextField descriptionField;
+    protected CharSequence description;
 
     public AddProcessStepActivity() {
         starter = new ActivityStarter(this);
@@ -52,7 +52,7 @@ public class AddProcessStepActivity extends AppCompatActivity {
     }
 
 
-    private void initTextField() {
+    protected void initTextField() {
         nameField = new TextField(this, R.string.process_name_placeholder)
                 .addUpdateListener((cs) -> name = cs);
         installer.installFragment(R.id.process_name_field, nameField);
@@ -64,7 +64,7 @@ public class AddProcessStepActivity extends AppCompatActivity {
         installer.installFragment(R.id.process_ingredient_list, checkBoxList);
     }
 
-    private void initProcessDescription() {
+    protected void initProcessDescription() {
         descriptionField = new TextField(this, R.string.process_description_placeholder)
                 .addUpdateListener((cs) -> description = cs);
         installer.installFragment(R.id.process_description_field, descriptionField);
@@ -79,7 +79,7 @@ public class AddProcessStepActivity extends AppCompatActivity {
         return validName && validDescription;
     }
 
-    private void createProcessStep() {
+    protected void createProcessStep() {
         ArrayList<SelectedIndex> selected = checkBoxList.getSelected();
         RecipeFactory.getInstance().addProcessStep(name.toString(), description.toString(), selected);
     }

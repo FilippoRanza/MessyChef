@@ -29,7 +29,7 @@ public class ModifyStepActivity extends AppCompatActivity {
             activity = ModifyTimerStepActivity.class;
         }
         else if(s instanceof RecipeProcess) {
-
+            activity = ModifyProcessStepActivity.class;
         }
         else if(s instanceof TakeIngredientStep) {
 

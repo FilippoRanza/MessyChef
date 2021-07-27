@@ -5,10 +5,9 @@ import java.util.Objects;
 
 public class RecipeProcess extends Step implements IngredientList {
 
-    private final String description;
-    private final int[] ingredients;
-
-    private final String name;
+    private String description;
+    private int[] ingredients;
+    private String name;
 
     public RecipeProcess(String name, String description, int[] ingredients) {
         this.name = name;
@@ -16,6 +15,18 @@ public class RecipeProcess extends Step implements IngredientList {
         this.ingredients = ingredients;
     }
 
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setIngredients(int[] ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public String getName() {
