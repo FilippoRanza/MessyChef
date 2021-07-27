@@ -13,7 +13,6 @@ import com.example.messychef.recipe.RecipeRunner;
 import com.example.messychef.recipe.RecipeTimer;
 import com.example.messychef.recipe.Step;
 import com.example.messychef.recipe.TakeIngredientStep;
-import com.example.messychef.timer_service.TimerService;
 import com.example.messychef.timer_service.TimerServiceCache;
 import com.example.messychef.utils.AppFocus;
 import com.example.messychef.utils.FieldInitializer;

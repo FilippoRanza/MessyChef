@@ -44,11 +44,11 @@ public class RecipeRunner {
 
     public <T extends Step> T getStep() {
         T output = null;
-        if(step >= 0) {
-            if(step < recipe.getSteps().length)
+        if (step >= 0) {
+            if (step < recipe.getSteps().length)
                 output = (T) recipe.getSteps()[step];
             else
-                output = (T)  new RecipeLastStep();
+                output = (T) new RecipeLastStep();
         }
         return output;
     }

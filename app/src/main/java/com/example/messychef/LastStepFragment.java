@@ -3,9 +3,6 @@ package com.example.messychef;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +39,7 @@ public class LastStepFragment extends AbstractShowStepFragment {
         initButton(view, R.id.back_to_recipe_menu, this::backToRecipeMenu);
     }
 
-    private void initButton(View v, int id, View.OnClickListener listener){
+    private void initButton(View v, int id, View.OnClickListener listener) {
         Button button = v.findViewById(id);
         button.setOnClickListener(listener);
     }

@@ -1,13 +1,11 @@
 package com.example.messychef.timer_service;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
-import android.content.Context;
 import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
@@ -85,10 +83,9 @@ class TimerNotificationManager {
                 .setDeleteIntent(snoozePendingIntent)
                 .setAutoCancel(true);
 
-        if(!AppFocus.getInstance().hasFocus()) {
+        if (!AppFocus.getInstance().hasFocus()) {
             builder.setContentIntent(restartPendingIntent);
-        }
-        else {
+        } else {
             builder.setContentIntent(snoozePendingIntent);
         }
 

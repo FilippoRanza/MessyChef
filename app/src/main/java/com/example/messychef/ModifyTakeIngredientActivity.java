@@ -15,7 +15,6 @@ public class ModifyTakeIngredientActivity extends TakeIngredientActivity {
     }
 
 
-
     @Override
     protected void initNameField() {
         super.initNameField();

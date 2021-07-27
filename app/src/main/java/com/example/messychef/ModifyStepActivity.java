@@ -25,13 +25,11 @@ public class ModifyStepActivity extends AppCompatActivity {
         RecipeFactory factory = RecipeFactory.getInstance();
         Step s = factory.getModifyStep();
         Class<?> activity = null;
-        if(s instanceof RecipeTimer) {
+        if (s instanceof RecipeTimer) {
             activity = ModifyTimerStepActivity.class;
-        }
-        else if(s instanceof RecipeProcess) {
+        } else if (s instanceof RecipeProcess) {
             activity = ModifyProcessStepActivity.class;
-        }
-        else if(s instanceof TakeIngredientStep) {
+        } else if (s instanceof TakeIngredientStep) {
             activity = ModifyTakeIngredientActivity.class;
         }
         System.out.println("Ciao");

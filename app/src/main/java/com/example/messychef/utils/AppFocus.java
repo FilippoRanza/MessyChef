@@ -7,10 +7,11 @@ public class AppFocus {
     private boolean hasFocus;
     private Activity activity;
 
-    private AppFocus() {}
+    private AppFocus() {
+    }
 
     public static AppFocus getInstance() {
-        if(instance == null)
+        if (instance == null)
             instance = new AppFocus();
         return instance;
     }

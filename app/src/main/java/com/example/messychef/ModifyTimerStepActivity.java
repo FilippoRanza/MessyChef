@@ -41,7 +41,7 @@ public class ModifyTimerStepActivity extends AddTimerActivity {
         timer.setName(name.toString());
         timer.setGlobalTime(getSeconds());
         Integer stepTimer = controller.getSelectedTime();
-        if(stepTimer != null)
+        if (stepTimer != null)
             stepTimer *= 60;
         timer.setStepTime(stepTimer);
 

@@ -1,21 +1,9 @@
 package com.example.messychef;
 
-import android.app.ActionBar;
-import android.app.StatusBarManager;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.LocaleList;
-import android.view.ActionMode;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.messychef.list_manager.ListManagerFragment;
@@ -27,7 +15,6 @@ import com.example.messychef.utils.FragmentInstaller;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Locale;
 
 public class RecipeListActivity extends AppCompatActivity {
 

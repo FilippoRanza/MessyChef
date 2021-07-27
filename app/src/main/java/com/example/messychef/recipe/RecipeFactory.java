@@ -184,7 +184,7 @@ public class RecipeFactory {
 
 
     public void deleteModifyStep() {
-        if(modifyStepId != NO_MODIFY) {
+        if (modifyStepId != NO_MODIFY) {
             this.steps.remove(modifyStepId);
             modifyStepId = NO_MODIFY;
         }

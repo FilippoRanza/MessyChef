@@ -66,7 +66,7 @@ public class AddTimerActivity extends AppCompatActivity {
     protected void createTimerStep() {
         RecipeFactory factory = RecipeFactory.getInstance();
         Integer stepTime = controller.getSelectedTime();
-        if(stepTime != null)
+        if (stepTime != null)
             stepTime *= 60;
         factory.addTimerStep(name.toString(), getSeconds(), stepTime);
     }

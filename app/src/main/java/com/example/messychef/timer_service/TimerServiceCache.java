@@ -10,7 +10,7 @@ public class TimerServiceCache {
     }
 
     public static TimerServiceCache getInstance() {
-        if(instance == null)
+        if (instance == null)
             instance = new TimerServiceCache();
         return instance;
     }

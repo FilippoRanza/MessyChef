@@ -10,14 +10,11 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 import com.example.messychef.R;
-import com.example.messychef.recipe.RecipeTimer;
 
-import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class TimerService extends Service {
-
 
 
     public class TimerController extends Binder {
@@ -29,7 +26,7 @@ public class TimerService extends Service {
         public void setStepTime(int time) {
             remainingStep = time;
             startStepTime = time;
-            if(time <= 0) {
+            if (time <= 0) {
                 runningStep = false;
                 enableStep = false;
             }
@@ -198,7 +195,7 @@ public class TimerService extends Service {
         if (remainingGlobal > 0) {
             remainingStep = Math.min(remainingGlobal, startStepTime);
             updateClient();
-            if(enableStep)
+            if (enableStep)
                 runningStep = true;
         }
         if (done) {

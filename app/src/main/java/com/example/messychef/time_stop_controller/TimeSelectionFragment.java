@@ -181,7 +181,7 @@ public class TimeSelectionFragment extends Fragment {
 
     public int getHour() {
         return (used) ?
-        getSelection(hourList) % 24 : (cacheHour == NO_CACHE) ? 0 : cacheHour;
+                getSelection(hourList) % 24 : (cacheHour == NO_CACHE) ? 0 : cacheHour;
     }
 
     public int getMinute() {
