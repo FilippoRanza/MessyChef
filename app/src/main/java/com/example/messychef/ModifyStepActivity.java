@@ -32,7 +32,7 @@ public class ModifyStepActivity extends AppCompatActivity {
             activity = ModifyProcessStepActivity.class;
         }
         else if(s instanceof TakeIngredientStep) {
-
+            activity = ModifyTakeIngredientActivity.class;
         }
         System.out.println("Ciao");
         new ActivityStarter(this).start(activity);

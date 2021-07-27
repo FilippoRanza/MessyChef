@@ -52,6 +52,7 @@
         <activity android:name=".AddIngredientActivity" />
         <activity android:name=".ModifyIngredientActivity" />
         <activity android:name=".ModifyProcessStepActivity" />
+        <activity android:name=".ModifyTakeIngredientActivity" />
         <activity android:name=".AddRecipeActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>

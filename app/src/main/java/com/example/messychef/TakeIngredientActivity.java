@@ -12,8 +12,8 @@ import com.example.messychef.utils.FragmentInstaller;
 
 public class TakeIngredientActivity extends AppCompatActivity {
 
-    private TextField actionName;
-    private CharSequence name;
+    protected TextField actionName;
+    protected CharSequence name;
 
     private FragmentInstaller installer;
     private CheckBoxListFragment fragment;
@@ -31,7 +31,7 @@ public class TakeIngredientActivity extends AppCompatActivity {
         initCheckBoxList();
     }
 
-    private void initNameField() {
+    protected void initNameField() {
         actionName = new TextField(this, R.string.take_ingredient_hint)
                 .addUpdateListener((cs) -> name = cs);
         installer.installFragment(R.id.take_ingredients_action_name, actionName);
