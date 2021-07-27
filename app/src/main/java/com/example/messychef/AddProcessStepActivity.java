@@ -61,8 +61,11 @@ public class AddProcessStepActivity extends AppCompatActivity {
     private void initIngredientList() {
         RecipeFactory factory = RecipeFactory.getInstance();
         checkBoxList = new CheckBoxListFragment(this, factory.streamTakenIngredients());
+        preSelectCheckBoxList();
         installer.installFragment(R.id.process_ingredient_list, checkBoxList);
     }
+
+    protected void preSelectCheckBoxList() {}
 
     protected void initProcessDescription() {
         descriptionField = new TextField(this, R.string.process_description_placeholder)
@@ -82,6 +85,15 @@ public class AddProcessStepActivity extends AppCompatActivity {
     protected void createProcessStep() {
         ArrayList<SelectedIndex> selected = checkBoxList.getSelected();
         RecipeFactory.getInstance().addProcessStep(name.toString(), description.toString(), selected);
+    }
+
+
+    protected ArrayList<SelectedIndex> getSelected() {
+        return checkBoxList.getSelected();
+    }
+
+    protected void setSelected(int index) {
+        checkBoxList.setSelectedIndex(index);
     }
 
 }

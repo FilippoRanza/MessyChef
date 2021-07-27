@@ -19,6 +19,13 @@ public class RecipeFactory {
     private int modifyIngredientId;
     private int modifyStepId;
 
+    private enum State {
+        Create,
+        Modify
+    }
+
+    private State state;
+
 
     private static class IngredientInfo {
         private Ingredient ingredient;
@@ -59,7 +66,7 @@ public class RecipeFactory {
         modifyIngredientId = -1;
         modifyStepId = -1;
 
-
+        state = State.Create;
     }
 
     public static RecipeFactory getInstance() {
@@ -73,6 +80,7 @@ public class RecipeFactory {
         name = r.getName();
         steps = GeneralUtils.fromArray(r.getSteps());
         ingredients = GeneralUtils.fromArray(r.getIngredients(), IngredientInfo::new);
+        state = State.Modify;
     }
 
 
@@ -84,7 +92,7 @@ public class RecipeFactory {
         ingredients = new ArrayList<>();
         steps = new ArrayList<>();
         name = null;
-
+        state = State.Create;
     }
 
     public boolean shouldInitialize() {
@@ -100,17 +108,6 @@ public class RecipeFactory {
         ingredients.add(info);
     }
 
-    public void addStep(Step step) {
-        steps.add(step);
-    }
-
-    public void deleteIngredient(int index) {
-        ingredients.remove(index);
-    }
-
-    public void deleteStep(int index) {
-        steps.remove(index);
-    }
 
     public Recipe getRecipe() {
 
@@ -133,6 +130,20 @@ public class RecipeFactory {
     }
 
     public ArrayList<IndexValue<String>> streamAvailableIngredients() {
+        ArrayList<IndexValue<String>> output = null;
+        switch (state) {
+            case Create:
+                output = streamAvailableOnCreate();
+                break;
+            case Modify:
+                output = streamAllIngredients();
+                break;
+        }
+        return output;
+    }
+
+
+    private ArrayList<IndexValue<String>> streamAvailableOnCreate() {
         ArrayList<IndexValue<String>> output = new ArrayList<>();
         for (int i = 0; i < ingredients.size(); i++) {
             IngredientInfo info = ingredients.get(i);
@@ -145,6 +156,19 @@ public class RecipeFactory {
     }
 
     public ArrayList<IndexValue<String>> streamTakenIngredients() {
+        ArrayList<IndexValue<String>> output = null;
+        switch (state) {
+            case Create:
+                output = streamTakenOnCreate();
+                break;
+            case Modify:
+                output = streamAllIngredients();
+                break;
+        }
+        return output;
+    }
+
+    private ArrayList<IndexValue<String>> streamTakenOnCreate() {
         ArrayList<IndexValue<String>> output = new ArrayList<>();
         for (int i = 0; i < ingredients.size(); i++) {
             IngredientInfo info = ingredients.get(i);
@@ -152,6 +176,16 @@ public class RecipeFactory {
                 IndexValue<String> tmp = new IndexValue<>(info.getIngredient().getName(), i);
                 output.add(tmp);
             }
+        }
+        return output;
+    }
+
+    private ArrayList<IndexValue<String>> streamAllIngredients() {
+        ArrayList<IndexValue<String>> output = new ArrayList<>(ingredients.size());
+        for (int i = 0; i < ingredients.size(); i++) {
+            IngredientInfo info = ingredients.get(i);
+            IndexValue<String> tmp = new IndexValue<>(info.getIngredient().getName(), i);
+            output.add(tmp);
         }
         return output;
     }
@@ -210,6 +244,14 @@ public class RecipeFactory {
 
     }
 
+    public void updateSelected(List<SelectedIndex> selectedIndices) {
+        int[] taken = getSelectedIngredients(selectedIndices);
+        Step step = steps.get(modifyStepId);
+        if(step instanceof RecipeProcess)
+            ((RecipeProcess) step).setIngredients(taken);
+        else if(step instanceof TakeIngredientStep)
+            ((TakeIngredientStep) step).setIngredients(taken);
+    }
 
     public void addProcessStep(String name, String description, List<SelectedIndex> selected) {
         int[] taken = getSelectedIngredients(selected);

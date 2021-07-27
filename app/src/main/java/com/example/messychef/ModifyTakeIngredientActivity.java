@@ -23,12 +23,17 @@ public class ModifyTakeIngredientActivity extends TakeIngredientActivity {
         enableDeleteButton();
     }
 
+    @Override
+    protected void preSelectCheckBoxList() {
+        super.preSelectCheckBoxList();
+        for(int i : step.getIngredientIndexList())
+            setSelected(i);
+    }
 
     @Override
     protected void makeTakeIngredientStep() {
         step.setName(name.toString());
-
-
+        RecipeFactory.getInstance().updateSelected(getSelected());
         RecipeFactory.getInstance().commitStep();
     }
 

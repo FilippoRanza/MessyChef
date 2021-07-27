@@ -33,6 +33,10 @@ public class CheckBoxListFragment extends Fragment {
         return adapter.getSelected();
     }
 
+    public void setSelectedIndex(int index) {
+        adapter.setSelectedIndex(index);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

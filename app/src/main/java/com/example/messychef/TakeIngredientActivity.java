@@ -9,6 +9,9 @@ import com.example.messychef.checkbox_list_manager.CheckBoxListFragment;
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.text_manager.TextField;
 import com.example.messychef.utils.FragmentInstaller;
+import com.example.messychef.utils.SelectedIndex;
+
+import java.util.ArrayList;
 
 public class TakeIngredientActivity extends AppCompatActivity {
 
@@ -41,8 +44,11 @@ public class TakeIngredientActivity extends AppCompatActivity {
         RecipeFactory factory = RecipeFactory.getInstance();
         fragment = new CheckBoxListFragment(this,
                 factory.streamAvailableIngredients());
+        preSelectCheckBoxList();
         installer.installFragment(R.id.take_ingredients_select_ingredients, fragment);
     }
+
+    protected void preSelectCheckBoxList() {}
 
     public void addTakeIngredientStep(View v) {
         if (!actionName.isEmpty()) {
@@ -54,6 +60,14 @@ public class TakeIngredientActivity extends AppCompatActivity {
     protected void makeTakeIngredientStep() {
         RecipeFactory factory = RecipeFactory.getInstance();
         factory.addTakeIngredientStep(name.toString(), fragment.getSelected());
+    }
+
+    protected ArrayList<SelectedIndex> getSelected() {
+        return fragment.getSelected();
+    }
+
+    protected void setSelected(int index) {
+        fragment.setSelectedIndex(index);
     }
 
 }

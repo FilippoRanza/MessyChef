@@ -41,9 +41,16 @@ public class CheckboxArrayAdapter extends ArrayAdapter<IndexValue<String>> {
         return selected;
     }
 
+    public void setSelectedIndex(int index) {
+        selected.get(index).setSelected(true);
+    }
+
     private void initializeCheckbox(int position, View view) {
         CheckBox checkBox = view.findViewById(R.id.checkbox_list_element);
         checkBox.setText(names.get(position).getValue());
+        if (selected.get(position).isSelected())
+            checkBox.setChecked(true);
+
         checkBox.setOnClickListener((v) ->
                 selected.get(position).setSelected(checkBox.isChecked())
         );

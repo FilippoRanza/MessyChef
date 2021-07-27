@@ -20,7 +20,7 @@ public class ModifyProcessStepActivity extends AddProcessStepActivity {
     protected void createProcessStep() {
         process.setName(name.toString());
         process.setDescription(description.toString());
-
+        RecipeFactory.getInstance().updateSelected(getSelected());
         RecipeFactory.getInstance().commitStep();
     }
 
@@ -33,6 +33,13 @@ public class ModifyProcessStepActivity extends AddProcessStepActivity {
         enableDeleteButton();
     }
 
+
+    @Override
+    protected void preSelectCheckBoxList() {
+        super.preSelectCheckBoxList();
+        for(int i : process.getIngredientIndexList())
+            setSelected(i);
+    }
 
     @Override
     protected void initProcessDescription() {
