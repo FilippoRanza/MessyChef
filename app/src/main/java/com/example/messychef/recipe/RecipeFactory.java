@@ -247,9 +247,9 @@ public class RecipeFactory {
     public void updateSelected(List<SelectedIndex> selectedIndices) {
         int[] taken = getSelectedIngredients(selectedIndices);
         Step step = steps.get(modifyStepId);
-        if(step instanceof RecipeProcess)
+        if (step instanceof RecipeProcess)
             ((RecipeProcess) step).setIngredients(taken);
-        else if(step instanceof TakeIngredientStep)
+        else if (step instanceof TakeIngredientStep)
             ((TakeIngredientStep) step).setIngredients(taken);
     }
 

@@ -3,8 +3,6 @@ package com.example.messychef;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.messychef.checkbox_list_manager.CheckBoxListFragment;
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.text_manager.TextField;
@@ -65,7 +63,8 @@ public class AddProcessStepActivity extends AbstractMenuActivity {
         installer.installFragment(R.id.process_ingredient_list, checkBoxList);
     }
 
-    protected void preSelectCheckBoxList() {}
+    protected void preSelectCheckBoxList() {
+    }
 
     protected void initProcessDescription() {
         descriptionField = new TextField(this, R.string.process_description_placeholder)

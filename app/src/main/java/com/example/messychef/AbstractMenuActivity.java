@@ -1,8 +1,5 @@
 package com.example.messychef;
 
-import android.app.Activity;
-import android.content.ContentProvider;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,12 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.messychef.storage_facility.StoreData;
-
-import java.net.URI;
 
 
 abstract public class AbstractMenuActivity extends AppCompatActivity {
@@ -29,7 +21,6 @@ abstract public class AbstractMenuActivity extends AppCompatActivity {
 
     private static final int EXPORT_REQUEST = 0;
     private static final int IMPORT_REQUEST = 1;
-
 
 
     @Override
@@ -100,9 +91,9 @@ abstract public class AbstractMenuActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode,  Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(data == null)
+        if (data == null)
             return;
 
         Uri uri = data.getData();

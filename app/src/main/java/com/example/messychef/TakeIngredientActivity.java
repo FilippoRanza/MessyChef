@@ -3,8 +3,6 @@ package com.example.messychef;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.messychef.checkbox_list_manager.CheckBoxListFragment;
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.text_manager.TextField;
@@ -48,7 +46,8 @@ public class TakeIngredientActivity extends AbstractMenuActivity {
         installer.installFragment(R.id.take_ingredients_select_ingredients, fragment);
     }
 
-    protected void preSelectCheckBoxList() {}
+    protected void preSelectCheckBoxList() {
+    }
 
     public void addTakeIngredientStep(View v) {
         if (!actionName.isEmpty()) {

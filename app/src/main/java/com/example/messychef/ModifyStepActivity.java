@@ -2,8 +2,6 @@ package com.example.messychef;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.recipe.RecipeProcess;
 import com.example.messychef.recipe.RecipeTimer;

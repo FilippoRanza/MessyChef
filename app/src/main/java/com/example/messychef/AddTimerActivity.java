@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.GridLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.text_manager.TextField;
 import com.example.messychef.time_stop_controller.GroupController;

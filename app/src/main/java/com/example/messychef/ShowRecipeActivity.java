@@ -3,8 +3,6 @@ package com.example.messychef;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.messychef.delete_dialog.DeleteDialog;
 import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeFactory;

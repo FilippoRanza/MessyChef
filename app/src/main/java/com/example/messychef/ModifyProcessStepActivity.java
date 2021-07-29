@@ -37,7 +37,7 @@ public class ModifyProcessStepActivity extends AddProcessStepActivity {
     @Override
     protected void preSelectCheckBoxList() {
         super.preSelectCheckBoxList();
-        for(int i : process.getIngredientIndexList())
+        for (int i : process.getIngredientIndexList())
             setSelected(i);
     }
 

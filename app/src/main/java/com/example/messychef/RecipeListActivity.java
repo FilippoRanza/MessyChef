@@ -2,12 +2,7 @@ package com.example.messychef;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.messychef.list_manager.ListManagerFragment;
 import com.example.messychef.storage_facility.CurrentRecipe;
@@ -44,7 +39,6 @@ public class RecipeListActivity extends AbstractMenuActivity {
         initListFragment();
         initRecipeList();
     }
-
 
 
     @Override

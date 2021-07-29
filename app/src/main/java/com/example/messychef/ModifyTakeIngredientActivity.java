@@ -26,7 +26,7 @@ public class ModifyTakeIngredientActivity extends TakeIngredientActivity {
     @Override
     protected void preSelectCheckBoxList() {
         super.preSelectCheckBoxList();
-        for(int i : step.getIngredientIndexList())
+        for (int i : step.getIngredientIndexList())
             setSelected(i);
     }
 
