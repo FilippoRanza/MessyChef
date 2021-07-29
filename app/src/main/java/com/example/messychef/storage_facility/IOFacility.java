@@ -57,7 +57,7 @@ class IOFacility {
 
 
     InputStream openReadFile(String name) throws IOException {
-        InputStream is = null;
+        InputStream is;
         try {
             is = owner.openFileInput(name);
         } catch (FileNotFoundException e) {

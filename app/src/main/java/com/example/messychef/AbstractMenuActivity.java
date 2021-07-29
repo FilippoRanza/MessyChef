@@ -26,8 +26,6 @@ abstract public class AbstractMenuActivity extends AppCompatActivity {
     private static final int EXPORT_REQUEST = 0;
     private static final int IMPORT_REQUEST = 1;
 
-    private ImportExportManager importExportManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
