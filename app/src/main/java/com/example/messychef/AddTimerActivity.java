@@ -12,7 +12,7 @@ import com.example.messychef.time_stop_controller.GroupController;
 import com.example.messychef.time_stop_controller.TimeSelectionFragment;
 import com.example.messychef.utils.FragmentInstaller;
 
-public class AddTimerActivity extends AppCompatActivity {
+public class AddTimerActivity extends AbstractMenuActivity {
 
     private static class RadioButtonGroupController {
         //private

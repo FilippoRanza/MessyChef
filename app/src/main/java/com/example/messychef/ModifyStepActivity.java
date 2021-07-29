@@ -11,7 +11,7 @@ import com.example.messychef.recipe.Step;
 import com.example.messychef.recipe.TakeIngredientStep;
 import com.example.messychef.utils.ActivityStarter;
 
-public class ModifyStepActivity extends AppCompatActivity {
+public class ModifyStepActivity extends AbstractMenuActivity {
 
 
     @Override

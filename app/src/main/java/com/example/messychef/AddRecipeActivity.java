@@ -16,7 +16,7 @@ import com.example.messychef.utils.FragmentInstaller;
 
 import java.io.IOException;
 
-public class AddRecipeActivity extends AppCompatActivity {
+public class AddRecipeActivity extends AbstractMenuActivity {
 
     private final ActivityStarter starter = new ActivityStarter(this);
     private final FragmentInstaller installer = new FragmentInstaller(this);

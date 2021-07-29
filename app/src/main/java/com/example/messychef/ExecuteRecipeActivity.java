@@ -19,7 +19,7 @@ import com.example.messychef.utils.FieldInitializer;
 import com.example.messychef.utils.FragmentInstaller;
 import com.example.messychef.utils.RecipeStepFragmentFactory;
 
-public class ExecuteRecipeActivity extends AppCompatActivity {
+public class ExecuteRecipeActivity extends AbstractMenuActivity {
 
     public static final String AUTO_NEXT = "AUTO_NEXT";
 

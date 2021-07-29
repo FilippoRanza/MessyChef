@@ -9,7 +9,7 @@ import com.example.messychef.list_manager.ListManagerFragment;
 import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FragmentInstaller;
 
-public abstract class AbstractManageItemListActivity extends AppCompatActivity {
+public abstract class AbstractManageItemListActivity extends AbstractMenuActivity {
 
     final protected ActivityStarter starter;
     final protected ListManagerFragment list;

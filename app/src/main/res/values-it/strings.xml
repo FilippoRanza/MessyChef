@@ -58,4 +58,7 @@
     <string name="recipe_done">Il tuo piatto è pronto. Complimenti!</string>
     <string name="back_to_recipe_list_text">Torna alla lista delle ricette</string>
     <string name="back_to_recipe_menu">Torna al menu della ricetta</string>
+    <string name="delete_step">Elimina Passaggio</string>
+    <string name="export_menu">Esporta Ricette</string>
+    <string name="import_menu">Importa Ricette</string>
 </resources>

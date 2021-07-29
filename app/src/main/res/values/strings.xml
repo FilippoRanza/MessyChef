@@ -61,8 +61,9 @@
     <string name="recipe_done">Your dish is ready. Enjoy!</string>
     <string name="back_to_recipe_list_text">Back to Recipe List</string>
     <string name="back_to_recipe_menu">Back to Recipe Menu</string>
-    <string name="settings">settings</string>
     <string name="italian" translatable="false">Italiano</string>
     <string name="english" translatable="false">English</string>
     <string name="delete_step">Delete Step</string>
+    <string name="export_menu">Export Recipes</string>
+    <string name="import_menu">Import Recipes</string>
 </resources>

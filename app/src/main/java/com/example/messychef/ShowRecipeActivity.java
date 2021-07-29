@@ -16,7 +16,7 @@ import com.example.messychef.utils.FieldInitializer;
 
 import java.io.IOException;
 
-public class ShowRecipeActivity extends AppCompatActivity {
+public class ShowRecipeActivity extends AbstractMenuActivity {
 
 
     private Recipe recipe;

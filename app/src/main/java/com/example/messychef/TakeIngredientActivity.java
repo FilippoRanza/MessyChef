@@ -13,7 +13,7 @@ import com.example.messychef.utils.SelectedIndex;
 
 import java.util.ArrayList;
 
-public class TakeIngredientActivity extends AppCompatActivity {
+public class TakeIngredientActivity extends AbstractMenuActivity {
 
     protected TextField actionName;
     protected CharSequence name;

@@ -14,7 +14,7 @@ import com.example.messychef.utils.SelectedIndex;
 
 import java.util.ArrayList;
 
-public class AddProcessStepActivity extends AppCompatActivity {
+public class AddProcessStepActivity extends AbstractMenuActivity {
 
     private final ActivityStarter starter;
     private final FragmentInstaller installer;

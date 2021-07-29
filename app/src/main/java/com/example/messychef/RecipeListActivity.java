@@ -2,8 +2,11 @@ package com.example.messychef;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.messychef.list_manager.ListManagerFragment;
@@ -16,7 +19,7 @@ import com.example.messychef.utils.FragmentInstaller;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class RecipeListActivity extends AppCompatActivity {
+public class RecipeListActivity extends AbstractMenuActivity {
 
     private final StoreData storeData;
     private final FragmentInstaller installer;
@@ -41,6 +44,8 @@ public class RecipeListActivity extends AppCompatActivity {
         initListFragment();
         initRecipeList();
     }
+
+
 
     @Override
     protected void onResume() {
@@ -84,5 +89,6 @@ public class RecipeListActivity extends AppCompatActivity {
                 .start();
 
     }
+
 
 }

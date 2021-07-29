@@ -9,7 +9,7 @@ import com.example.messychef.text_manager.TextField;
 import com.example.messychef.utils.FragmentInstaller;
 import com.example.messychef.utils.GeneralUtils;
 
-public abstract class AbstractManageIngredientActivity extends AppCompatActivity {
+public abstract class AbstractManageIngredientActivity extends AbstractMenuActivity {
 
 
     TextField nameField;

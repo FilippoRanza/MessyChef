@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.messychef.utils.ActivityStarter;
 
-public class AddRecipeStepActivity extends AppCompatActivity {
+public class AddRecipeStepActivity extends AbstractMenuActivity {
 
     private final ActivityStarter starter;
 
