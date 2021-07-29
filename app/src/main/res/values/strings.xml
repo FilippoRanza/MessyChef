@@ -66,4 +66,5 @@
     <string name="delete_step">Delete Step</string>
     <string name="export_menu">Export Recipes</string>
     <string name="import_menu">Import Recipes</string>
+    <string name="remove_selection">Unselect Step</string>
 </resources>

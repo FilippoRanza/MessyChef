@@ -12,6 +12,7 @@ import com.example.messychef.utils.FragmentInstaller;
 
 public class AddTimerActivity extends AbstractMenuActivity {
 
+
     private static class RadioButtonGroupController {
         //private
     }
@@ -41,6 +42,11 @@ public class AddTimerActivity extends AbstractMenuActivity {
         initNameField();
         initTimePicker();
     }
+
+    public void removeSelection(View view) {
+        controller.clear();
+    }
+
 
     protected void initTimePicker() {
         picker = new TimeSelectionFragment(this).setTimeUpdateListener(this::timePickerCallback);
