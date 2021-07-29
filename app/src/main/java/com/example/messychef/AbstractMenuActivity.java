@@ -9,6 +9,10 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.messychef.storage_facility.ImportExportManager;
+
+import java.io.IOException;
+
 
 abstract public class AbstractMenuActivity extends AppCompatActivity {
 
@@ -22,6 +26,7 @@ abstract public class AbstractMenuActivity extends AppCompatActivity {
     private static final int EXPORT_REQUEST = 0;
     private static final int IMPORT_REQUEST = 1;
 
+    private ImportExportManager importExportManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +102,14 @@ abstract public class AbstractMenuActivity extends AppCompatActivity {
             return;
 
         Uri uri = data.getData();
+        try {
+            handleRequest(requestCode, uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void handleRequest(int requestCode, Uri uri) throws IOException {
         switch (requestCode) {
             case EXPORT_REQUEST:
                 handleExport(uri);
@@ -108,12 +120,12 @@ abstract public class AbstractMenuActivity extends AppCompatActivity {
         }
     }
 
-    private void handleImport(Uri uri) {
-        System.out.println("Import");
+    private void handleImport(Uri uri) throws IOException {
+        ImportExportManager.importRecipes(uri, this);
     }
 
-    private void handleExport(Uri uri) {
-        System.out.println("Export");
+    private void handleExport(Uri uri) throws IOException {
+        ImportExportManager.exportRecipes(uri, this);
     }
 
 }

@@ -43,11 +43,17 @@ public class StoreData {
         return saveRecipe(r);
     }
 
+
     public FileInfo saveRecipe(Recipe r) throws IOException {
+        return saveRecipe(r, false);
+    }
+
+    protected FileInfo saveRecipe(Recipe r, boolean leaveOpen) throws IOException {
         String fileName = makeFileName(r);
         DataOutputStream dos = new DataOutputStream(facility.openWriteFile(fileName));
         new RecipeSerializer(dos).serialize(r);
-        dos.close();
+        if (!leaveOpen)
+            dos.close();
         return new FileInfo(fileName, r.getName());
     }
 

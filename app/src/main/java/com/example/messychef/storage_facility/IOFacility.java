@@ -9,8 +9,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,9 +32,17 @@ class IOFacility {
     }
 
     boolean exists(String name) {
+        return getFile(name).exists();
+    }
+
+    int getFileSize(String name) {
+        return (int) getFile(name).length();
+    }
+
+    private File getFile(String name) {
         File directory = owner.getFilesDir();
         Path path = Paths.get(directory.getAbsolutePath(), name);
-        return path.toFile().exists();
+        return path.toFile();
     }
 
 
@@ -47,16 +53,6 @@ class IOFacility {
 
     DataInputStream openDataInput(String name) throws IOException {
         return new DataInputStream(openReadFile(name));
-    }
-
-
-    ObjectOutputStream openObjectOutput(String name) throws IOException {
-        return new ObjectOutputStream(openWriteFile(name));
-    }
-
-
-    ObjectInputStream openObjectRead(String name) throws IOException {
-        return new ObjectInputStream(openReadFile(name));
     }
 
 
