@@ -22,7 +22,7 @@ public class ModifyIngredientActivity extends AbstractManageIngredientActivity {
     @Override
     public void commit(View v) {
         if (validateInput()) {
-            Ingredient ingredient = new Ingredient(name.toString(), quantity);
+            Ingredient ingredient = new Ingredient(name.toString(), quantity, unit.toString());
             factory.commitIngredient(ingredient);
             finish();
         }

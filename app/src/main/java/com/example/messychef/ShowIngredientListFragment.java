@@ -44,7 +44,7 @@ public class ShowIngredientListFragment extends AbstractShowStepFragment {
 
     private void initIngredientList(View v) {
         ArrayList<String> ingredientName = Arrays.stream(ingredients)
-                .map(Ingredient::getName)
+                .map(Ingredient::getDescription)
                 .collect(Collectors.toCollection(ArrayList::new));
         ArrayAdapter<String> ingredientArrayAdapter = new ArrayAdapter<>(owner, R.layout.list_element, ingredientName);
         ListView lv = v.findViewById(R.id.show_ingredient_list);

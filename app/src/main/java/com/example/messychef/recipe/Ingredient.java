@@ -30,6 +30,10 @@ public class Ingredient implements Serializable {
         return name;
     }
 
+    public String getDescription() {
+        return String.format("%s %.2f%s", name, quantity, unit);
+    }
+
     public String getUnit() {
         return unit;
     }

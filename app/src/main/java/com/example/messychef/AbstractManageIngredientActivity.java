@@ -2,6 +2,10 @@ package com.example.messychef;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.messychef.text_manager.TextField;
 import com.example.messychef.utils.FragmentInstaller;
@@ -18,6 +22,8 @@ public abstract class AbstractManageIngredientActivity extends AbstractMenuActiv
 
     FragmentInstaller installer;
 
+    CharSequence unit;
+
     AbstractManageIngredientActivity() {
         installer = new FragmentInstaller(this);
     }
@@ -29,6 +35,7 @@ public abstract class AbstractManageIngredientActivity extends AbstractMenuActiv
         setContentView(R.layout.activity_add_ingredient);
         initializeNameField();
         initializeQuantityField();
+        initSpinner();
     }
 
     public abstract void commit(View v);
@@ -62,6 +69,25 @@ public abstract class AbstractManageIngredientActivity extends AbstractMenuActiv
                 .addUpdateListener((s) -> quantity = GeneralUtils.parseDouble(s))
                 .setInputType(TextField.NUMBER_INPUT);
         installer.installFragment(R.id.ingredient_quantity_field, amountField);
+    }
+
+    private void initSpinner() {
+        Spinner spinner = findViewById(R.id.unit_spinner);
+        String[] units = {"Kg", "g", "l", "ml", "qt."};
+        unit = units[0];
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_element, units);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                unit = units[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 }

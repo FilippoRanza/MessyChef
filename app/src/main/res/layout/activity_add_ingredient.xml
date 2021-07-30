@@ -23,12 +23,30 @@
             android:layout_height="wrap_content"
             android:id="@+id/ingredient_name_field"/>
 
-        <androidx.fragment.app.FragmentContainerView
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ingredient_quantity_field"/>
+            >
+
+            <TableRow
+                android:layout_weight="9">
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+                    android:id="@+id/ingredient_quantity_field"/>
+
+                <Spinner
+                    android:id="@+id/unit_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
 
 
+            </TableRow>
+
+        </TableLayout>>
 
         <androidx.fragment.app.FragmentContainerView
             android:layout_width="wrap_content"
