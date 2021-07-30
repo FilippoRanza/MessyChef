@@ -13,11 +13,6 @@ import com.example.messychef.utils.FragmentInstaller;
 public class AddTimerActivity extends AbstractMenuActivity {
 
 
-    private static class RadioButtonGroupController {
-        //private
-    }
-
-
     private static final int RADIO_BUTTON_COUNT = 12;
 
     private final FragmentInstaller installer;
