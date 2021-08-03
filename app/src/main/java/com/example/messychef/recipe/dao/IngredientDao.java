@@ -25,4 +25,7 @@ public interface IngredientDao {
     @Update
     void update(Ingredient i);
 
+    @Query("SELECT name FROM ingredients WHERE name like (:name)")
+    List<String> searchIngredientByName(String name);
+
 }

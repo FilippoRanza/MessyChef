@@ -8,12 +8,17 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.messychef.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TextField extends Fragment {
 
@@ -26,7 +31,7 @@ public class TextField extends Fragment {
 
     Activity owner;
     TextInputLayout layout;
-    TextInputEditText input;
+    AutoCompleteTextView input;
     int emptyErrorId = R.string.empty_field_error_msg;
     boolean emptyStatus = false;
     CharSequence tmpBuff;
@@ -34,6 +39,8 @@ public class TextField extends Fragment {
 
     TextChangeRunner textChangeRunner;
     int inputType;
+
+    UpdateAutocomplete updateAutocomplete;
 
     public TextField(Activity owner, int placeholderID) {
         this.owner = owner;
@@ -43,6 +50,12 @@ public class TextField extends Fragment {
 
     public TextField addUpdateListener(TextChangeRunner r) {
         textChangeRunner = r;
+        return this;
+    }
+
+
+    public TextField addUpdateAutocomplete(UpdateAutocomplete updateAutocomplete){
+        this.updateAutocomplete = updateAutocomplete;
         return this;
     }
 
@@ -94,7 +107,6 @@ public class TextField extends Fragment {
             input.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
                 }
 
                 @Override
@@ -105,12 +117,22 @@ public class TextField extends Fragment {
 
                 @Override
                 public void afterTextChanged(Editable s) {
+                    runUpdateAutocomplete();
                     emptyErrorMessage();
                 }
             });
         }
     }
 
+    private void runUpdateAutocomplete() {
+        if(updateAutocomplete != null) {
+            List<String> list = updateAutocomplete.updateList();
+            if(list != null && list.size() <= 5) {
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(owner, R.layout.list_element, list);
+                input.setAdapter(adapter);
+            }
+        }
+    }
 
     private void initializeInput() {
 

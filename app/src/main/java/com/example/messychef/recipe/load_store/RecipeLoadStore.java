@@ -6,6 +6,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.messychef.recipe.Recipe;
+import com.example.messychef.recipe.dao.IngredientDao;
 import com.example.messychef.recipe.dao.RecipeDao;
 import com.example.messychef.recipe.dao.RecipeDatabase;
 
@@ -14,6 +15,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class RecipeLoadStore {
 
@@ -27,6 +30,7 @@ public class RecipeLoadStore {
     private Future<List<RecipeDao.RecipeInfo>> recipeInfoFuture;
     private Future<?> deleteRecipeFuture;
     private Future<?> updateRecipeFuture;
+    private Future<List<String>> searchIngredientFuture;
 
 
     private RecipeLoadStore(Context owner) {
@@ -173,6 +177,34 @@ public class RecipeLoadStore {
 
         database.close();
     }
+
+
+
+    public void startSearchIngredient(String name) {
+        searchIngredientFuture = executor.submit(() -> searchIngredient(name));
+    }
+
+    public List<String> commitSearchIngredient() {
+        if(searchIngredientFuture == null)
+            return null;
+
+        List<String> output = null;
+        try {
+            output = searchIngredientFuture.get(100, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException ignored) {}
+        return output;
+    }
+
+    public List<String> searchIngredient(String name) {
+        RecipeDatabase database = builder.build();
+        IngredientDao dao = database.getIngredientDao();
+        List<String> output = dao.searchIngredientByName(name + '%');
+        database.close();
+        return output;
+    }
+
 
 
 }

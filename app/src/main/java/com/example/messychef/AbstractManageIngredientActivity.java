@@ -6,6 +6,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.example.messychef.recipe.load_store.RecipeLoadStore;
 import com.example.messychef.text_manager.TextField;
 import com.example.messychef.utils.FragmentInstaller;
 import com.example.messychef.utils.GeneralUtils;
@@ -13,18 +14,22 @@ import com.example.messychef.utils.GeneralUtils;
 public abstract class AbstractManageIngredientActivity extends AbstractMenuActivity {
 
 
-    TextField nameField;
-    TextField amountField;
+    private TextField nameField;
+    private TextField amountField;
 
     CharSequence name;
     Double quantity;
 
-    FragmentInstaller installer;
+    private final FragmentInstaller installer;
 
     CharSequence unit;
 
+    private final RecipeLoadStore loadStore;
+
+
     AbstractManageIngredientActivity() {
         installer = new FragmentInstaller(this);
+        loadStore = RecipeLoadStore.getInstance();
     }
 
 
@@ -59,8 +64,15 @@ public abstract class AbstractManageIngredientActivity extends AbstractMenuActiv
     }
 
     private void initializeNameField() {
-        nameField = new TextField(this, R.string.ingredient_name_field).addUpdateListener((s) -> name = s);
+        nameField = new TextField(this, R.string.ingredient_name_field)
+                .addUpdateListener(this::inputListener)
+                .addUpdateAutocomplete(loadStore::commitSearchIngredient);
         installer.installFragment(R.id.ingredient_name_field, nameField);
+    }
+
+    private void inputListener(CharSequence cs) {
+        name = cs;
+        loadStore.startSearchIngredient(cs.toString());
     }
 
     private void initializeQuantityField() {
