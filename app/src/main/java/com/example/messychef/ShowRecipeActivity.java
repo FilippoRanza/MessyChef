@@ -7,8 +7,8 @@ import com.example.messychef.delete_dialog.DeleteDialog;
 import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeFactory;
 import com.example.messychef.recipe.RecipeRunner;
+import com.example.messychef.recipe.load_store.RecipeLoadStore;
 import com.example.messychef.storage_facility.CurrentRecipe;
-import com.example.messychef.storage_facility.StoreData;
 import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FieldInitializer;
 
@@ -18,15 +18,15 @@ public class ShowRecipeActivity extends AbstractMenuActivity {
 
 
     private Recipe recipe;
-    private String recipeFile;
+    private int recipeID;
 
     private final CurrentRecipe currentRecipe;
-    private final StoreData storeData;
+    private final RecipeLoadStore storeData;
     private final ActivityStarter starter;
 
     public ShowRecipeActivity() {
         starter = new ActivityStarter(this);
-        storeData = new StoreData(this);
+        storeData = RecipeLoadStore.getInstance();
         currentRecipe = new CurrentRecipe(this);
     }
 
@@ -34,8 +34,8 @@ public class ShowRecipeActivity extends AbstractMenuActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_recipe);
         initRecipe();
+        setContentView(R.layout.activity_show_recipe);
         initTextField();
     }
 
@@ -48,14 +48,15 @@ public class ShowRecipeActivity extends AbstractMenuActivity {
 
     private void initRecipe() {
         try {
-            recipeFile = currentRecipe.getCurrentRecipeName();
-            recipe = storeData.loadRecipe(recipeFile);
+            recipeID = currentRecipe.getCurrentRecipeName();
+            storeData.startLoadRecipeById(recipeID);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void initTextField() {
+        recipe = storeData.commitLoadRecipeById();
         FieldInitializer.getInstance(this)
                 .initTextField(R.id.recipe_name_text_view, recipe.getName())
                 .initTextField(R.id.ingredient_count_text_view, recipe.getIngredients().length)
@@ -78,7 +79,7 @@ public class ShowRecipeActivity extends AbstractMenuActivity {
                 .setMessage(R.string.ingredient_delete_confirm_message)
                 .setTitle(R.string.ingredient_delete_confirm_title)
                 .setDeleteMessageAction((n) -> {
-                    storeData.deleteFile(recipeFile);
+                    storeData.startDeleteRecipe(recipe);
                     finish();
                 })
                 .start();

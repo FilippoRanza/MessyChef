@@ -22,12 +22,12 @@ public class CurrentRecipe {
         facility.deleteFile(CURR_RECIPE_FILE_NAME);
     }
 
-    public void setCurrentRecipeName(String fileName) throws IOException {
-        RecipeCacheInfo info = new RecipeCacheInfo(fileName);
+    public void setCurrentRecipeName(int id) throws IOException {
+        RecipeCacheInfo info = new RecipeCacheInfo(id);
         info.store(makeWriter());
     }
 
-    public String getCurrentRecipeName() throws IOException {
+    public Integer getCurrentRecipeName() throws IOException {
         return (exists()) ? blindGetCurrentRecipeName() : null;
     }
 
@@ -40,13 +40,13 @@ public class CurrentRecipe {
     }
 
 
-    public Integer blindGetCurrentRecipeIndex() throws IOException {
+    private Integer blindGetCurrentRecipeIndex() throws IOException {
         return load().getCurrStep();
     }
 
 
-    public String blindGetCurrentRecipeName() throws IOException {
-        return load().getFileName();
+    public int blindGetCurrentRecipeName() throws IOException {
+        return load().getRecipeIndex();
     }
 
 

@@ -5,27 +5,27 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.messychef.list_manager.ListManagerFragment;
+import com.example.messychef.recipe.dao.RecipeDao;
+import com.example.messychef.recipe.load_store.RecipeLoadStore;
 import com.example.messychef.storage_facility.CurrentRecipe;
-import com.example.messychef.storage_facility.FileInfo;
-import com.example.messychef.storage_facility.StoreData;
 import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FragmentInstaller;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.List;
 
 public class RecipeListActivity extends AbstractMenuActivity {
 
-    private final StoreData storeData;
+    private final RecipeLoadStore storeData;
     private final FragmentInstaller installer;
     private final ActivityStarter starter;
     private final CurrentRecipe currentRecipe;
 
-    private FileInfo[] names;
+    private List<RecipeDao.RecipeInfo> names;
     private ListManagerFragment listManagerFragment;
 
     public RecipeListActivity() {
-        storeData = new StoreData(this);
+        storeData = RecipeLoadStore.getInstance();
         installer = new FragmentInstaller(this);
         starter = new ActivityStarter(this);
         currentRecipe = new CurrentRecipe(this);
@@ -35,6 +35,7 @@ public class RecipeListActivity extends AbstractMenuActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        storeData.startGetRecipeList();
         setContentView(R.layout.activity_recipe_list);
         initListFragment();
         initRecipeList();
@@ -44,6 +45,7 @@ public class RecipeListActivity extends AbstractMenuActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        storeData.startGetRecipeList();
         initRecipeList();
     }
 
@@ -63,19 +65,16 @@ public class RecipeListActivity extends AbstractMenuActivity {
 
 
     private void initRecipeList() {
-        try {
-            names = storeData.buildFileInfoList();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        listManagerFragment.updateList(Arrays.stream(names).map(FileInfo::toString));
+        names = storeData.commitGetRecipeList();
+        listManagerFragment.updateList(names.stream().map(RecipeDao.RecipeInfo::getName));
 
     }
 
+
     private void startShowRecipe(int id) {
-        FileInfo info = names[id];
+        RecipeDao.RecipeInfo info = names.get(id);
         try {
-            currentRecipe.setCurrentRecipeName(info.getFileName());
+            currentRecipe.setCurrentRecipeName(info.getRecipeID());
         } catch (IOException e) {
             e.printStackTrace();
         }

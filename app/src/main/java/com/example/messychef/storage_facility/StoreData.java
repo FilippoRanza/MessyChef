@@ -11,7 +11,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class StoreData {
+class StoreData {
 
     private static final String RECIPE_IDENTIFIER = "recipe";
 

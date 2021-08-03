@@ -5,9 +5,8 @@ import android.view.View;
 
 import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeFactory;
+import com.example.messychef.recipe.load_store.RecipeLoadStore;
 import com.example.messychef.storage_facility.CurrentRecipe;
-import com.example.messychef.storage_facility.FileInfo;
-import com.example.messychef.storage_facility.StoreData;
 import com.example.messychef.text_manager.TextField;
 import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FragmentInstaller;
@@ -23,10 +22,10 @@ public class AddRecipeActivity extends AbstractMenuActivity {
     private CharSequence name;
 
     private final CurrentRecipe currentRecipe;
-    private final StoreData storeData;
+    private final RecipeLoadStore storeData;
 
     public AddRecipeActivity() {
-        storeData = new StoreData(this);
+        storeData = RecipeLoadStore.getInstance();
         currentRecipe = new CurrentRecipe(this);
     }
 
@@ -82,17 +81,19 @@ public class AddRecipeActivity extends AbstractMenuActivity {
     private void runSave() throws IOException {
         factory.setName(name.toString());
         Recipe recipe = factory.getRecipe();
-        String fileName = currentRecipe.getCurrentRecipeName();
-        if (fileName != null)
-            updateRecipe(recipe, fileName);
+        Integer recipeID = currentRecipe.getCurrentRecipeName();
+        if (recipeID != null)
+            updateRecipe(recipe, recipeID);
         else
-            storeData.saveRecipe(recipe);
+            storeData.startSaveRecipe(recipe);
 
     }
 
-    private void updateRecipe(Recipe recipe, String currFile) throws IOException {
+    private void updateRecipe(Recipe recipe, int recipeId) throws IOException {
+        /*
         FileInfo info = storeData.updateRecipe(recipe, currFile);
         String newFile = info.getFileName();
         currentRecipe.setCurrentRecipeName(newFile);
+         */
     }
 }

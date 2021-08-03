@@ -26,11 +26,15 @@ class RecipeStore {
 
     void storeRecipe(Recipe recipe) {
         updateRecipeIndex(recipe);
-        System.out.println(recipe.getRecipeID());
         saveRecipeIngredients(recipe);
         saveRecipeSteps(recipe);
         saveRecipe(recipe);
     }
+
+    void updateRecipe(Recipe recipe) {
+
+    }
+
 
     private void updateRecipeIndex(Recipe recipe) {
         RecipeDao dao = database.getRecipeDao();

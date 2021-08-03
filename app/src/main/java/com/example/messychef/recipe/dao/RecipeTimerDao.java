@@ -1,6 +1,7 @@
 package com.example.messychef.recipe.dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -17,5 +18,8 @@ public interface RecipeTimerDao {
 
     @Insert
     void addRecipeTimer(RecipeTimer timer);
+
+    @Delete
+    void delete(RecipeTimer timer);
 
 }

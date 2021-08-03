@@ -8,15 +8,15 @@ import java.io.OutputStream;
 
 class RecipeCacheInfo {
 
-    private final String fileName;
+    private final int fileName;
     private int currStep;
 
 
-    RecipeCacheInfo(String fileName) {
+    RecipeCacheInfo(int fileName) {
         this(fileName, 0);
     }
 
-    RecipeCacheInfo(String fileName, int currStep) {
+    RecipeCacheInfo(int fileName, int currStep) {
         this.fileName = fileName;
         this.currStep = currStep;
     }
@@ -24,14 +24,14 @@ class RecipeCacheInfo {
 
     void store(OutputStream os) throws IOException {
         DataOutputStream dos = new DataOutputStream(os);
-        dos.writeUTF(fileName);
+        dos.writeInt(fileName);
         dos.writeInt(currStep);
         os.close();
     }
 
     static RecipeCacheInfo load(InputStream is) throws IOException {
         DataInputStream dis = new DataInputStream(is);
-        String fileName = dis.readUTF();
+        int fileName = dis.readInt();
         int currStep = dis.readInt();
         RecipeCacheInfo output = new RecipeCacheInfo(fileName, currStep);
         dis.close();
@@ -39,7 +39,7 @@ class RecipeCacheInfo {
     }
 
 
-    String getFileName() {
+    int getRecipeIndex() {
         return fileName;
     }
 

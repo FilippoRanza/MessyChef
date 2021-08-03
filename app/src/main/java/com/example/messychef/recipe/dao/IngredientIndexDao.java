@@ -15,4 +15,7 @@ public interface IngredientIndexDao {
     @Query("SELECT ingredientID FROM ingredientindex WHERE stepID = (:id) and type = (:type)")
     List<Integer> getIngredientsById(int id, int type);
 
+    @Query("DELETE FROM ingredientindex WHERE stepID = (:stepId) and type = (:type)")
+    void deleteAll(int stepId, int type);
+
 }
