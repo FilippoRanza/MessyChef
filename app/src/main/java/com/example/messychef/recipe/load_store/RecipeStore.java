@@ -41,6 +41,7 @@ class RecipeStore {
         int lastID = dao.getLastRecipeID();
         recipe.setRecipeID(lastID + 1);
         recipe.updateComponentID();
+        updateStepId(recipe.getSteps());
     }
 
 
@@ -81,6 +82,20 @@ class RecipeStore {
                 recipeProcessDao.addRecipeProcess((RecipeProcess) step);
             } else if (step instanceof RecipeTimer) {
                 recipeTimerDao.addRecipeTimer((RecipeTimer) step);
+            }
+        }
+    }
+
+    private void updateStepId(Step[] steps) {
+        TakeIngredientDao takeIngredientDao = database.getTakeIngredientDao();
+        RecipeProcessDao recipeProcessDao = database.getRecipeProcessDao();
+        for (Step step : steps) {
+            if (step instanceof TakeIngredientStep) {
+                TakeIngredientStep s = (TakeIngredientStep) step;
+                s.setTakeIngredientID(takeIngredientDao.getLastTakeIngredientID() + 1);
+            } else if (step instanceof RecipeProcess) {
+                RecipeProcess s = (RecipeProcess) step;
+                s.setProcessID(recipeProcessDao.getLastRecipeProcessID() + 1);
             }
         }
     }

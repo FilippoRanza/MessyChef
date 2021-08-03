@@ -28,6 +28,7 @@ public class TestDatabase {
 
     static final String READ_WRITE_DB = "read-write";
     static final String MASSIVE_WRITE_DB = "massive-write";
+    static final String DELETE_RECIPE_DB = "delete-recipe";
 
     FakeRecipeFactory fakeRecipeFactory;
 
@@ -66,6 +67,22 @@ public class TestDatabase {
 
     }
 
+
+    @Test
+    public void testDeleteRecipe() {
+        Recipe recipe = fakeRecipeFactory.makeRandomRecipe(5, 10);
+        RecipeLoadStore loadStore = initDatabase(DELETE_RECIPE_DB);
+        loadStore.saveRecipe(recipe);
+        List<RecipeDao.RecipeInfo> preDelete = loadStore.getRecipeList();
+        assertEquals(preDelete.size(), 1);
+
+        loadStore.deleteRecipe(recipe);
+        List<RecipeDao.RecipeInfo> postDelete = loadStore.getRecipeList();
+        assertEquals(postDelete.size(), 0);
+    }
+
+
+
     private ArrayList<Recipe> buildRecipes(int count) {
         ArrayList<Recipe> output = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
@@ -90,6 +107,7 @@ public class TestDatabase {
         Context context = ApplicationProvider.getApplicationContext();
         context.getDatabasePath(READ_WRITE_DB).delete();
         context.getDatabasePath(MASSIVE_WRITE_DB).delete();
+        context.getDatabasePath(DELETE_RECIPE_DB).delete();
     }
 
 
