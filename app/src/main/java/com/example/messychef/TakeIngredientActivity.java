@@ -16,7 +16,7 @@ public class TakeIngredientActivity extends AbstractMenuActivity {
     protected TextField actionName;
     protected CharSequence name;
 
-    private FragmentInstaller installer;
+    private final FragmentInstaller installer;
     private CheckBoxListFragment fragment;
 
     public TakeIngredientActivity() {

@@ -1,11 +1,18 @@
 package com.example.messychef.recipe;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity(tableName = "recipe-timer")
 public class RecipeTimer extends Step implements Serializable {
 
     private static final int NO_STEPS = -1;
+
+    @PrimaryKey(autoGenerate = true)
+    private int timerID;
 
     private int globalTime;
     private int stepTime;
@@ -21,6 +28,14 @@ public class RecipeTimer extends Step implements Serializable {
             this.stepTime = stepTime;
     }
 
+
+    public int getTimerID() {
+        return timerID;
+    }
+
+    public void setTimerID(int timerID) {
+        this.timerID = timerID;
+    }
 
     @Override
     public String getName() {

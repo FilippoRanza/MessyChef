@@ -12,7 +12,7 @@ import com.example.messychef.utils.ActivityStarter;
 
 public class LastStepFragment extends AbstractShowStepFragment {
 
-    private ActivityStarter starter;
+    private final ActivityStarter starter;
 
     public LastStepFragment(Activity owner) {
         starter = new ActivityStarter(owner);

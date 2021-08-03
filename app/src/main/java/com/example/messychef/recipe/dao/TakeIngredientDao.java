@@ -1,0 +1,23 @@
+package com.example.messychef.recipe.dao;
+
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.Query;
+
+import com.example.messychef.recipe.TakeIngredientStep;
+
+import java.util.List;
+
+@Dao
+public interface TakeIngredientDao {
+
+    @Query("SELECT * FROM `take-ingredient` WHERE recipeID = (:recipeID)")
+    List<TakeIngredientStep> getTakeIngredientByRecipe(int recipeID);
+
+    @Query("SELECT MAX(takeIngredientID) FROM `TAKE-INGREDIENT`")
+    int getLastTakeIngredientID();
+
+    @Insert
+    void addTakeIngredient(TakeIngredientStep step);
+
+}

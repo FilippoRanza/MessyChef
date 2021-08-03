@@ -1,14 +1,30 @@
 package com.example.messychef.recipe;
 
-import java.io.Serializable;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Recipe implements Serializable {
+@Entity(tableName = "recipes")
+public class Recipe {
 
-    private final String name;
-    private final Ingredient[] ingredients;
-    private final Step[] steps;
+    @PrimaryKey
+    private int recipeID;
+    private String name;
+
+    @Ignore
+    private Ingredient[] ingredients;
+
+    @Ignore
+    private Step[] steps;
+
+    public Recipe() {
+        name = null;
+        ingredients = null;
+        steps = null;
+    }
 
     public Recipe(String name, Ingredient[] ingredients, Step[] steps) {
         this.name = name;
@@ -16,6 +32,17 @@ public class Recipe implements Serializable {
         this.steps = steps;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIngredients(Ingredient[] ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void setSteps(Step[] steps) {
+        this.steps = steps;
+    }
 
     public String getName() {
         return name;
@@ -29,6 +56,14 @@ public class Recipe implements Serializable {
         return steps;
     }
 
+
+    public int getRecipeID() {
+        return recipeID;
+    }
+
+    public void setRecipeID(int rid) {
+        this.recipeID = rid;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -46,5 +81,16 @@ public class Recipe implements Serializable {
         result = 31 * result + Arrays.hashCode(ingredients);
         result = 31 * result + Arrays.hashCode(steps);
         return result;
+    }
+
+    public void updateComponentID() {
+        for (int i = 0; i < ingredients.length; i++) {
+            ingredients[i].setRecipeID(recipeID);
+            ingredients[i].setRecipeIndex(i);
+        }
+        for (int i = 0; i < steps.length; i++) {
+            steps[i].setRecipeIndex(i);
+            steps[i].setRecipeID(recipeID);
+        }
     }
 }

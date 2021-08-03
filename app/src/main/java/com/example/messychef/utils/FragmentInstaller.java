@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentContainerView;
 
 public class FragmentInstaller {
 
-    private AppCompatActivity owner;
+    private final AppCompatActivity owner;
 
     public FragmentInstaller(AppCompatActivity owner) {
         this.owner = owner;

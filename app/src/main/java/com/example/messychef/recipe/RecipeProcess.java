@@ -1,14 +1,33 @@
 package com.example.messychef.recipe;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+import com.example.messychef.recipe.dao.IngredientIndex;
+
 import java.util.Arrays;
 import java.util.Objects;
 
-public class RecipeProcess extends Step implements IngredientList {
+@Entity(tableName = "recipe-process")
+public class RecipeProcess extends Step implements IngredientList, SetIngredientsFromDB {
+
+    @PrimaryKey
+    private int processID;
 
     private String description;
+
+    @Ignore
     private int[] ingredients;
+
     private String name;
 
+    public RecipeProcess(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    @Ignore
     public RecipeProcess(String name, String description, int[] ingredients) {
         this.name = name;
         this.description = description;
@@ -39,6 +58,14 @@ public class RecipeProcess extends Step implements IngredientList {
     }
 
 
+    public int getProcessID() {
+        return processID;
+    }
+
+    public void setProcessID(int processID) {
+        this.processID = processID;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,5 +95,25 @@ public class RecipeProcess extends Step implements IngredientList {
     @Override
     public int[] getIngredientIndexList() {
         return ingredients;
+    }
+
+    @Override
+    public void setIngredientList(int[] list) {
+        this.ingredients = list;
+    }
+
+    @Override
+    public int[] getIngredients() {
+        return ingredients;
+    }
+
+    @Override
+    public int getType() {
+        return IngredientIndex.PROCESS;
+    }
+
+    @Override
+    public int getId() {
+        return processID;
     }
 }

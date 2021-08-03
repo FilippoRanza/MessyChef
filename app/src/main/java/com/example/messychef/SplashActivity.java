@@ -3,6 +3,8 @@ package com.example.messychef;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.messychef.recipe.load_store.RecipeLoadStore;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,6 +22,7 @@ public class SplashActivity extends AbstractMenuActivity {
                 startApp();
             }
         }, 1000L);
+        RecipeLoadStore.initInstance(getApplicationContext());
     }
 
 

@@ -13,7 +13,7 @@ import com.example.messychef.utils.IngredientsFieldRunnerValues;
 
 public class ShowProcessIngredientsStepFragment extends AbstractShowStepFragment {
 
-    private IngredientsFieldRunnerValues<RecipeProcess> ingredientsFieldRunnerValues;
+    private final IngredientsFieldRunnerValues<RecipeProcess> ingredientsFieldRunnerValues;
 
     public ShowProcessIngredientsStepFragment(Activity owner) {
         ingredientsFieldRunnerValues = new IngredientsFieldRunnerValues<>(owner);
