@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.messychef.recipe.TakeIngredientStep;
 
@@ -23,5 +24,8 @@ public interface TakeIngredientDao {
 
     @Delete
     void delete(TakeIngredientStep step);
+
+    @Update
+    void update(TakeIngredientStep step);
 
 }

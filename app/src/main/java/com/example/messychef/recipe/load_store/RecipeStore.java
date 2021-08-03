@@ -32,7 +32,52 @@ class RecipeStore {
     }
 
     void updateRecipe(Recipe recipe) {
+        updateRecipeIngredients(recipe);
+        updateRecipeSteps(recipe);
+        mUpdateRecipe(recipe);
+    }
 
+    private void mUpdateRecipe(Recipe recipe) {
+        RecipeDao dao = database.getRecipeDao();
+        dao.update(recipe);
+    }
+
+    private void updateRecipeSteps(Recipe recipe) {
+        TakeIngredientDao takeIngredientDao = database.getTakeIngredientDao();
+        RecipeProcessDao recipeProcessDao = database.getRecipeProcessDao();
+        RecipeTimerDao recipeTimerDao = database.getRecipeTimerDao();
+
+        IngredientIndexDao ingredientIndexDao = database.getIngredientIndexDao();
+
+        for (Step step : recipe.getSteps()) {
+            if(step instanceof SetIngredientsFromDB) {
+                updateIngredientIndex((SetIngredientsFromDB) step);
+            }
+            if (step instanceof TakeIngredientStep) { ;
+                takeIngredientDao.update((TakeIngredientStep) step);
+            } else if (step instanceof RecipeProcess) {
+                recipeProcessDao.update((RecipeProcess) step);
+            } else if (step instanceof RecipeTimer) {
+                recipeTimerDao.update((RecipeTimer) step);
+            }
+        }
+    }
+
+    private void updateIngredientIndex(SetIngredientsFromDB step) {
+        IngredientIndexDao ingredientIndexDao = database.getIngredientIndexDao();
+        ingredientIndexDao.deleteAll(step.getId(), step.getType());
+        for (int i : step.getIngredients()) {
+            IngredientIndex index = new IngredientIndex(step.getId(), i, step.getType());
+            ingredientIndexDao.addIngredientIndex(index);
+        }
+    }
+
+
+    private void updateRecipeIngredients(Recipe recipe) {
+        IngredientDao dao = database.getIngredientDao();
+        for (Ingredient i : recipe.getIngredients()) {
+            dao.update(i);
+        }
     }
 
 
@@ -41,7 +86,6 @@ class RecipeStore {
         int lastID = dao.getLastRecipeID();
         recipe.setRecipeID(lastID + 1);
         recipe.updateComponentID();
-        updateStepId(recipe.getSteps());
     }
 
 
@@ -86,19 +130,6 @@ class RecipeStore {
         }
     }
 
-    private void updateStepId(Step[] steps) {
-        TakeIngredientDao takeIngredientDao = database.getTakeIngredientDao();
-        RecipeProcessDao recipeProcessDao = database.getRecipeProcessDao();
-        for (Step step : steps) {
-            if (step instanceof TakeIngredientStep) {
-                TakeIngredientStep s = (TakeIngredientStep) step;
-                s.setTakeIngredientID(takeIngredientDao.getLastTakeIngredientID() + 1);
-            } else if (step instanceof RecipeProcess) {
-                RecipeProcess s = (RecipeProcess) step;
-                s.setProcessID(recipeProcessDao.getLastRecipeProcessID() + 1);
-            }
-        }
-    }
 
     private void saveAllIngredientList(Step[] step) {
         for (Step s : step) {

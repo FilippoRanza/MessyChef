@@ -90,10 +90,9 @@ public class AddRecipeActivity extends AbstractMenuActivity {
     }
 
     private void updateRecipe(Recipe recipe, int recipeId) throws IOException {
-        /*
-        FileInfo info = storeData.updateRecipe(recipe, currFile);
-        String newFile = info.getFileName();
-        currentRecipe.setCurrentRecipeName(newFile);
-         */
+        recipe.setRecipeID(recipeId);
+        recipe.updateComponentID();
+        storeData.startUpdateRecipe(recipe);
+        currentRecipe.setCurrentRecipeName(recipeId);
     }
 }

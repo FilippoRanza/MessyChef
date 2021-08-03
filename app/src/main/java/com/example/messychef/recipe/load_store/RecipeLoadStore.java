@@ -26,6 +26,7 @@ public class RecipeLoadStore {
     private Future<?> storeRecipeFuture;
     private Future<List<RecipeDao.RecipeInfo>> recipeInfoFuture;
     private Future<?> deleteRecipeFuture;
+    private Future<?> updateRecipeFuture;
 
 
     private RecipeLoadStore(Context owner) {
@@ -123,14 +124,12 @@ public class RecipeLoadStore {
     }
 
     private void autoCommit() {
-        try {
-            if (storeRecipeFuture != null)
-                storeRecipeFuture.get();
-            if (deleteRecipeFuture != null)
-                deleteRecipeFuture.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        if (storeRecipeFuture != null)
+            commitSaveRecipe();
+        if (deleteRecipeFuture != null)
+            commitDeleteRecipe();
+        if (updateRecipeFuture != null)
+            commitUpdateRecipe();
     }
 
     public void startDeleteRecipe(Recipe recipe) {
@@ -151,4 +150,29 @@ public class RecipeLoadStore {
         recipeDelete.deleteRecipe(recipe);
         database.close();
     }
+
+    public void startUpdateRecipe(Recipe recipe) {
+        updateRecipeFuture = executor.submit(() -> updateRecipe(recipe));
+    }
+
+
+    public void commitUpdateRecipe() {
+        try {
+            updateRecipeFuture.get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void updateRecipe(Recipe recipe) {
+        RecipeDatabase database = builder.build();
+
+        RecipeStore store = new RecipeStore(database);
+        store.updateRecipe(recipe);
+
+        database.close();
+    }
+
+
 }

@@ -29,6 +29,8 @@ public class TestDatabase {
     static final String READ_WRITE_DB = "read-write";
     static final String MASSIVE_WRITE_DB = "massive-write";
     static final String DELETE_RECIPE_DB = "delete-recipe";
+    static final String UPDATE_RECIPE_DB = "update-recipe";
+
 
     FakeRecipeFactory fakeRecipeFactory;
 
@@ -81,6 +83,22 @@ public class TestDatabase {
         assertEquals(postDelete.size(), 0);
     }
 
+    @Test
+    public void testUpdateRecipe() {
+        Recipe origRecipe = fakeRecipeFactory.makeRandomRecipe(5, 10);
+        RecipeLoadStore loadStore = initDatabase(UPDATE_RECIPE_DB);
+        loadStore.saveRecipe(origRecipe);
+        origRecipe.setName("1234");
+        loadStore.updateRecipe(origRecipe);
+
+        Recipe newRecipe = loadStore.loadRecipeById(1);
+
+        assertEquals(origRecipe, newRecipe);
+    }
+
+
+
+
 
 
     private ArrayList<Recipe> buildRecipes(int count) {
@@ -108,6 +126,7 @@ public class TestDatabase {
         context.getDatabasePath(READ_WRITE_DB).delete();
         context.getDatabasePath(MASSIVE_WRITE_DB).delete();
         context.getDatabasePath(DELETE_RECIPE_DB).delete();
+        context.getDatabasePath(UPDATE_RECIPE_DB).delete();
     }
 
 

@@ -4,7 +4,9 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
+import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeProcess;
 
 import java.util.List;
@@ -24,5 +26,8 @@ public interface RecipeProcessDao {
 
     @Delete
     void delete(RecipeProcess process);
+
+    @Update
+    void update(RecipeProcess process);
 
 }
