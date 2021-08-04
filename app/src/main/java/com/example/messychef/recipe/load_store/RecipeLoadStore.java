@@ -20,7 +20,8 @@ import java.util.concurrent.TimeoutException;
 
 public class RecipeLoadStore {
 
-    private final DatabaseCache builder;
+    private final DatabaseCache databaseCache;
+    private final RoomDatabase.Builder<RecipeDatabase> builder;
     private static RecipeLoadStore instance;
     private final ExecutorService executor;
 
@@ -39,7 +40,8 @@ public class RecipeLoadStore {
     }
 
     private RecipeLoadStore(RoomDatabase.Builder<RecipeDatabase> builder) {
-        this.builder = new DatabaseCache(builder);
+        this.databaseCache = new DatabaseCache(builder);
+        this.builder = builder;
         builder.fallbackToDestructiveMigration();
         executor = Executors.newSingleThreadExecutor();
     }
@@ -78,10 +80,10 @@ public class RecipeLoadStore {
 
 
     public Recipe loadRecipeById(int id) {
-        RecipeDatabase database = builder.open();
+        RecipeDatabase database = databaseCache.open();
         RecipeLoad recipeLoad = new RecipeLoad(database);
         Recipe recipe = recipeLoad.loadRecipe(id);
-        builder.close();
+        databaseCache.close();
         return recipe;
     }
 
@@ -98,10 +100,10 @@ public class RecipeLoadStore {
     }
 
     public void saveRecipe(Recipe r) {
-        RecipeDatabase database = builder.open();
+        RecipeDatabase database = databaseCache.open();
         RecipeStore recipeStore = new RecipeStore(database);
         recipeStore.storeRecipe(r);
-        builder.close();
+        databaseCache.close();
     }
 
     public void startGetRecipeList() {
@@ -121,10 +123,10 @@ public class RecipeLoadStore {
 
 
     public List<RecipeDao.RecipeInfo> getRecipeList() {
-        RecipeDatabase database = builder.open();
+        RecipeDatabase database = databaseCache.open();
         RecipeDao dao = database.getRecipeDao();
         List<RecipeDao.RecipeInfo> recipesName = dao.getRecipesName();
-        builder.close();
+        databaseCache.close();
         return recipesName;
     }
 
@@ -150,10 +152,10 @@ public class RecipeLoadStore {
     }
 
     public void deleteRecipe(Recipe recipe) {
-        RecipeDatabase database = builder.open();
+        RecipeDatabase database = databaseCache.open();
         RecipeDelete recipeDelete = new RecipeDelete(database);
         recipeDelete.deleteRecipe(recipe);
-        builder.close();
+        databaseCache.close();
     }
 
     public void startUpdateRecipe(Recipe recipe) {
@@ -171,12 +173,12 @@ public class RecipeLoadStore {
 
 
     public void updateRecipe(Recipe recipe) {
-        RecipeDatabase database = builder.open();
+        RecipeDatabase database = databaseCache.open();
 
         RecipeStore store = new RecipeStore(database);
         store.updateRecipe(recipe);
 
-        builder.close();
+        databaseCache.close();
     }
 
 
@@ -189,10 +191,10 @@ public class RecipeLoadStore {
     }
 
     public List<String> searchIngredient(String name) {
-        RecipeDatabase database = builder.open();
+        RecipeDatabase database = databaseCache.open();
         IngredientDao dao = database.getIngredientDao();
         List<String> output = dao.searchIngredientByName(name + '%');
-        builder.close();
+        databaseCache.close();
         return output;
     }
 
@@ -206,20 +208,20 @@ public class RecipeLoadStore {
     }
 
     public List<RecipeDao.RecipeInfo> searchRecipe(String name) {
-        RecipeDatabase database = builder.open();
+        RecipeDatabase database = databaseCache.open();
         RecipeDao dao = database.getRecipeDao();
         List<RecipeDao.RecipeInfo> output = dao.searchByName(name + '%');
-        builder.close();
+        databaseCache.close();
         return output;
     }
 
 
     public void startCacheDatabase() {
-        builder.startCache();
+        databaseCache.startCache();
     }
 
     public void stopCacheDatabase() {
-        builder.stopCache();
+        databaseCache.stopCache();
     }
 
 
@@ -243,10 +245,15 @@ public class RecipeLoadStore {
     }
 
     List<RecipeDao.RecipeInfo> searchRecipeByIngredient(String name) {
-        RecipeDatabase database = builder.open();
+        RecipeDatabase database = databaseCache.open();
         RecipeDao dao = database.getRecipeDao();
         List<RecipeDao.RecipeInfo> output = dao.searchByIngredient(name + '%');
-        builder.close();
+        databaseCache.close();
         return output;
     }
+
+    public RecipeIterator getRecipeIterator() {
+        return new RecipeIterator(builder.build());
+    }
+
 }

@@ -51,6 +51,9 @@ public interface RecipeDao {
     @Query("SELECT name, recipeID FROM recipes")
     List<RecipeInfo> getRecipesName();
 
+    @Query("SELECT COUNT(*) FROM recipes where recipeID = (:recipeID)")
+    int findRecipe(int recipeID);
+
     @Query("SELECT MAX(recipeID) FROM recipes ")
     int getLastRecipeID();
 

@@ -12,6 +12,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.dao.RecipeDao;
 import com.example.messychef.recipe.dao.RecipeDatabase;
+import com.example.messychef.recipe.load_store.RecipeIterator;
 import com.example.messychef.recipe.load_store.RecipeLoadStore;
 
 import org.junit.After;
@@ -30,6 +31,7 @@ public class TestDatabase {
     static final String MASSIVE_WRITE_DB = "massive-write";
     static final String DELETE_RECIPE_DB = "delete-recipe";
     static final String UPDATE_RECIPE_DB = "update-recipe";
+    static final String RECIPE_ITERATOR_DB = "recipe-iterator";
 
 
     FakeRecipeFactory fakeRecipeFactory;
@@ -97,8 +99,30 @@ public class TestDatabase {
     }
 
 
+    @Test
+    public void testRecipeIterator() {
+        ArrayList<Recipe> recipes = buildRecipes(100);
+        RecipeLoadStore loadStore = initDatabase(RECIPE_ITERATOR_DB);
+        for (Recipe r : recipes) {
+            loadStore.saveRecipe(r);
+        }
+
+        for (int i = 90; i > 0; i -= 10) {
+            Recipe r = recipes.remove(i);
+            loadStore.deleteRecipe(r);
+        }
 
 
+        int i = 0;
+        RecipeIterator iterator = loadStore.getRecipeIterator();
+        for (Recipe actual : iterator) {
+            Recipe expect = recipes.get(i);
+            assertEquals(expect, actual);
+            i++;
+        }
+        assertEquals(i, recipes.size());
+
+    }
 
 
     private ArrayList<Recipe> buildRecipes(int count) {
@@ -109,7 +133,6 @@ public class TestDatabase {
         }
         return output;
     }
-
 
 
     private RecipeLoadStore initDatabase(String name) {
@@ -127,9 +150,8 @@ public class TestDatabase {
         context.getDatabasePath(MASSIVE_WRITE_DB).delete();
         context.getDatabasePath(DELETE_RECIPE_DB).delete();
         context.getDatabasePath(UPDATE_RECIPE_DB).delete();
+        context.getDatabasePath(RECIPE_ITERATOR_DB).delete();
     }
-
-
 
 
 }

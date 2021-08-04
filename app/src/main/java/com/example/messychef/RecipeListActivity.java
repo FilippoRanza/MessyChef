@@ -108,7 +108,7 @@ public class RecipeListActivity extends AbstractMenuActivity {
 
 
     private void updateListOnSearchResult() {
-        if(status == FilterStatus.Filtering) {
+        if (status == FilterStatus.Filtering) {
             List<RecipeDao.RecipeInfo> list = storeData.commitSearchRecipe();
             System.out.println(list.size());
             names = list;
