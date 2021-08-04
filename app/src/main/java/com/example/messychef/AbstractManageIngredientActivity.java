@@ -66,7 +66,9 @@ public abstract class AbstractManageIngredientActivity extends AbstractMenuActiv
     private void initializeNameField() {
         nameField = new TextField(this, R.string.ingredient_name_field)
                 .addUpdateListener(this::inputListener)
-                .addUpdateAutocomplete(loadStore::commitSearchIngredient);
+                .addUpdateAutocomplete(loadStore::commitSearchIngredient)
+                .addFocusGetCallback(loadStore::startCacheDatabase)
+                .addFocusLostCallback(loadStore::stopCacheDatabase);
         installer.installFragment(R.id.ingredient_name_field, nameField);
     }
 
