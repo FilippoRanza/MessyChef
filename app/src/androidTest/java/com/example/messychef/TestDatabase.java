@@ -1,6 +1,7 @@
 package com.example.messychef;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import android.content.Context;
 
@@ -14,12 +15,20 @@ import com.example.messychef.recipe.dao.RecipeDao;
 import com.example.messychef.recipe.dao.RecipeDatabase;
 import com.example.messychef.recipe.load_store.RecipeIterator;
 import com.example.messychef.recipe.load_store.RecipeLoadStore;
+import com.example.messychef.storage_facility.ImportExportManager;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,24 +36,21 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 public class TestDatabase {
 
-    static final String READ_WRITE_DB = "read-write";
-    static final String MASSIVE_WRITE_DB = "massive-write";
-    static final String DELETE_RECIPE_DB = "delete-recipe";
-    static final String UPDATE_RECIPE_DB = "update-recipe";
-    static final String RECIPE_ITERATOR_DB = "recipe-iterator";
 
+    DatabaseNameGenerator nameGenerator;
 
     FakeRecipeFactory fakeRecipeFactory;
 
     @Before
     public void initialize() {
         fakeRecipeFactory = new FakeRecipeFactory();
+        nameGenerator = new DatabaseNameGenerator();
     }
 
     @Test
     public void writeDataInDatabase() {
         Recipe recipe = fakeRecipeFactory.makeRandomRecipe(5, 10);
-        RecipeLoadStore loadStore = initDatabase(READ_WRITE_DB);
+        RecipeLoadStore loadStore = initDatabase(nameGenerator.getNextName());
         loadStore.saveRecipe(recipe);
         Recipe newRecipe = loadStore.loadRecipeById(1);
         assertEquals(recipe, newRecipe);
@@ -54,7 +60,7 @@ public class TestDatabase {
     @Test
     public void testRecipeNameList() {
         ArrayList<Recipe> recipes = buildRecipes(100);
-        RecipeLoadStore loadStore = initDatabase(MASSIVE_WRITE_DB);
+        RecipeLoadStore loadStore = initDatabase(nameGenerator.getNextName());
         for (Recipe r : recipes) {
             loadStore.saveRecipe(r);
         }
@@ -75,7 +81,7 @@ public class TestDatabase {
     @Test
     public void testDeleteRecipe() {
         Recipe recipe = fakeRecipeFactory.makeRandomRecipe(5, 10);
-        RecipeLoadStore loadStore = initDatabase(DELETE_RECIPE_DB);
+        RecipeLoadStore loadStore = initDatabase(nameGenerator.getNextName());
         loadStore.saveRecipe(recipe);
         List<RecipeDao.RecipeInfo> preDelete = loadStore.getRecipeList();
         assertEquals(preDelete.size(), 1);
@@ -88,7 +94,7 @@ public class TestDatabase {
     @Test
     public void testUpdateRecipe() {
         Recipe origRecipe = fakeRecipeFactory.makeRandomRecipe(5, 10);
-        RecipeLoadStore loadStore = initDatabase(UPDATE_RECIPE_DB);
+        RecipeLoadStore loadStore = initDatabase(nameGenerator.getNextName());
         loadStore.saveRecipe(origRecipe);
         origRecipe.setName("1234");
         loadStore.updateRecipe(origRecipe);
@@ -102,7 +108,7 @@ public class TestDatabase {
     @Test
     public void testRecipeIterator() {
         ArrayList<Recipe> recipes = buildRecipes(100);
-        RecipeLoadStore loadStore = initDatabase(RECIPE_ITERATOR_DB);
+        RecipeLoadStore loadStore = initDatabase(nameGenerator.getNextName());
         for (Recipe r : recipes) {
             loadStore.saveRecipe(r);
         }
@@ -121,6 +127,34 @@ public class TestDatabase {
             i++;
         }
         assertEquals(i, recipes.size());
+
+    }
+
+
+    @Test
+    public void testRecipeImportExport() throws IOException {
+        ArrayList<Recipe> originalRecipes = buildRecipes(25);
+        RecipeLoadStore originalDatabase = initDatabase(nameGenerator.getNextName());
+        for (Recipe recipe : originalRecipes)
+            originalDatabase.saveRecipe(recipe);
+
+        Path tempDir = makeTempDir();
+        File file = Paths.get(tempDir.toString(), "recipe-export.dat").toFile();
+
+        ImportExportManager importExportManager = new ImportExportManager();
+        importExportManager.exportRecipes(new FileOutputStream(file), originalDatabase);
+
+        RecipeLoadStore importDatabase = initDatabase(nameGenerator.getNextName());
+
+        importExportManager.importRecipes(new FileInputStream(file), importDatabase);
+
+        RecipeIterator iterator = importDatabase.getRecipeIterator();
+        int i = 0;
+        for (Recipe actual : iterator) {
+            Recipe expect = originalRecipes.get(i++);
+            assertEquals(expect, actual);
+        }
+        assertEquals(i, originalRecipes.size());
 
     }
 
@@ -146,12 +180,19 @@ public class TestDatabase {
     @After
     public void clearDatabase() {
         Context context = ApplicationProvider.getApplicationContext();
-        context.getDatabasePath(READ_WRITE_DB).delete();
-        context.getDatabasePath(MASSIVE_WRITE_DB).delete();
-        context.getDatabasePath(DELETE_RECIPE_DB).delete();
-        context.getDatabasePath(UPDATE_RECIPE_DB).delete();
-        context.getDatabasePath(RECIPE_ITERATOR_DB).delete();
+        for (String name : nameGenerator) {
+            context.getDatabasePath(name).delete();
+        }
     }
 
+    private Path makeTempDir() {
+        Path path = null;
+        try {
+            path = Files.createTempDirectory("test");
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+        return path;
 
+    }
 }

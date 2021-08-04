@@ -37,6 +37,8 @@ public interface RecipeDao {
         }
     }
 
+    @Query("SELECT COUNT(*) FROM recipes")
+    int getRecipeCount();
 
     @Query("SELECT * FROM recipes where recipeID = (:recipeID)")
     Recipe getRecipeByID(int recipeID);

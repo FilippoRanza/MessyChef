@@ -25,6 +25,11 @@ public class RecipeIterator implements Iterator<Recipe>, Iterable<Recipe> {
         current = 0;
     }
 
+
+    public int getRecipeCount() {
+        return dao.getRecipeCount();
+    }
+
     @Override
     public boolean hasNext() {
         while (!existsRecipe() && current <= count)
