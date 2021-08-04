@@ -172,12 +172,12 @@ public class TextField extends Fragment {
     }
 
     private void runOnGetFocus() {
-        if(focusGet != null)
+        if (focusGet != null)
             focusGet.run();
     }
 
     private void runOnLostFocus() {
-        if(focusLost != null)
+        if (focusLost != null)
             focusLost.run();
     }
 
@@ -216,7 +216,7 @@ public class TextField extends Fragment {
     }
 
     private void emptyErrorMessage() {
-        if(allowEmpty == AllowEmpty.Forbid) {
+        if (allowEmpty == AllowEmpty.Forbid) {
             if (emptyErrorId != -1) {
                 String msg = (emptyStatus) ? owner.getString(emptyErrorId) : null;
                 layout.setError(msg);

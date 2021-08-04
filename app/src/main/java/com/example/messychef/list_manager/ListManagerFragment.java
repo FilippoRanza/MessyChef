@@ -39,11 +39,7 @@ public class ListManagerFragment extends Fragment {
 
     public void updateList(Stream<String> s) {
         ArrayList<String> arrayList = s.collect(Collectors.toCollection(ArrayList::new));
-        if (arrayList.size() > 0) {
-            updateAdapter(arrayList);
-        } else {
-            adapter = null;
-        }
+        updateAdapter(arrayList);
     }
 
     public ListManagerFragment addItemClickListener(ItemClickRunner runner) {
@@ -101,12 +97,12 @@ public class ListManagerFragment extends Fragment {
 
     private void updateAdapter(ArrayList<String> arrayList) {
         adapter = new ArrayAdapter<>(owner, R.layout.list_element, arrayList);
-        if(list != null)
+        if (list != null)
             list.setAdapter(adapter);
     }
 
     private void updateFragment() {
-        if (adapter != null) {
+        if (adapter != null && adapter.getCount() > 0) {
             updateView();
         } else {
             showMessage();

@@ -34,9 +34,6 @@ public class RecipeLoadStore {
     private Future<List<RecipeDao.RecipeInfo>> searchRecipeFuture;
 
 
-
-
-
     private RecipeLoadStore(Context owner) {
         this(Room.databaseBuilder(owner, RecipeDatabase.class, "recipe-database"));
     }
@@ -183,7 +180,6 @@ public class RecipeLoadStore {
     }
 
 
-
     public void startSearchIngredient(String name) {
         searchIngredientFuture = executor.submit(() -> searchIngredient(name));
     }
@@ -233,13 +229,24 @@ public class RecipeLoadStore {
 
         T output = null;
         try {
-            output = future.get(100, TimeUnit.MILLISECONDS);
+            output = future.get(300, TimeUnit.MILLISECONDS);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-        } catch (TimeoutException ignored) {}
+        } catch (TimeoutException ignored) {
+        }
         return output;
     }
 
 
+    public void startSearchRecipeByIngredient(String toString) {
+        searchRecipeFuture = executor.submit(() -> searchRecipeByIngredient(toString));
+    }
 
+    List<RecipeDao.RecipeInfo> searchRecipeByIngredient(String name) {
+        RecipeDatabase database = builder.open();
+        RecipeDao dao = database.getRecipeDao();
+        List<RecipeDao.RecipeInfo> output = dao.searchByIngredient(name + '%');
+        builder.close();
+        return output;
+    }
 }

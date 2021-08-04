@@ -37,15 +37,14 @@ class DatabaseCache {
         if (cache == null) {
             current = make();
             output = current;
-        }
-        else {
+        } else {
             output = cache;
         }
         return output;
     }
 
     void close() {
-        if(current != null) {
+        if (current != null) {
             current.close();
             current = null;
         }

@@ -68,4 +68,6 @@
     <string name="import_menu">Import Recipes</string>
     <string name="remove_selection">Unselect Step</string>
     <string name="filter_placeholder">Filter...</string>
+    <string name="filter_name">By Recipe Name</string>
+    <string name="filter_ingredient">By Ingredients</string>
 </resources>

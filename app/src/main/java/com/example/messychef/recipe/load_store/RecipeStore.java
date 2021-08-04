@@ -50,10 +50,10 @@ class RecipeStore {
         IngredientIndexDao ingredientIndexDao = database.getIngredientIndexDao();
 
         for (Step step : recipe.getSteps()) {
-            if(step instanceof SetIngredientsFromDB) {
+            if (step instanceof SetIngredientsFromDB) {
                 updateIngredientIndex((SetIngredientsFromDB) step);
             }
-            if (step instanceof TakeIngredientStep) { ;
+            if (step instanceof TakeIngredientStep) {
                 takeIngredientDao.update((TakeIngredientStep) step);
             } else if (step instanceof RecipeProcess) {
                 recipeProcessDao.update((RecipeProcess) step);

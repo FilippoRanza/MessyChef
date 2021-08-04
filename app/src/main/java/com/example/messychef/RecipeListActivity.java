@@ -3,6 +3,7 @@ package com.example.messychef;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioButton;
 
 import com.example.messychef.list_manager.ListManagerFragment;
 import com.example.messychef.recipe.dao.RecipeDao;
@@ -27,11 +28,32 @@ public class RecipeListActivity extends AbstractMenuActivity {
 
     private TextField field;
 
+    private RadioButton filterRecipe;
+    private RadioButton filterIngredient;
+
+    private List<RecipeDao.RecipeInfo> fullList;
+
+    private enum FilterStatus {
+        Clear,
+        Filtering
+    }
+
+    private FilterStatus status;
+
+    private enum FilterMode {
+        ByName,
+        ByIngredient
+    }
+
+    private FilterMode mode;
+
     public RecipeListActivity() {
         storeData = RecipeLoadStore.getInstance();
         installer = new FragmentInstaller(this);
         starter = new ActivityStarter(this);
         currentRecipe = new CurrentRecipe(this);
+        mode = FilterMode.ByName;
+        status = FilterStatus.Clear;
     }
 
 
@@ -42,12 +64,23 @@ public class RecipeListActivity extends AbstractMenuActivity {
         setContentView(R.layout.activity_recipe_list);
         initFilterFragment();
         initListFragment();
+        initRadioButtons();
         initRecipeList();
+    }
+
+    private void initRadioButtons() {
+        System.out.println("START RADIO");
+        filterRecipe = findViewById(R.id.filter_by_name);
+        filterRecipe.setOnClickListener((v) -> mode = FilterMode.ByName);
+        filterRecipe.toggle();
+
+        filterIngredient = findViewById(R.id.filter_by_ingredient);
+        filterIngredient.setOnClickListener((v) -> mode = FilterMode.ByIngredient);
     }
 
     private void initFilterFragment() {
         field = new TextField(this, R.string.filter_placeholder)
-                .addUpdateListener((cs) -> storeData.startSearchRecipe(cs.toString()))
+                .addUpdateListener(this::startRecipeFilter)
                 .addEditCompleteCallback(this::updateListOnSearchResult)
                 .addFocusGetCallback(storeData::startCacheDatabase)
                 .addFocusLostCallback(storeData::stopCacheDatabase)
@@ -56,14 +89,33 @@ public class RecipeListActivity extends AbstractMenuActivity {
         installer.installFragment(R.id.filter_text_input, field);
     }
 
-    private void updateListOnSearchResult() {
-        System.out.println("Call");
-        List<RecipeDao.RecipeInfo> list = storeData.commitSearchRecipe();
-
-        if(list != null) {
-            names = list;
-            applyList();
+    private void startRecipeFilter(CharSequence cs) {
+        if (cs.length() == 0) {
+            status = FilterStatus.Clear;
+        } else {
+            startFilter(cs.toString());
+            status = FilterStatus.Filtering;
         }
+
+    }
+
+    private void startFilter(String s) {
+        if (mode == FilterMode.ByName)
+            storeData.startSearchRecipe(s);
+        else if (mode == FilterMode.ByIngredient)
+            storeData.startSearchRecipeByIngredient(s);
+    }
+
+
+    private void updateListOnSearchResult() {
+        if(status == FilterStatus.Filtering) {
+            List<RecipeDao.RecipeInfo> list = storeData.commitSearchRecipe();
+            System.out.println(list.size());
+            names = list;
+        } else {
+            names = fullList;
+        }
+        applyList();
     }
 
     @Override
@@ -91,6 +143,7 @@ public class RecipeListActivity extends AbstractMenuActivity {
 
     private void initRecipeList() {
         names = storeData.commitGetRecipeList();
+        fullList = names;
         applyList();
     }
 

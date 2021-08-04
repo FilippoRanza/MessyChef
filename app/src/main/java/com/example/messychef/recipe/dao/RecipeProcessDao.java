@@ -6,7 +6,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeProcess;
 
 import java.util.List;

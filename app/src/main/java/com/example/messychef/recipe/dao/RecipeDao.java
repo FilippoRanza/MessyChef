@@ -41,7 +41,7 @@ public interface RecipeDao {
     @Query("SELECT * FROM recipes where recipeID = (:recipeID)")
     Recipe getRecipeByID(int recipeID);
 
-    @Query("SELECT recipes.name, recipes.recipeID FROM RECIPES LEFT JOIN ingredients on recipes.recipeID = ingredients.recipeID and ingredients.name like (:ingredient)")
+    @Query("SELECT DISTINCT recipes.name, recipes.recipeID FROM RECIPES LEFT JOIN ingredients on recipes.recipeID = ingredients.recipeID WHERE ingredients.name like (:ingredient)")
     List<RecipeInfo> searchByIngredient(String ingredient);
 
     @Query("SELECT recipes.name, recipes.recipeID FROM RECIPES WHERE name like (:ingredient)")
