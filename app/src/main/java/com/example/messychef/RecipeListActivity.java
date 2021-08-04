@@ -8,6 +8,7 @@ import com.example.messychef.list_manager.ListManagerFragment;
 import com.example.messychef.recipe.dao.RecipeDao;
 import com.example.messychef.recipe.load_store.RecipeLoadStore;
 import com.example.messychef.storage_facility.CurrentRecipe;
+import com.example.messychef.text_manager.TextField;
 import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FragmentInstaller;
 
@@ -24,6 +25,8 @@ public class RecipeListActivity extends AbstractMenuActivity {
     private List<RecipeDao.RecipeInfo> names;
     private ListManagerFragment listManagerFragment;
 
+    private TextField field;
+
     public RecipeListActivity() {
         storeData = RecipeLoadStore.getInstance();
         installer = new FragmentInstaller(this);
@@ -37,15 +40,37 @@ public class RecipeListActivity extends AbstractMenuActivity {
         super.onCreate(savedInstanceState);
         storeData.startGetRecipeList();
         setContentView(R.layout.activity_recipe_list);
+        initFilterFragment();
         initListFragment();
         initRecipeList();
     }
 
+    private void initFilterFragment() {
+        field = new TextField(this, R.string.filter_placeholder)
+                .addUpdateListener((cs) -> storeData.startSearchRecipe(cs.toString()))
+                .addEditCompleteCallback(this::updateListOnSearchResult)
+                .addFocusGetCallback(storeData::startCacheDatabase)
+                .addFocusLostCallback(storeData::stopCacheDatabase)
+                .allowEmpty();
+
+        installer.installFragment(R.id.filter_text_input, field);
+    }
+
+    private void updateListOnSearchResult() {
+        System.out.println("Call");
+        List<RecipeDao.RecipeInfo> list = storeData.commitSearchRecipe();
+
+        if(list != null) {
+            names = list;
+            applyList();
+        }
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
         storeData.startGetRecipeList();
+        field.clear();
         initRecipeList();
     }
 
@@ -66,10 +91,12 @@ public class RecipeListActivity extends AbstractMenuActivity {
 
     private void initRecipeList() {
         names = storeData.commitGetRecipeList();
-        listManagerFragment.updateList(names.stream().map(RecipeDao.RecipeInfo::getName));
-
+        applyList();
     }
 
+    private void applyList() {
+        listManagerFragment.updateList(names.stream().map(RecipeDao.RecipeInfo::getName));
+    }
 
     private void startShowRecipe(int id) {
         RecipeDao.RecipeInfo info = names.get(id);

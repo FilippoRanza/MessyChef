@@ -14,10 +14,8 @@ import android.widget.AutoCompleteTextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.messychef.R;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TextField extends Fragment {
@@ -42,10 +40,23 @@ public class TextField extends Fragment {
 
     UpdateAutocomplete updateAutocomplete;
 
+    private Runnable runnable;
+
+    private Runnable focusGet;
+    private Runnable focusLost;
+
+    private enum AllowEmpty {
+        Allow,
+        Forbid
+    }
+
+    private AllowEmpty allowEmpty;
+
     public TextField(Activity owner, int placeholderID) {
         this.owner = owner;
         this.placeholderID = placeholderID;
         inputType = NONE_TYPE;
+        allowEmpty = AllowEmpty.Forbid;
     }
 
     public TextField addUpdateListener(TextChangeRunner r) {
@@ -54,13 +65,39 @@ public class TextField extends Fragment {
     }
 
 
-    public TextField addUpdateAutocomplete(UpdateAutocomplete updateAutocomplete){
+    public TextField addUpdateAutocomplete(UpdateAutocomplete updateAutocomplete) {
         this.updateAutocomplete = updateAutocomplete;
+        return this;
+    }
+
+    public TextField addEditCompleteCallback(Runnable runnable) {
+        this.runnable = runnable;
+        return this;
+    }
+
+    public TextField addFocusGetCallback(Runnable runnable) {
+        this.focusGet = runnable;
+        return this;
+    }
+
+    public TextField addFocusLostCallback(Runnable runnable) {
+        this.focusLost = runnable;
         return this;
     }
 
     public TextField setInputType(int i) {
         inputType = i;
+        return this;
+    }
+
+    public void clear() {
+        input.setText("");
+        input.clearFocus();
+    }
+
+
+    public TextField allowEmpty() {
+        allowEmpty = AllowEmpty.Allow;
         return this;
     }
 
@@ -117,6 +154,7 @@ public class TextField extends Fragment {
 
                 @Override
                 public void afterTextChanged(Editable s) {
+                    runEditCompleteCallback();
                     runUpdateAutocomplete();
                     emptyErrorMessage();
                 }
@@ -124,10 +162,34 @@ public class TextField extends Fragment {
         }
     }
 
+    private void applyFocusListener() {
+        input.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus)
+                runOnGetFocus();
+            else
+                runOnLostFocus();
+        });
+    }
+
+    private void runOnGetFocus() {
+        if(focusGet != null)
+            focusGet.run();
+    }
+
+    private void runOnLostFocus() {
+        if(focusLost != null)
+            focusLost.run();
+    }
+
+    private void runEditCompleteCallback() {
+        if (runnable != null)
+            runnable.run();
+    }
+
     private void runUpdateAutocomplete() {
-        if(updateAutocomplete != null) {
+        if (updateAutocomplete != null) {
             List<String> list = updateAutocomplete.updateList();
-            if(list != null && list.size() <= 5) {
+            if (list != null && list.size() <= 5) {
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(owner, R.layout.list_element, list);
                 input.setAdapter(adapter);
             }
@@ -143,6 +205,7 @@ public class TextField extends Fragment {
             input.setText(tmpBuff);
         }
         applyListener();
+        applyFocusListener();
     }
 
     public void setText(CharSequence cs) {
@@ -153,9 +216,11 @@ public class TextField extends Fragment {
     }
 
     private void emptyErrorMessage() {
-        if (emptyErrorId != -1) {
-            String msg = (emptyStatus) ? owner.getString(emptyErrorId) : null;
-            layout.setError(msg);
+        if(allowEmpty == AllowEmpty.Forbid) {
+            if (emptyErrorId != -1) {
+                String msg = (emptyStatus) ? owner.getString(emptyErrorId) : null;
+                layout.setError(msg);
+            }
         }
     }
 }

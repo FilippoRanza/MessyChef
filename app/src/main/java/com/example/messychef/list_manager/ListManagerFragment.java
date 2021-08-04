@@ -101,6 +101,8 @@ public class ListManagerFragment extends Fragment {
 
     private void updateAdapter(ArrayList<String> arrayList) {
         adapter = new ArrayAdapter<>(owner, R.layout.list_element, arrayList);
+        if(list != null)
+            list.setAdapter(adapter);
     }
 
     private void updateFragment() {

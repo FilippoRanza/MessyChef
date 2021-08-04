@@ -20,7 +20,7 @@ import java.util.concurrent.TimeoutException;
 
 public class RecipeLoadStore {
 
-    private final RoomDatabase.Builder<RecipeDatabase> builder;
+    private final DatabaseCache builder;
     private static RecipeLoadStore instance;
     private final ExecutorService executor;
 
@@ -31,6 +31,10 @@ public class RecipeLoadStore {
     private Future<?> deleteRecipeFuture;
     private Future<?> updateRecipeFuture;
     private Future<List<String>> searchIngredientFuture;
+    private Future<List<RecipeDao.RecipeInfo>> searchRecipeFuture;
+
+
+
 
 
     private RecipeLoadStore(Context owner) {
@@ -38,8 +42,8 @@ public class RecipeLoadStore {
     }
 
     private RecipeLoadStore(RoomDatabase.Builder<RecipeDatabase> builder) {
-        this.builder = builder;
-        this.builder.fallbackToDestructiveMigration();
+        this.builder = new DatabaseCache(builder);
+        builder.fallbackToDestructiveMigration();
         executor = Executors.newSingleThreadExecutor();
     }
 
@@ -77,10 +81,10 @@ public class RecipeLoadStore {
 
 
     public Recipe loadRecipeById(int id) {
-        RecipeDatabase database = builder.build();
+        RecipeDatabase database = builder.open();
         RecipeLoad recipeLoad = new RecipeLoad(database);
         Recipe recipe = recipeLoad.loadRecipe(id);
-        database.close();
+        builder.close();
         return recipe;
     }
 
@@ -97,10 +101,10 @@ public class RecipeLoadStore {
     }
 
     public void saveRecipe(Recipe r) {
-        RecipeDatabase database = builder.build();
+        RecipeDatabase database = builder.open();
         RecipeStore recipeStore = new RecipeStore(database);
         recipeStore.storeRecipe(r);
-        database.close();
+        builder.close();
     }
 
     public void startGetRecipeList() {
@@ -120,10 +124,10 @@ public class RecipeLoadStore {
 
 
     public List<RecipeDao.RecipeInfo> getRecipeList() {
-        RecipeDatabase database = builder.build();
+        RecipeDatabase database = builder.open();
         RecipeDao dao = database.getRecipeDao();
         List<RecipeDao.RecipeInfo> recipesName = dao.getRecipesName();
-        database.close();
+        builder.close();
         return recipesName;
     }
 
@@ -149,10 +153,10 @@ public class RecipeLoadStore {
     }
 
     public void deleteRecipe(Recipe recipe) {
-        RecipeDatabase database = builder.build();
+        RecipeDatabase database = builder.open();
         RecipeDelete recipeDelete = new RecipeDelete(database);
         recipeDelete.deleteRecipe(recipe);
-        database.close();
+        builder.close();
     }
 
     public void startUpdateRecipe(Recipe recipe) {
@@ -170,12 +174,12 @@ public class RecipeLoadStore {
 
 
     public void updateRecipe(Recipe recipe) {
-        RecipeDatabase database = builder.build();
+        RecipeDatabase database = builder.open();
 
         RecipeStore store = new RecipeStore(database);
         store.updateRecipe(recipe);
 
-        database.close();
+        builder.close();
     }
 
 
@@ -185,23 +189,54 @@ public class RecipeLoadStore {
     }
 
     public List<String> commitSearchIngredient() {
-        if(searchIngredientFuture == null)
-            return null;
-
-        List<String> output = null;
-        try {
-            output = searchIngredientFuture.get(100, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        } catch (TimeoutException ignored) {}
-        return output;
+        return runFutureSearch(searchIngredientFuture);
     }
 
     public List<String> searchIngredient(String name) {
-        RecipeDatabase database = builder.build();
+        RecipeDatabase database = builder.open();
         IngredientDao dao = database.getIngredientDao();
         List<String> output = dao.searchIngredientByName(name + '%');
-        database.close();
+        builder.close();
+        return output;
+    }
+
+
+    public void startSearchRecipe(String name) {
+        searchRecipeFuture = executor.submit(() -> searchRecipe(name));
+    }
+
+    public List<RecipeDao.RecipeInfo> commitSearchRecipe() {
+        return runFutureSearch(searchRecipeFuture);
+    }
+
+    public List<RecipeDao.RecipeInfo> searchRecipe(String name) {
+        RecipeDatabase database = builder.open();
+        RecipeDao dao = database.getRecipeDao();
+        List<RecipeDao.RecipeInfo> output = dao.searchByName(name + '%');
+        builder.close();
+        return output;
+    }
+
+
+    public void startCacheDatabase() {
+        builder.startCache();
+    }
+
+    public void stopCacheDatabase() {
+        builder.stopCache();
+    }
+
+
+    private <T> T runFutureSearch(Future<T> future) {
+        if (future == null)
+            return null;
+
+        T output = null;
+        try {
+            output = future.get(100, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException ignored) {}
         return output;
     }
 
