@@ -60,8 +60,33 @@ public class ShowRecipeActivity extends AbstractMenuActivity {
         FieldInitializer.getInstance(this)
                 .initTextField(R.id.recipe_name_text_view, recipe.getName())
                 .initTextField(R.id.ingredient_count_text_view, recipe.getIngredients().length)
-                .initTextField(R.id.step_count_text_view, recipe.getSteps().length);
+                .initTextField(R.id.step_count_text_view, recipe.getSteps().length)
+                .initTextField(R.id.recipe_complexity_view, recipeComplexityMessage());
     }
+
+    private String recipeComplexityMessage() {
+        int id = 0;
+        switch (recipe.getRecipeComplexity()) {
+            case Recipe.RECIPE_HARD:
+                id = R.string.hard;
+                break;
+            case Recipe.RECIPE_MEDIUM:
+                id = R.string.medium;
+                break;
+            case Recipe.RECIPE_SIMPLE:
+                id = R.string.easy;
+                break;
+            case Recipe.RECIPE_VERY_HARD:
+                id = R.string.very_hard;
+                break;
+            case Recipe.RECIPE_VERY_SIMPLE:
+                id = R.string.very_easy;
+                break;
+        }
+
+        return getString(id);
+    }
+
 
     public void startRecipe(View view) {
         RecipeRunner.getInstance().setRecipe(recipe);

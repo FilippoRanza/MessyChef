@@ -12,7 +12,7 @@ import com.example.messychef.recipe.TakeIngredientStep;
 @Database(entities = {
         Recipe.class, Ingredient.class, RecipeTimer.class,
         RecipeProcess.class, TakeIngredientStep.class, IngredientIndex.class},
-        version = 3)
+        version = 4)
 public abstract class RecipeDatabase extends RoomDatabase {
 
     public abstract RecipeDao getRecipeDao();

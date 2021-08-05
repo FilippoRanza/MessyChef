@@ -10,9 +10,19 @@ import java.util.Objects;
 @Entity(tableName = "recipes")
 public class Recipe {
 
+    public static final int RECIPE_VERY_SIMPLE = 0;
+    public static final int RECIPE_SIMPLE = 1;
+    public static final int RECIPE_MEDIUM = 2;
+    public static final int RECIPE_HARD = 3;
+    public static final int RECIPE_VERY_HARD = 4;
+
+
+
     @PrimaryKey
     private int recipeID;
     private String name;
+
+    private int recipeComplexity;
 
     @Ignore
     private Ingredient[] ingredients;
@@ -63,6 +73,15 @@ public class Recipe {
 
     public void setRecipeID(int rid) {
         this.recipeID = rid;
+    }
+
+
+    public int getRecipeComplexity() {
+        return recipeComplexity;
+    }
+
+    public void setRecipeComplexity(int recipeComplexity) {
+        this.recipeComplexity = recipeComplexity;
     }
 
     @Override

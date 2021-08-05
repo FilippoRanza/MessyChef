@@ -18,6 +18,7 @@ public class RecipeFactory {
     private ArrayList<Step> steps;
     private int modifyIngredientId;
     private int modifyStepId;
+    private int complexity;
 
     private enum State {
         Create,
@@ -103,6 +104,10 @@ public class RecipeFactory {
         this.name = name;
     }
 
+    public void setComplexity(int complexity) {
+        this.complexity = complexity;
+    }
+
     public void addIngredient(Ingredient ingredient) {
         IngredientInfo info = new IngredientInfo(ingredient);
         ingredients.add(info);
@@ -118,6 +123,7 @@ public class RecipeFactory {
         Step[] steps = this.steps.toArray(new Step[]{});
 
         Recipe output = new Recipe(name, ingredients, steps);
+        output.setRecipeComplexity(complexity);
         this.ingredients = null;
         this.steps = null;
         this.name = null;

@@ -2,6 +2,7 @@ package com.example.messychef;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioGroup;
 
 import com.example.messychef.recipe.Recipe;
 import com.example.messychef.recipe.RecipeFactory;
@@ -62,6 +63,7 @@ public class AddRecipeActivity extends AbstractMenuActivity {
     }
 
     public void saveRecipe(View v) {
+
         if (!textField.isEmpty()) {
             save();
             finish();
@@ -80,6 +82,7 @@ public class AddRecipeActivity extends AbstractMenuActivity {
 
     private void runSave() throws IOException {
         factory.setName(name.toString());
+        factory.setComplexity(getRecipeComplexity());
         Recipe recipe = factory.getRecipe();
         Integer recipeID = currentRecipe.getCurrentRecipeName();
         if (recipeID != null)
@@ -94,5 +97,30 @@ public class AddRecipeActivity extends AbstractMenuActivity {
         recipe.updateComponentID();
         storeData.startUpdateRecipe(recipe);
         currentRecipe.setCurrentRecipeName(recipeId);
+    }
+
+    private int getRecipeComplexity() {
+        RadioGroup group = findViewById(R.id.recipe_complexity_group);
+        int id = group.getCheckedRadioButtonId();
+        int output = 0;
+        switch (id) {
+            case R.id.button_recipe_very_easy:
+                output = Recipe.RECIPE_VERY_SIMPLE;
+                break;
+
+            case R.id.button_recipe_easy:
+                output = Recipe.RECIPE_SIMPLE;
+                break;
+            case R.id.button_recipe_medium:
+                output = Recipe.RECIPE_MEDIUM;
+                break;
+            case R.id.button_recipe_hard:
+                output = Recipe.RECIPE_HARD;
+                break;
+            case R.id.button_recipe_very_hard:
+                output = Recipe.RECIPE_VERY_HARD;
+                break;
+        }
+        return output;
     }
 }
