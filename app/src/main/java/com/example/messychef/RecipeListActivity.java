@@ -109,9 +109,7 @@ public class RecipeListActivity extends AbstractMenuActivity {
 
     private void updateListOnSearchResult() {
         if (status == FilterStatus.Filtering) {
-            List<RecipeDao.RecipeInfo> list = storeData.commitSearchRecipe();
-            System.out.println(list.size());
-            names = list;
+            names = storeData.commitSearchRecipe();
         } else {
             names = fullList;
         }
@@ -143,6 +141,7 @@ public class RecipeListActivity extends AbstractMenuActivity {
 
     private void initRecipeList() {
         names = storeData.commitGetRecipeList();
+        System.out.println(names);
         fullList = names;
         applyList();
     }
@@ -163,5 +162,10 @@ public class RecipeListActivity extends AbstractMenuActivity {
 
     }
 
-
+    @Override
+    protected void importDone() {
+        super.importDone();
+        storeData.startGetRecipeList();
+        initRecipeList();
+    }
 }

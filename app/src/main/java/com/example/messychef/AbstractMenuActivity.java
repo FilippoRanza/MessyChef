@@ -1,20 +1,66 @@
 package com.example.messychef;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.messychef.storage_facility.ImportExportManager;
-
-import java.io.IOException;
-
 
 abstract public class AbstractMenuActivity extends AppCompatActivity {
+
+
+
+    private class ConnectionHandler implements ServiceConnection {
+
+        private final int requestCode;
+        private final Uri uri;
+
+        ConnectionHandler(Uri uri, int requestCode) {
+            this.uri = uri;
+            this.requestCode = requestCode;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            ImportExportService.ImportExportBinder binder = (ImportExportService.ImportExportBinder) service;
+            binder.setClientBinder(new ClientBinder());
+            switch (requestCode) {
+                case EXPORT_REQUEST:
+                    binder.exportRecipes(uri);
+                    break;
+                case IMPORT_REQUEST:
+                    binder.importRecipes(uri);
+                    break;
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+    }
+
+
+    public class ClientBinder extends Binder {
+        public void onImportDone() {
+            importDone();
+            unbindService(connection);
+        }
+
+        public void onExportDone() {
+            unbindService(connection);
+        }
+
+
+    }
 
 
     private static final int GROUP_ID = 0;
@@ -25,6 +71,9 @@ abstract public class AbstractMenuActivity extends AppCompatActivity {
 
     private static final int EXPORT_REQUEST = 0;
     private static final int IMPORT_REQUEST = 1;
+
+    private ServiceConnection connection;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +93,10 @@ abstract public class AbstractMenuActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+
+    protected void importDone() {
     }
 
     @Override
@@ -100,30 +153,17 @@ abstract public class AbstractMenuActivity extends AppCompatActivity {
             return;
 
         Uri uri = data.getData();
-        try {
-            handleRequest(requestCode, uri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        startImportExportService(uri, requestCode);
     }
 
-    private void handleRequest(int requestCode, Uri uri) throws IOException {
-        switch (requestCode) {
-            case EXPORT_REQUEST:
-                handleExport(uri);
-                break;
-            case IMPORT_REQUEST:
-                handleImport(uri);
-                break;
-        }
+
+    private void startImportExportService(Uri uri, int requestCode) {
+        Intent intent = new Intent(this, ImportExportService.class);
+        startService(intent);
+        connection =  new ConnectionHandler(uri, requestCode);
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
     }
 
-    private void handleImport(Uri uri) throws IOException {
-        ImportExportManager.importRecipes(uri, this);
-    }
 
-    private void handleExport(Uri uri) throws IOException {
-        ImportExportManager.exportRecipes(uri, this);
-    }
 
 }
