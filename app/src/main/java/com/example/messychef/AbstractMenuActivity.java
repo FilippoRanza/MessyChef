@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 abstract public class AbstractMenuActivity extends AppCompatActivity {
 
 
-
     private class ConnectionHandler implements ServiceConnection {
 
         private final int requestCode;
@@ -160,10 +159,9 @@ abstract public class AbstractMenuActivity extends AppCompatActivity {
     private void startImportExportService(Uri uri, int requestCode) {
         Intent intent = new Intent(this, ImportExportService.class);
         startService(intent);
-        connection =  new ConnectionHandler(uri, requestCode);
+        connection = new ConnectionHandler(uri, requestCode);
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
     }
-
 
 
 }

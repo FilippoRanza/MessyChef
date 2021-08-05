@@ -1,6 +1,5 @@
 package com.example.messychef.storage_facility;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 
@@ -19,7 +18,8 @@ import java.io.OutputStream;
 public class ImportExportManager {
 
 
-    public ImportExportManager() {}
+    public ImportExportManager() {
+    }
 
     public static void exportRecipes(Uri uri, Context owner) throws IOException {
         new ImportExportManager()
@@ -30,7 +30,7 @@ public class ImportExportManager {
         new ImportExportManager().importRecipes(owner.getContentResolver().openInputStream(uri), RecipeLoadStore.getInstance());
     }
 
-     public void exportRecipes(OutputStream outputStream, RecipeLoadStore loadStore) throws IOException {
+    public void exportRecipes(OutputStream outputStream, RecipeLoadStore loadStore) throws IOException {
 
         DataOutputStream dos = new DataOutputStream(outputStream);
         RecipeIterator iterator = loadStore.getRecipeIterator();
