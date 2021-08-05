@@ -62,4 +62,18 @@
     <string name="export_menu">Esporta Ricette</string>
     <string name="import_menu">Importa Ricette</string>
     <string name="remove_selection">Deseleziona</string>
+    <string name="filter_placeholder">Filtra</string>
+    <string name="filter_name">Per Nome</string>
+    <string name="filter_ingredient">Per Ingrediente</string>
+    <string name="import_done">Ricette Importate</string>
+    <string name="import_start">Avvio caricamento Ricette</string>
+    <string name="export_start">Avvio salvataggio Ricette</string>
+    <string name="export_done">Ricette Esportate</string>
+    <string name="very_easy">Molto Facile</string>
+    <string name="easy">Facile</string>
+    <string name="medium">Medio</string>
+    <string name="hard">Difficile</string>
+    <string name="very_hard">Molto Difficile</string>
+    <string name="recipe_complexity">Complessità della Ricetta</string>
+    <string name="complexity">Complessità:</string>
 </resources>
