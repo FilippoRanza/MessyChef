@@ -25,6 +25,10 @@ public class AddRecipeActivity extends AbstractMenuActivity {
     private final CurrentRecipe currentRecipe;
     private final RecipeLoadStore storeData;
 
+
+    private ChooseComplexityFragment chooseComplexityFragment;
+
+
     public AddRecipeActivity() {
         storeData = RecipeLoadStore.getInstance();
         currentRecipe = new CurrentRecipe(this);
@@ -37,6 +41,7 @@ public class AddRecipeActivity extends AbstractMenuActivity {
         if (savedInstanceState == null) {
             setContentView(R.layout.activity_add_recipe);
             factory = RecipeFactory.getInstance();
+            installChooseComplexity();
             textField = new TextField(this, R.string.add_recipe_text)
                     .addUpdateListener((cs) -> name = cs);
             if (factory.shouldInitialize())
@@ -46,6 +51,12 @@ public class AddRecipeActivity extends AbstractMenuActivity {
 
             installer.installFragment(R.id.input_recipe_name, textField);
         }
+    }
+
+    private void installChooseComplexity() {
+        chooseComplexityFragment = new ChooseComplexityFragment();
+        installer.installFragment(R.id.choose_complexity_fragment, chooseComplexityFragment);
+
     }
 
     private void initNameField() {
@@ -82,7 +93,7 @@ public class AddRecipeActivity extends AbstractMenuActivity {
 
     private void runSave() throws IOException {
         factory.setName(name.toString());
-        factory.setComplexity(getRecipeComplexity());
+        factory.setComplexity(chooseComplexityFragment.getRecipeComplexity());
         Recipe recipe = factory.getRecipe();
         Integer recipeID = currentRecipe.getCurrentRecipeName();
         if (recipeID != null)
@@ -99,28 +110,4 @@ public class AddRecipeActivity extends AbstractMenuActivity {
         currentRecipe.setCurrentRecipeName(recipeId);
     }
 
-    private int getRecipeComplexity() {
-        RadioGroup group = findViewById(R.id.recipe_complexity_group);
-        int id = group.getCheckedRadioButtonId();
-        int output = 0;
-        switch (id) {
-            case R.id.button_recipe_very_easy:
-                output = Recipe.RECIPE_VERY_SIMPLE;
-                break;
-
-            case R.id.button_recipe_easy:
-                output = Recipe.RECIPE_SIMPLE;
-                break;
-            case R.id.button_recipe_medium:
-                output = Recipe.RECIPE_MEDIUM;
-                break;
-            case R.id.button_recipe_hard:
-                output = Recipe.RECIPE_HARD;
-                break;
-            case R.id.button_recipe_very_hard:
-                output = Recipe.RECIPE_VERY_HARD;
-                break;
-        }
-        return output;
-    }
 }

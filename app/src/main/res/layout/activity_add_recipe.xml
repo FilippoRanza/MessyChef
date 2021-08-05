@@ -30,70 +30,10 @@
             android:text="@string/manage_recipe_step" />
 
 
-        <TextView
+        <androidx.fragment.app.FragmentContainerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/recipe_complexity"
-            android:textAlignment="center"
-            android:textSize="20sp" />
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checkedButton="@id/button_recipe_medium"
-            android:textAlignment="center"
-            android:id="@+id/recipe_complexity_group"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/very_easy"
-                android:textAlignment="center"
-                android:textSize="16sp" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_recipe_very_easy"
-
-                />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_recipe_easy"
-                />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_recipe_medium"
-
-                />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_recipe_hard"
-
-                />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_recipe_very_hard"
-
-                />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/very_hard"
-                android:textAlignment="center"
-                android:textSize="16sp" />
-        </RadioGroup>
+            android:id="@+id/choose_complexity_fragment"/>
 
 
         <com.google.android.material.button.MaterialButton
