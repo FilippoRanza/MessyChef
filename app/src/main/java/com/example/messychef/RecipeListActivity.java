@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 
+import androidx.fragment.app.Fragment;
+
+import com.example.messychef.choose_complexity.ChooseComplexityFragment;
 import com.example.messychef.list_manager.ListManagerFragment;
 import com.example.messychef.recipe.dao.RecipeDao;
 import com.example.messychef.recipe.load_store.RecipeLoadStore;
@@ -26,10 +29,9 @@ public class RecipeListActivity extends AbstractMenuActivity {
     private List<RecipeDao.RecipeInfo> names;
     private ListManagerFragment listManagerFragment;
 
-    private TextField field;
 
-    private RadioButton filterRecipe;
-    private RadioButton filterIngredient;
+    private ChooseComplexityFragment chooseComplexity;
+    private TextField field;
 
     private List<RecipeDao.RecipeInfo> fullList;
 
@@ -46,6 +48,14 @@ public class RecipeListActivity extends AbstractMenuActivity {
     }
 
     private FilterMode mode;
+
+
+    private enum FilterType {
+        Text,
+        Complexity
+    }
+
+    private FilterType filterType;
 
     public RecipeListActivity() {
         storeData = RecipeLoadStore.getInstance();
@@ -69,14 +79,45 @@ public class RecipeListActivity extends AbstractMenuActivity {
     }
 
     private void initRadioButtons() {
-        System.out.println("START RADIO");
-        filterRecipe = findViewById(R.id.filter_by_name);
-        filterRecipe.setOnClickListener((v) -> mode = FilterMode.ByName);
-        filterRecipe.toggle();
+        setClickListener(R.id.filter_by_name,
+                actionBuilder(() -> mode = FilterMode.ByName, FilterType.Text))
+                .toggle();
 
-        filterIngredient = findViewById(R.id.filter_by_ingredient);
-        filterIngredient.setOnClickListener((v) -> mode = FilterMode.ByIngredient);
+        setClickListener(R.id.filter_by_ingredient,
+                actionBuilder(() -> mode = FilterMode.ByIngredient, FilterType.Text));
+
+        setClickListener(R.id.filter_by_complexity,
+                actionBuilder(() -> {
+                }, FilterType.Complexity));
     }
+
+    private RadioButton setClickListener(int id, View.OnClickListener listener) {
+        RadioButton output = findViewById(id);
+        output.setOnClickListener(listener);
+        return output;
+    }
+
+
+    private View.OnClickListener actionBuilder(Runnable callback, FilterType type) {
+        return v -> {
+            if (filterType != type)
+                enableType(type);
+            callback.run();
+        };
+    }
+
+
+    private void enableType(FilterType type) {
+        switch (type) {
+            case Text:
+                initFilterFragment();
+                break;
+            case Complexity:
+                initComplexityFragment();
+                break;
+        }
+    }
+
 
     private void initFilterFragment() {
         field = new TextField(this, R.string.filter_placeholder)
@@ -86,8 +127,30 @@ public class RecipeListActivity extends AbstractMenuActivity {
                 .addFocusLostCallback(storeData::stopCacheDatabase)
                 .allowEmpty();
 
-        installer.installFragment(R.id.filter_text_input, field);
+        installFilterFragment(field);
+
+        filterType = FilterType.Text;
     }
+
+    private void initComplexityFragment() {
+        chooseComplexity = new ChooseComplexityFragment()
+                .setRadioSelectionListener(this::filterByComplexity);
+        installFilterFragment(chooseComplexity);
+
+        filterType = FilterType.Complexity;
+        status = FilterStatus.Filtering;
+    }
+
+    private void filterByComplexity(int c) {
+        storeData.startFilterRecipeByComplexity(c);
+        updateListOnSearchResult();
+    }
+
+    private void installFilterFragment(Fragment fragment) {
+        installer.removeFragment(R.id.filter_text_input);
+        installer.installFragment(R.id.filter_text_input, fragment);
+    }
+
 
     private void startRecipeFilter(CharSequence cs) {
         if (cs.length() == 0) {
@@ -96,7 +159,6 @@ public class RecipeListActivity extends AbstractMenuActivity {
             startFilter(cs.toString());
             status = FilterStatus.Filtering;
         }
-
     }
 
     private void startFilter(String s) {

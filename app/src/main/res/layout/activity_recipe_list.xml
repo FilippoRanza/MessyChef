@@ -16,7 +16,6 @@
             android:layout_height="wrap_content">
 
 
-
             <androidx.fragment.app.FragmentContainerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,6 +44,19 @@
                     android:text="@string/filter_ingredient"
                     android:layout_weight="2"
                     android:id="@+id/filter_by_ingredient"
+                    android:layout_height="wrap_content"/>
+
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:text="@string/filter_complexity"
+                    android:layout_weight="2"
+                    android:id="@+id/filter_by_complexity"
                     android:layout_height="wrap_content"/>
 
             </RadioGroup>

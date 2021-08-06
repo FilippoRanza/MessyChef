@@ -81,6 +81,5 @@
     <string name="very_hard">Very Hard</string>
     <string name="recipe_complexity">Recipe Complexity</string>
     <string name="complexity">Complexity:</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="filter_complexity">By Complexity</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.messychef;
+package com.example.messychef.choose_complexity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,15 +8,22 @@ import android.widget.RadioButton;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.messychef.R;
 import com.example.messychef.recipe.Recipe;
 
 public class ChooseComplexityFragment extends Fragment {
 
 
     private int complexity;
+    private RadioSelectionListener listener;
 
     public ChooseComplexityFragment() {
         // Required empty public constructor
+    }
+
+    public ChooseComplexityFragment setRadioSelectionListener(RadioSelectionListener listener) {
+        this.listener = listener;
+        return this;
     }
 
 
@@ -46,7 +53,12 @@ public class ChooseComplexityFragment extends Fragment {
         for (RadioComplexityTuple tuple : tuples) {
             RadioButton button = view.findViewById(tuple.id);
             button.setOnClickListener((v) ->
-                    complexity = tuple.value);
+            {
+                complexity = tuple.value;
+                if(listener != null)
+                    listener.selectionListener(complexity);
+            });
+
             if (button.isChecked())
                 complexity = tuple.value;
         }

@@ -13,6 +13,7 @@ import java.util.List;
 @Dao
 public interface RecipeDao {
 
+
     class RecipeInfo {
         private String name;
         private int recipeID;
@@ -36,6 +37,11 @@ public interface RecipeDao {
             this.name = name;
         }
     }
+
+
+    @Query("SELECT DISTINCT name, recipeID FROM recipes WHERE recipeComplexity <= (:complexity)")
+    List<RecipeInfo> searchByComplexity(int complexity);
+
 
     @Query("SELECT COUNT(*) FROM recipes")
     int getRecipeCount();

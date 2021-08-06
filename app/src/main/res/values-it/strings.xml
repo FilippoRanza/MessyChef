@@ -76,4 +76,5 @@
     <string name="very_hard">Molto Difficile</string>
     <string name="recipe_complexity">Complessità della Ricetta</string>
     <string name="complexity">Complessità:</string>
+    <string name="filter_complexity">Per Complessità</string>
 </resources>

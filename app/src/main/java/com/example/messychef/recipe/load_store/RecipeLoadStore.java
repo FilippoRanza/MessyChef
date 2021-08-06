@@ -244,6 +244,18 @@ public class RecipeLoadStore {
         searchRecipeFuture = executor.submit(() -> searchRecipeByIngredient(toString));
     }
 
+    public void startFilterRecipeByComplexity(int complexity) {
+        searchRecipeFuture = executor.submit(() -> searchRecipeByComplexity(complexity));
+    }
+
+    private List<RecipeDao.RecipeInfo> searchRecipeByComplexity(int complexity) {
+        RecipeDatabase database = databaseCache.open();
+        RecipeDao dao = database.getRecipeDao();
+        List<RecipeDao.RecipeInfo> output = dao.searchByComplexity(complexity);
+        databaseCache.close();
+        return output;
+    }
+
     List<RecipeDao.RecipeInfo> searchRecipeByIngredient(String name) {
         RecipeDatabase database = databaseCache.open();
         RecipeDao dao = database.getRecipeDao();
