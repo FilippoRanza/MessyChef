@@ -13,7 +13,7 @@ public class DeleteItemFragment extends Fragment {
 
 
     Button button;
-    Runnable runnable;
+    final Runnable runnable;
 
     public DeleteItemFragment(Runnable runnable) {
         this.runnable = runnable;

@@ -7,18 +7,16 @@ import com.example.messychef.R;
 
 public class DeleteDialog<T> {
 
-    Activity owner;
-    AlertDialog.Builder builder;
+    final Activity owner;
+    final AlertDialog.Builder builder;
     AlertDialog dialog;
-    T info;
+    final T info;
 
     public DeleteDialog(Activity owner, T info) {
         this.owner = owner;
         this.info = info;
         builder = new AlertDialog.Builder(owner);
-        builder.setNegativeButton(R.string.cancel_delete, (dialog, which) -> {
-            dialog.cancel();
-        });
+        builder.setNegativeButton(R.string.cancel_delete, (dialog, which) -> dialog.cancel());
     }
 
     public DeleteDialog<T> setTitle(int id) {

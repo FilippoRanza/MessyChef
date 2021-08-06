@@ -1,5 +1,6 @@
 package com.example.messychef.recipe;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -70,6 +71,7 @@ public class TakeIngredientStep extends Step implements IngredientList, SetIngre
         return result;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "TakeIngredientStep{" +

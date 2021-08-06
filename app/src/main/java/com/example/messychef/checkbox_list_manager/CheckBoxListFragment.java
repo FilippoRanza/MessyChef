@@ -20,12 +20,10 @@ public class CheckBoxListFragment extends Fragment {
 
     public static final int LIST_ID = R.id.checkbox_list;
 
-    final private Activity owner;
     final private CheckboxArrayAdapter adapter;
 
 
     public CheckBoxListFragment(Activity owner, ArrayList<IndexValue<String>> names) {
-        this.owner = owner;
         adapter = new CheckboxArrayAdapter(owner, R.layout.checkbox_list_element, names);
     }
 

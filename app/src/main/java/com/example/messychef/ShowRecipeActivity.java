@@ -18,7 +18,6 @@ public class ShowRecipeActivity extends AbstractMenuActivity {
 
 
     private Recipe recipe;
-    private int recipeID;
 
     private final CurrentRecipe currentRecipe;
     private final RecipeLoadStore storeData;
@@ -48,7 +47,7 @@ public class ShowRecipeActivity extends AbstractMenuActivity {
 
     private void initRecipe() {
         try {
-            recipeID = currentRecipe.getCurrentRecipeName();
+            int recipeID = currentRecipe.getCurrentRecipeName();
             storeData.startLoadRecipeById(recipeID);
         } catch (IOException e) {
             e.printStackTrace();

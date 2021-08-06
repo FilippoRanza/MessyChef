@@ -33,7 +33,7 @@ class DatabaseCache {
 
 
     RecipeDatabase open() {
-        RecipeDatabase output = null;
+        RecipeDatabase output;
         if (cache == null) {
             current = make();
             output = current;

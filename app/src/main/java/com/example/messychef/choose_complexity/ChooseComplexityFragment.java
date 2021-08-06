@@ -65,8 +65,8 @@ public class ChooseComplexityFragment extends Fragment {
     }
 
     private static class RadioComplexityTuple {
-        int id;
-        int value;
+        final int id;
+        final int value;
 
         RadioComplexityTuple(int id, int value) {
             this.id = id;

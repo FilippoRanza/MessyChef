@@ -13,7 +13,7 @@ import com.example.messychef.recipe.dao.RecipeDatabase;
 
 class RecipeDelete {
 
-    RecipeDatabase database;
+    final RecipeDatabase database;
 
     RecipeDelete(RecipeDatabase database) {
         this.database = database;

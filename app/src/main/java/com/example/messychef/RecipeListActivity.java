@@ -30,7 +30,6 @@ public class RecipeListActivity extends AbstractMenuActivity {
     private ListManagerFragment listManagerFragment;
 
 
-    private ChooseComplexityFragment chooseComplexity;
     private TextField field;
 
     private List<RecipeDao.RecipeInfo> fullList;
@@ -133,7 +132,7 @@ public class RecipeListActivity extends AbstractMenuActivity {
     }
 
     private void initComplexityFragment() {
-        chooseComplexity = new ChooseComplexityFragment()
+        ChooseComplexityFragment chooseComplexity = new ChooseComplexityFragment()
                 .setRadioSelectionListener(this::filterByComplexity);
         installFilterFragment(chooseComplexity);
 

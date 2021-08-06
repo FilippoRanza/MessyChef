@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 public class AddProcessStepActivity extends AbstractMenuActivity {
 
-    private final ActivityStarter starter;
     private final FragmentInstaller installer;
 
     protected TextField nameField;
@@ -26,7 +25,7 @@ public class AddProcessStepActivity extends AbstractMenuActivity {
     protected CharSequence description;
 
     public AddProcessStepActivity() {
-        starter = new ActivityStarter(this);
+        ActivityStarter starter = new ActivityStarter(this);
         installer = new FragmentInstaller(this);
 
     }

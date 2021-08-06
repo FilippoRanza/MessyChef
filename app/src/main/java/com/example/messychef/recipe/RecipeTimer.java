@@ -1,5 +1,6 @@
 package com.example.messychef.recipe;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -86,6 +87,7 @@ public class RecipeTimer extends Step implements Serializable {
         return Objects.hash(globalTime, stepTime, name);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "RecipeTimer{" +

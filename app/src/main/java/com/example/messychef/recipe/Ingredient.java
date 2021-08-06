@@ -1,5 +1,6 @@
 package com.example.messychef.recipe;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -91,6 +92,7 @@ public class Ingredient implements Serializable {
         return Objects.hash(name, quantity, unit);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Ingredient{" +

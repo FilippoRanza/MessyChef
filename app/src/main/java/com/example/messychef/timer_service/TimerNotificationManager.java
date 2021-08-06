@@ -54,7 +54,7 @@ class TimerNotificationManager {
         return new NotificationCompat.Builder(owner, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(owner.getString(R.string.step_timer_over))
-                .setContentText("Arrivederci")
+                .setContentText(owner.getString(R.string.snooze))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)
                 .setDeleteIntent(pendingIntent)
@@ -78,7 +78,7 @@ class TimerNotificationManager {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(owner.getString(R.string.global_timer_over))
-                .setContentText("Arrivederci")
+                .setContentText(owner.getString(R.string.snooze))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setDeleteIntent(snoozePendingIntent)
                 .setAutoCancel(true);

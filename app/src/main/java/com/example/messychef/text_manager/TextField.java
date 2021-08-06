@@ -27,13 +27,13 @@ public class TextField extends Fragment {
     public static final int NUMBER_INPUT = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL;
 
 
-    Activity owner;
+    final Activity owner;
     TextInputLayout layout;
     AutoCompleteTextView input;
     int emptyErrorId = R.string.empty_field_error_msg;
     boolean emptyStatus = false;
     CharSequence tmpBuff;
-    int placeholderID;
+    final int placeholderID;
 
     TextChangeRunner textChangeRunner;
     int inputType;

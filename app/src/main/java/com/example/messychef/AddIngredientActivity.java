@@ -16,6 +16,7 @@ public class AddIngredientActivity extends AbstractManageIngredientActivity {
         }
     }
 
+
     private void sendResult() {
         RecipeFactory.getInstance().addIngredient(makeIngredient());
     }
@@ -24,6 +25,5 @@ public class AddIngredientActivity extends AbstractManageIngredientActivity {
     private Ingredient makeIngredient() {
         return new Ingredient(name.toString(), quantity, unit.toString());
     }
-
 
 }

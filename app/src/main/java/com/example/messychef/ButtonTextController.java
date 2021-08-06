@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ButtonTextController {
 
     Button button;
-    ArrayList<Integer> textIds;
+    final ArrayList<Integer> textIds;
     int current;
 
     public ButtonTextController(View v, int id) {
