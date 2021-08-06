@@ -27,6 +27,13 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/process_description_field"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:text="@string/expected_time"/>
+
             <TimePicker
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -82,4 +82,5 @@
     <string name="duration">Durata Stimata:</string>
     <string name="filter_by_time">Specifica Durata Desiderata</string>
     <string name="filter_by_duration">Per Durata</string>
+    <string name="expected_time">Importa il Tempo Previsto</string>
 </resources>

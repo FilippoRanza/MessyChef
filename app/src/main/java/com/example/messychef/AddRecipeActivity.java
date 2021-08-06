@@ -50,19 +50,22 @@ public class AddRecipeActivity extends AbstractMenuActivity {
             if (factory.shouldInitialize())
                 factory.initFactory();
             else
-                initNameField();
+                initFields();
 
             installer.installFragment(R.id.input_recipe_name, textField);
         }
     }
 
     private void installChooseComplexity() {
-        chooseComplexityFragment = new ChooseComplexityFragment();
+        chooseComplexityFragment = factory.shouldInitialize() ?
+                new ChooseComplexityFragment() :
+                new ChooseComplexityFragment(factory.getComplexity());
+
         installer.installFragment(R.id.choose_complexity_fragment, chooseComplexityFragment);
 
     }
 
-    private void initNameField() {
+    private void initFields() {
         textField.setText(factory.getName());
         name = factory.getName();
     }

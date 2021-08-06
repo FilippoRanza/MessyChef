@@ -17,8 +17,15 @@ public class ChooseComplexityFragment extends Fragment {
     private int complexity;
     private RadioSelectionListener listener;
 
+    private int startComplexity;
+
     public ChooseComplexityFragment() {
-        // Required empty public constructor
+        this(Recipe.RECIPE_MEDIUM);
+    }
+
+    public ChooseComplexityFragment(int startComplexity) {
+        this.startComplexity = startComplexity;
+        this.complexity = startComplexity;
     }
 
     public ChooseComplexityFragment setRadioSelectionListener(RadioSelectionListener listener) {
@@ -59,8 +66,8 @@ public class ChooseComplexityFragment extends Fragment {
                     listener.selectionListener(complexity);
             });
 
-            if (button.isChecked())
-                complexity = tuple.value;
+            if(tuple.value == startComplexity)
+                button.toggle();
         }
     }
 

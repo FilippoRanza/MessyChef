@@ -87,4 +87,5 @@
     <string name="duration">Estimated Time: </string>
     <string name="filter_by_time">Select Recipe Duration</string>
     <string name="filter_by_duration">By Duration</string>
+    <string name="expected_time">Set Expected Time</string>
 </resources>

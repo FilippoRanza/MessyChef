@@ -20,6 +20,8 @@ public class RecipeFactory {
     private int modifyStepId;
     private int complexity;
 
+
+
     private enum State {
         Create,
         Modify
@@ -82,8 +84,13 @@ public class RecipeFactory {
         steps = GeneralUtils.fromArray(r.getSteps());
         ingredients = GeneralUtils.fromArray(r.getIngredients(), IngredientInfo::new);
         state = State.Modify;
+        complexity = r.getRecipeComplexity();
     }
 
+
+    public int getComplexity() {
+        return complexity;
+    }
 
     public String getName() {
         return name;
