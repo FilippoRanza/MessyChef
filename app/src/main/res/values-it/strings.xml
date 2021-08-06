@@ -80,4 +80,6 @@
     <string name="snooze">Seleziona per Interrompere</string>
     <string name="recipe_time">Durata Stimata</string>
     <string name="duration">Durata Stimata:</string>
+    <string name="filter_by_time">Specifica Durata Desiderata</string>
+    <string name="filter_by_duration">Per Durata</string>
 </resources>
