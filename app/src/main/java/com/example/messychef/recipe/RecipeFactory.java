@@ -6,7 +6,6 @@ import com.example.messychef.utils.SelectedIndex;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
 
 public class RecipeFactory {
@@ -134,7 +133,7 @@ public class RecipeFactory {
         Recipe output = new Recipe(name, ingredients, steps);
         output.setRecipeComplexity(complexity);
 
-        int duration =  getRecipeMinDuration();
+        int duration = getRecipeMinDuration();
         output.setRecipeDuration(duration);
 
         this.ingredients = null;

@@ -8,6 +8,7 @@ import android.widget.RadioButton;
 import androidx.fragment.app.Fragment;
 
 import com.example.messychef.choose_complexity.ChooseComplexityFragment;
+import com.example.messychef.duration_selection.DurationFilterFragment;
 import com.example.messychef.list_manager.ListManagerFragment;
 import com.example.messychef.recipe.dao.RecipeDao;
 import com.example.messychef.recipe.load_store.RecipeLoadStore;
@@ -51,7 +52,8 @@ public class RecipeListActivity extends AbstractMenuActivity {
 
     private enum FilterType {
         Text,
-        Complexity
+        Complexity,
+        Time
     }
 
     private FilterType filterType;
@@ -88,6 +90,10 @@ public class RecipeListActivity extends AbstractMenuActivity {
         setClickListener(R.id.filter_by_complexity,
                 actionBuilder(() -> {
                 }, FilterType.Complexity));
+
+        setClickListener(R.id.filter_by_time,
+                actionBuilder(() -> {
+                }, FilterType.Time));
     }
 
     private RadioButton setClickListener(int id, View.OnClickListener listener) {
@@ -114,6 +120,9 @@ public class RecipeListActivity extends AbstractMenuActivity {
             case Complexity:
                 initComplexityFragment();
                 break;
+            case Time:
+                initDurationFragment();
+                break;
         }
     }
 
@@ -138,6 +147,21 @@ public class RecipeListActivity extends AbstractMenuActivity {
 
         filterType = FilterType.Complexity;
         status = FilterStatus.Filtering;
+    }
+
+
+    private void initDurationFragment() {
+        DurationFilterFragment fragment = new DurationFilterFragment()
+                .setOnIntervalChange(this::filterByDuration);
+        installFilterFragment(fragment);
+
+        filterType = FilterType.Time;
+        status = FilterStatus.Filtering;
+    }
+
+    private void filterByDuration(int min, int max) {
+        storeData.startFilterRecipeByDuration(min, max);
+        updateListOnSearchResult();
     }
 
     private void filterByComplexity(int c) {

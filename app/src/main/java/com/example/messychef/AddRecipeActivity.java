@@ -12,8 +12,6 @@ import com.example.messychef.text_manager.TextField;
 import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FragmentInstaller;
 
-import org.w3c.dom.Text;
-
 import java.io.IOException;
 
 public class AddRecipeActivity extends AbstractMenuActivity {
@@ -88,7 +86,7 @@ public class AddRecipeActivity extends AbstractMenuActivity {
 
 
     private boolean checkEmptyFields() {
-        return  !(textField.isEmpty());
+        return !(textField.isEmpty());
     }
 
 

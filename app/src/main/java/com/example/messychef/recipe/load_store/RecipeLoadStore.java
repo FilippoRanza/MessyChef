@@ -34,6 +34,9 @@ public class RecipeLoadStore {
     private Future<List<String>> searchIngredientFuture;
     private Future<List<RecipeDao.RecipeInfo>> searchRecipeFuture;
 
+    private Future<Integer> minTimeFuture;
+    private Future<Integer> maxTimeFuture;
+
 
     private RecipeLoadStore(Context owner) {
         this(Room.databaseBuilder(owner, RecipeDatabase.class, "recipe-database"));
@@ -43,7 +46,7 @@ public class RecipeLoadStore {
         this.databaseCache = new DatabaseCache(builder);
         this.builder = builder;
         builder.fallbackToDestructiveMigration();
-        executor = Executors.newSingleThreadExecutor();
+        executor = Executors.newCachedThreadPool();
     }
 
     public static void initInstance(Context owner) {
@@ -248,10 +251,55 @@ public class RecipeLoadStore {
         searchRecipeFuture = executor.submit(() -> searchRecipeByComplexity(complexity));
     }
 
+
     private List<RecipeDao.RecipeInfo> searchRecipeByComplexity(int complexity) {
         RecipeDatabase database = databaseCache.open();
         RecipeDao dao = database.getRecipeDao();
         List<RecipeDao.RecipeInfo> output = dao.searchByComplexity(complexity);
+        databaseCache.close();
+        return output;
+    }
+
+    public void startFilterRecipeByDuration(int min, int max) {
+        searchRecipeFuture = executor.submit(() -> searchRecipeByDuration(min, max));
+    }
+
+    private List<RecipeDao.RecipeInfo> searchRecipeByDuration(int min, int max) {
+        RecipeDatabase database = databaseCache.open();
+        RecipeDao dao = database.getRecipeDao();
+        List<RecipeDao.RecipeInfo> output = dao.searchByTime(min, max);
+        databaseCache.close();
+        return output;
+    }
+
+    public void startGetMaxRecipeDuration() {
+        maxTimeFuture = executor.submit(this::getMaxRecipeDuration);
+    }
+
+    public Integer commitGetMaxRecipeDuration() {
+        return runFutureSearch(maxTimeFuture);
+    }
+
+    public int getMaxRecipeDuration() {
+        RecipeDatabase database = databaseCache.open();
+        RecipeDao dao = database.getRecipeDao();
+        int output = dao.getMaxRecipeDuration();
+        databaseCache.close();
+        return output;
+    }
+
+    public void startGetMinRecipeDuration() {
+        minTimeFuture = executor.submit(this::getMinRecipeDuration);
+    }
+
+    public Integer commitGetMinRecipeDuration() {
+        return runFutureSearch(minTimeFuture);
+    }
+
+    public int getMinRecipeDuration() {
+        RecipeDatabase database = databaseCache.open();
+        RecipeDao dao = database.getRecipeDao();
+        int output = dao.getMinRecipeDuration();
         databaseCache.close();
         return output;
     }

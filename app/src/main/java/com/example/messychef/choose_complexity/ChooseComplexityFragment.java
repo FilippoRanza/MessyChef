@@ -55,7 +55,7 @@ public class ChooseComplexityFragment extends Fragment {
             button.setOnClickListener((v) ->
             {
                 complexity = tuple.value;
-                if(listener != null)
+                if (listener != null)
                     listener.selectionListener(complexity);
             });
 

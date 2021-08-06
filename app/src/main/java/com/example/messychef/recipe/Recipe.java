@@ -17,7 +17,6 @@ public class Recipe {
     public static final int RECIPE_VERY_HARD = 4;
 
 
-
     @PrimaryKey
     private int recipeID;
     private String name;

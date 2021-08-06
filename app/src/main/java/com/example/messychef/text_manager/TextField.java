@@ -25,7 +25,7 @@ public class TextField extends Fragment {
 
     public static final int NONE_TYPE = -1;
     public static final int NUMBER_INPUT = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL;
-    public static final int DECIMAL_INPUT =  InputType.TYPE_CLASS_NUMBER;
+    public static final int DECIMAL_INPUT = InputType.TYPE_CLASS_NUMBER;
 
     final Activity owner;
     TextInputLayout layout;

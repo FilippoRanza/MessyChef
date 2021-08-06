@@ -59,6 +59,18 @@
                     android:id="@+id/filter_by_complexity"
                     android:layout_height="wrap_content"/>
 
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:text="@string/filter_by_duration"
+                    android:layout_weight="2"
+                    android:id="@+id/filter_by_time"
+                    android:layout_height="wrap_content"/>
             </RadioGroup>
 
 

@@ -39,6 +39,17 @@ public interface RecipeDao {
     }
 
 
+    @Query("SELECT MIN(recipeDuration) FROM recipes")
+    int getMinRecipeDuration();
+
+
+    @Query("SELECT MAX(recipeDuration) FROM recipes")
+    int getMaxRecipeDuration();
+
+
+    @Query("SELECT DISTINCT name, recipeID FROM recipes WHERE recipeDuration <= (:max) AND recipeDuration >= (:min)")
+    List<RecipeInfo> searchByTime(int min, int max);
+
     @Query("SELECT DISTINCT name, recipeID FROM recipes WHERE recipeComplexity <= (:complexity)")
     List<RecipeInfo> searchByComplexity(int complexity);
 

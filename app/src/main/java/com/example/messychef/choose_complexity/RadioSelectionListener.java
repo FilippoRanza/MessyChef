@@ -5,5 +5,4 @@ public interface RadioSelectionListener {
     void selectionListener(int complexity);
 
 
-
 }
