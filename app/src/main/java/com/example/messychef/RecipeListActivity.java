@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.fragment.app.Fragment;
 
@@ -18,6 +19,7 @@ import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FragmentInstaller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeListActivity extends AbstractMenuActivity {
@@ -30,7 +32,7 @@ public class RecipeListActivity extends AbstractMenuActivity {
     private List<RecipeDao.RecipeInfo> names;
     private ListManagerFragment listManagerFragment;
 
-
+    private RadioButton prevButton;
     private TextField field;
 
     private List<RecipeDao.RecipeInfo> fullList;
@@ -80,9 +82,10 @@ public class RecipeListActivity extends AbstractMenuActivity {
     }
 
     private void initRadioButtons() {
-        setClickListener(R.id.filter_by_name,
-                actionBuilder(() -> mode = FilterMode.ByName, FilterType.Text))
-                .toggle();
+        RadioButton button = setClickListener(R.id.filter_by_name,
+                actionBuilder(() -> mode = FilterMode.ByName, FilterType.Text));
+        button.toggle();
+        button.callOnClick();
 
         setClickListener(R.id.filter_by_ingredient,
                 actionBuilder(() -> mode = FilterMode.ByIngredient, FilterType.Text));
@@ -96,15 +99,22 @@ public class RecipeListActivity extends AbstractMenuActivity {
                 }, FilterType.Time));
     }
 
-    private RadioButton setClickListener(int id, View.OnClickListener listener) {
+    private RadioButton setClickListener(int id, Runnable listener) {
         RadioButton output = findViewById(id);
-        output.setOnClickListener(listener);
+        output.setOnClickListener((v) -> {
+            if(prevButton != null)
+                prevButton.setChecked(false);
+            prevButton = (RadioButton) v;
+            listener.run();
+        });
+
         return output;
     }
 
 
-    private View.OnClickListener actionBuilder(Runnable callback, FilterType type) {
-        return v -> {
+
+    private Runnable actionBuilder(Runnable callback, FilterType type) {
+        return () -> {
             if (filterType != type)
                 enableType(type);
             callback.run();

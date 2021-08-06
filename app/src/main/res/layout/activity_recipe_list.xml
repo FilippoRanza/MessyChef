@@ -12,76 +12,63 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
             <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/filter_text_input"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/filter_text_input"/>
+                android:layout_height="wrap_content" />
 
-            <RadioGroup
+            <TableLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
                 android:layout_height="wrap_content">
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:id="@+id/filter_by_name"
-                    android:text="@string/filter_name"
-                    />
 
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                <TableRow>
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:text="@string/filter_ingredient"
-                    android:layout_weight="2"
-                    android:id="@+id/filter_by_ingredient"
-                    android:layout_height="wrap_content"/>
+                    <RadioButton
+                        android:id="@+id/filter_by_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="@string/filter_name" />
 
+                    <RadioButton
+                        android:id="@+id/filter_by_ingredient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="@string/filter_ingredient" />
+                </TableRow>
 
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                <TableRow>
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:text="@string/filter_complexity"
-                    android:layout_weight="2"
-                    android:id="@+id/filter_by_complexity"
-                    android:layout_height="wrap_content"/>
+                    <RadioButton
+                        android:id="@+id/filter_by_complexity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="@string/filter_complexity" />
 
 
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:text="@string/filter_by_duration"
-                    android:layout_weight="2"
-                    android:id="@+id/filter_by_time"
-                    android:layout_height="wrap_content"/>
-            </RadioGroup>
-
+                    <RadioButton
+                        android:id="@+id/filter_by_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="@string/filter_by_duration" />
+                </TableRow>
+            </TableLayout>
 
             <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/list_view_recipe_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/list_view_recipe_list"/>
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>
-
 
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -90,12 +77,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            app:icon="@android:drawable/ic_input_add"
             android:contentDescription="@string/add_button_help"
-            android:tooltipText="@string/add_button_help"
-            android:text="@string/add_recipe_text"
             android:onClick="addNewRecipe"
-            />
+            android:text="@string/add_recipe_text"
+            android:tooltipText="@string/add_button_help"
+            app:icon="@android:drawable/ic_input_add" />
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
