@@ -78,4 +78,6 @@
     <string name="complexity">Complessità:</string>
     <string name="filter_complexity">Per Complessità</string>
     <string name="snooze">Seleziona per Interrompere</string>
+    <string name="recipe_time">Durata Stimata</string>
+    <string name="duration">Durata Stimata:</string>
 </resources>

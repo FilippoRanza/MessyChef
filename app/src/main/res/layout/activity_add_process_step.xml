@@ -27,6 +27,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/process_description_field"/>
 
+            <TimePicker
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/set_step_duration"/>
+
             <androidx.fragment.app.FragmentContainerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

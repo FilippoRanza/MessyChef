@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Entity(tableName = "recipe-process")
-public class RecipeProcess extends Step implements IngredientList, SetIngredientsFromDB {
+public class RecipeProcess extends Step implements IngredientList, SetIngredientsFromDB, Duration {
 
     @PrimaryKey
     private int processID;
@@ -22,6 +22,7 @@ public class RecipeProcess extends Step implements IngredientList, SetIngredient
     private int[] ingredients;
 
     private String name;
+    private int duration;
 
     public RecipeProcess(String name, String description) {
         this.name = name;
@@ -35,6 +36,10 @@ public class RecipeProcess extends Step implements IngredientList, SetIngredient
         this.ingredients = ingredients;
     }
 
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
     public void setDescription(String description) {
         this.description = description;
@@ -117,5 +122,10 @@ public class RecipeProcess extends Step implements IngredientList, SetIngredient
     @Override
     public int getId() {
         return processID;
+    }
+
+    @Override
+    public int getDuration() {
+        return duration;
     }
 }

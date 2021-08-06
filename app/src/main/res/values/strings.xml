@@ -83,4 +83,6 @@
     <string name="complexity">Complexity:</string>
     <string name="filter_complexity">By Complexity</string>
     <string name="snooze">Click to Snooze</string>
+    <string name="recipe_time">Estimated Time</string>
+    <string name="duration">Estimated Time: </string>
 </resources>

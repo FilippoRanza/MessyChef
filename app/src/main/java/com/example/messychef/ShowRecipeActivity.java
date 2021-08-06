@@ -60,7 +60,19 @@ public class ShowRecipeActivity extends AbstractMenuActivity {
                 .initTextField(R.id.recipe_name_text_view, recipe.getName())
                 .initTextField(R.id.ingredient_count_text_view, recipe.getIngredients().length)
                 .initTextField(R.id.step_count_text_view, recipe.getSteps().length)
-                .initTextField(R.id.recipe_complexity_view, recipeComplexityMessage());
+                .initTextField(R.id.recipe_complexity_view, recipeComplexityMessage())
+                .initTextField(R.id.recipe_duration, secondToTimeString());
+    }
+
+    private String secondToTimeString() {
+        int seconds = recipe.getRecipeDuration();
+        int minutes = seconds / 60;
+        int s = seconds % 60;
+
+        int h = minutes / 60;
+        int m = minutes % 60;
+
+        return String.format("%02d:%02d:%02d", h, m, s);
     }
 
     private String recipeComplexityMessage() {

@@ -33,6 +33,11 @@ public class ModifyProcessStepActivity extends AddProcessStepActivity {
         enableDeleteButton();
     }
 
+    @Override
+    protected void initTimePicker() {
+        super.initTimePicker();
+        setCurrentTime(process.getDuration());
+    }
 
     @Override
     protected void preSelectCheckBoxList() {

@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity(tableName = "recipe-timer")
-public class RecipeTimer extends Step implements Serializable {
+public class RecipeTimer extends Step implements Duration {
 
     private static final int NO_STEPS = -1;
 
@@ -95,5 +95,10 @@ public class RecipeTimer extends Step implements Serializable {
                 ", stepTime=" + stepTime +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public int getDuration() {
+        return globalTime;
     }
 }

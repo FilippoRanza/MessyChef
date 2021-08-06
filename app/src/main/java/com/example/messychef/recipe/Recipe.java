@@ -23,6 +23,7 @@ public class Recipe {
     private String name;
 
     private int recipeComplexity;
+    private int recipeDuration;
 
     @Ignore
     private Ingredient[] ingredients;
@@ -82,6 +83,15 @@ public class Recipe {
 
     public void setRecipeComplexity(int recipeComplexity) {
         this.recipeComplexity = recipeComplexity;
+    }
+
+
+    public void setRecipeDuration(int recipeDuration) {
+        this.recipeDuration = recipeDuration;
+    }
+
+    public int getRecipeDuration() {
+        return recipeDuration;
     }
 
     @Override

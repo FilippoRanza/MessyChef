@@ -12,6 +12,8 @@ import com.example.messychef.text_manager.TextField;
 import com.example.messychef.utils.ActivityStarter;
 import com.example.messychef.utils.FragmentInstaller;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 
 public class AddRecipeActivity extends AbstractMenuActivity {
@@ -21,6 +23,7 @@ public class AddRecipeActivity extends AbstractMenuActivity {
     private RecipeFactory factory;
     private TextField textField;
     private CharSequence name;
+
 
     private final CurrentRecipe currentRecipe;
     private final RecipeLoadStore storeData;
@@ -44,6 +47,8 @@ public class AddRecipeActivity extends AbstractMenuActivity {
             installChooseComplexity();
             textField = new TextField(this, R.string.add_recipe_text)
                     .addUpdateListener((cs) -> name = cs);
+
+
             if (factory.shouldInitialize())
                 factory.initFactory();
             else
@@ -75,10 +80,15 @@ public class AddRecipeActivity extends AbstractMenuActivity {
 
     public void saveRecipe(View v) {
 
-        if (!textField.isEmpty()) {
+        if (checkEmptyFields()) {
             save();
             finish();
         }
+    }
+
+
+    private boolean checkEmptyFields() {
+        return  !(textField.isEmpty());
     }
 
 

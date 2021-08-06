@@ -2,6 +2,7 @@ package com.example.messychef;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TimePicker;
 
 import com.example.messychef.checkbox_list_manager.CheckBoxListFragment;
 import com.example.messychef.recipe.RecipeFactory;
@@ -24,6 +25,8 @@ public class AddProcessStepActivity extends AbstractMenuActivity {
     protected TextField descriptionField;
     protected CharSequence description;
 
+    private TimePicker picker;
+
     public AddProcessStepActivity() {
         ActivityStarter starter = new ActivityStarter(this);
         installer = new FragmentInstaller(this);
@@ -35,9 +38,17 @@ public class AddProcessStepActivity extends AbstractMenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_process_step);
+        initTimePicker();
         initTextField();
         initIngredientList();
         initProcessDescription();
+    }
+
+    protected void initTimePicker() {
+        picker = findViewById(R.id.set_step_duration);
+        picker.setIs24HourView(true);
+        picker.setHour(0);
+        picker.setMinute(0);
     }
 
 
@@ -48,6 +59,19 @@ public class AddProcessStepActivity extends AbstractMenuActivity {
         }
     }
 
+    protected void setCurrentTime(int minutes) {
+        minutes /= 60;
+        int h = minutes / 60;
+        int m = minutes % 60;
+        picker.setHour(h);
+        picker.setMinute(m);
+    }
+
+    protected int getDurationInSeconds() {
+        int h = picker.getHour();
+        int m = picker.getMinute();
+        return (h * 60 + m) * 60;
+    }
 
     protected void initTextField() {
         nameField = new TextField(this, R.string.process_name_placeholder)
@@ -76,13 +100,16 @@ public class AddProcessStepActivity extends AbstractMenuActivity {
         // made in two steps in order to avoid short circuit evaluation
         boolean validName = !nameField.isEmpty();
         boolean validDescription = !descriptionField.isEmpty();
+        boolean validDuration = picker.validateInput();
 
-        return validName && validDescription;
+        return validName && validDescription && validDuration;
     }
 
     protected void createProcessStep() {
         ArrayList<SelectedIndex> selected = checkBoxList.getSelected();
-        RecipeFactory.getInstance().addProcessStep(name.toString(), description.toString(), selected);
+        RecipeFactory
+                .getInstance()
+                .addProcessStep(name.toString(), description.toString(), selected, getDurationInSeconds());
     }
 
 

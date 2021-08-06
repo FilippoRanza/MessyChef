@@ -6,6 +6,7 @@ import com.example.messychef.utils.SelectedIndex;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
 
 public class RecipeFactory {
@@ -114,6 +115,14 @@ public class RecipeFactory {
     }
 
 
+    public int getRecipeMinDuration() {
+        return steps.stream()
+                .filter((s) -> s instanceof Duration)
+                .map((s) -> (Duration) s)
+                .map(Duration::getDuration)
+                .reduce(0, Integer::sum);
+    }
+
     public Recipe getRecipe() {
 
         Ingredient[] ingredients = this.ingredients
@@ -124,6 +133,10 @@ public class RecipeFactory {
 
         Recipe output = new Recipe(name, ingredients, steps);
         output.setRecipeComplexity(complexity);
+
+        int duration =  getRecipeMinDuration();
+        output.setRecipeDuration(duration);
+
         this.ingredients = null;
         this.steps = null;
         this.name = null;
@@ -134,6 +147,7 @@ public class RecipeFactory {
     public Stream<Ingredient> streamIngredients() {
         return ingredients.stream().map(IngredientInfo::getIngredient);
     }
+
 
     public ArrayList<IndexValue<String>> streamAvailableIngredients() {
         ArrayList<IndexValue<String>> output = null;
@@ -259,9 +273,10 @@ public class RecipeFactory {
             ((TakeIngredientStep) step).setIngredients(taken);
     }
 
-    public void addProcessStep(String name, String description, List<SelectedIndex> selected) {
+    public void addProcessStep(String name, String description, List<SelectedIndex> selected, int duration) {
         int[] taken = getSelectedIngredients(selected);
         RecipeProcess process = new RecipeProcess(name, description, taken);
+        process.setDuration(duration);
         this.steps.add(process);
     }
 
